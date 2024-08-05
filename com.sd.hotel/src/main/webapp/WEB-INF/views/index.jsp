@@ -8,6 +8,7 @@
 <jsp:include page="./hotel/layout/header.jsp" />
 
 <!--================Banner Area =================-->
+됐나??????????????????????????
 <section class="banner_area">
 	<div class="booking_table d_flex align-items-center">
 		<div class="overlay bg-parallax" data-stellar-ratio="0.9"
