@@ -1,5 +1,0 @@
-INDEX VERSION 1.134
-C:\study\prj\hotel\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4164265494.index
-\com.sd.hotel\src\main\java
-C:\study\prj\hotel\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3628611696.index
-\com.sd.hotel\src\main\java
