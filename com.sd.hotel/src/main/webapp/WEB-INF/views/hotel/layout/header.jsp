@@ -4,9 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
-<c:set var="member" value="${pageContext.request.userPrincipal.name}"/>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
 
 <!DOCTYPE html>
 <html>
@@ -25,25 +22,20 @@
   <!-- main css -->
   <link rel="stylesheet" href="/resources/hotel/css/style.css">
   <link rel="stylesheet" href="/resources/hotel/css/responsive.css">
+  
+  
+
 
 </head>
 <body>
 
-<!-- 
-<sec:authorize access="isAuthenticated()">
-    <p>안녕하세요, <sec:authentication property="name"/>님!</p>
-    <a href="${contextPath}/logout">로그아웃</a>
-  </sec:authorize>
- -->
-
 	<!--================Header Area =================-->
-	
-	<div><p>안녕하세요, <sec:authentication property="name"/>님!</p></div>
 	<header class="header_area">
-		<div class="container" id="hotel-header-container">
+		<div class="container">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<!-- Brand and toggle get grouped for better mobile display -->
-
+				<a class="navbar-brand logo_h" href="index.html"><img
+					src="image/Logo.png" alt=""></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -56,7 +48,7 @@
 					id="navbarSupportedContent">
 					<ul class="nav navbar-nav menu_nav ml-auto">
 						<li class="nav-item active"><a class="nav-link"
-							href="/">Home</a></li>
+							href="index.html">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="about.html">About
 								us</a></li>
 						<li class="nav-item"><a class="nav-link"
@@ -70,33 +62,11 @@
 								<li class="nav-item"><a class="nav-link"
 									href="blog-single.html">Blog Details</a></li>
 							</ul></li>
-						<li class="nav-item"><a class="nav-link" href="${contextPath}/user/signup.page">Join</a></li>
+						<li class="nav-item"><a class="nav-link" href="elements.html">Elemests</a></li>
 						<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 					</ul>
 				</div>
-			  <div class="sub-navbar">
-			   <ul class="navbar-nav">
-				   <sec:authorize access="isAnonymous()">
-				       <li class="nav-item">
-				           <a href="${contextPath}/user/login.page">로그인</a>
-				       </li>
-				       <li class="nav-item">
-				           <a href="${contextPath}/user/signup.page">회원가입</a>
-				       </li>
-				   </sec:authorize>
-				
-				   <sec:authorize access="isAuthenticated()">
-				       <li class="nav-item">
-				           <a href="${contextPath}/user/logout">로그아웃</a>
-				       </li>
-				       <li class="nav-item">
-				           <a href="${contextPath}/user/mypage.page">마이페이지</a>
-				       </li>
-				   </sec:authorize>
-				</ul>
-			  </div>
 			</nav>
-			
 		</div>
 	</header>
 	<!--================Header Area =================-->

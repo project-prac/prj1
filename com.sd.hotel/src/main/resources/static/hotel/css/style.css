@@ -331,8 +331,6 @@ button:focus {
 .navbar {
   background: #fff;
   padding: 0px 25px;
-  display:flex;
-  justify-content: space-between
 }
 
 .navbar .logo_h {

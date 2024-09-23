@@ -654,7 +654,7 @@ pre code {
 
 @media (min-width: 992px) {
   .container {
-    max-width: 1200px;
+    max-width: 960px;
   }
 }
 
@@ -666,9 +666,8 @@ pre code {
 
 .container-fluid {
   width: 100%;
-  /*
   padding-right: 15px;
-  padding-left: 15px;*/
+  padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -3661,7 +3660,7 @@ tbody.collapse.show {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   -ms-flex-positive: 1;
-     /* flex-grow: 1;*/
+      flex-grow: 1;
   -ms-flex-align: center;
       align-items: center;
 }
@@ -7180,7 +7179,7 @@ a.bg-dark:focus, a.bg-dark:hover {
 
 .ml-auto,
 .mx-auto {
-  /*margin-left: auto !important;*/
+  margin-left: auto !important;
 }
 
 @media (min-width: 576px) {
@@ -8373,9 +8372,3 @@ a.text-dark:focus, a.text-dark:hover {
   visibility: hidden !important;
 }
 /*# sourceMappingURL=bootstrap.css.map */
-
-
-/* 커스텀css*/
-/* 호텔 header*/
-#hotel-header-container{width:100% !important;max-width:100%;padding:0}
-.btna1{display:block;width:100%;color:#fff !important;    padding: 1.375rem 3.2rem;line-height:1.5}
