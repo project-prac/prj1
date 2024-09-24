@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sd.hotel.mapper.MemberMapper">
+  
+  <insert id="insertMember"
+  				parameterType="MemberDto">
+  	INSERT INTO MEMBER (
+  			MEMBER_NO
+  		, MEMBER_ID
+  		, NAME
+  		, PASSWORD
+  		, BIRTH
+  		, TEL
+  		, GENDER
+  		, MEMBER_EMAIL
+  		, ROLE
+  	) VALUES(
+  			MEM_SEQ.NEXTVAL
+  		, #{memberId}
+  		, #{name}
+  		, #{password}
+  		, #{birth}
+  		, #{tel}
+  		, #{gender}
+  		, #{memberEmail}
+  		, #{role}
+  	)			
+  </insert>
+  
+  <select id="getMemberByMap"
+  				parameterType="Map"
+  				resultType="MemberDto">
+  	SELECT MEMBER_NO, MEMBER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, MEMBER_EMAIL, ROLE
+  	  FROM MEMBER
+  	  <where>
+  	    <if test="memberId!=null">MEMBER_Id = #{memberId}</if>
+  	  	<if test="email!=null">EMAIL = #{email}</if>
+  	  	<if test="password!=null">AND PASSWORD = #{password}</if>
+  	  </where>
+  	  <!-- EMAIL 이 빈값이 아니면 조건 추가 -->
+  </select>
+  
+  <!-- 
+  parametertype이 Map인 이유:
+  (memberId, #memberId)
+  (email, #email)
+  -->
+  
+    <select id="getMemberById"
+          parameterType="String"
+          resultType="MemberDto">
+      SELECT MEMBER_NO, MEMBER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, MEMBER_EMAIL, ROLE
+        FROM MEMBER
+       WHERE MEMBER_ID = #{memberId} 
+    </select>
+  
+  
+    <update id="updateMember" parameterType="MemberDto">
+      UPDATE MEMBER
+         SET NAME = #{name}
+           , BIRTH = #{birth}
+           , TEL = #{tel}
+           , MEMBER_EMAIL = #{memberEmail}
+       WHERE MEMBER_ID = #{memberId} 
+    </update>
+  
+  
+</mapper>
