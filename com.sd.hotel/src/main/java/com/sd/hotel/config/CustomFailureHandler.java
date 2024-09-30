@@ -26,7 +26,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler{
    
 		String errorMessage;
 		//아이디 가져오기
-		String memberId = request.getParameter("memberId");
+		String userId = request.getParameter("userId");
 		
 		if (exception instanceof BadCredentialsException) {
       // 잘못된 사용자명 또는 비밀번호
@@ -39,9 +39,9 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler{
 		
 		
 		//errorMessage= URLEncoder.encode(errorMessage,"UTF-8");//한글 인코딩 깨지는 문제 방지
-		memberId = URLEncoder.encode(memberId,"UTF-8");
+		userId = URLEncoder.encode(userId,"UTF-8");
 		
-		request.getSession().setAttribute("memberId", memberId);
+		request.getSession().setAttribute("userId", userId);
 		request.getSession().setAttribute("errorMessage", errorMessage);
 		
 		/*

@@ -9,23 +9,23 @@
   				parameterType="MemberDto">
   	INSERT INTO MEMBER (
   			MEMBER_NO
-  		, MEMBER_ID
+  		, USER_ID
   		, NAME
   		, PASSWORD
   		, BIRTH
   		, TEL
   		, GENDER
-  		, MEMBER_EMAIL
+  		, EMAIL
   		, ROLE
   	) VALUES(
   			MEM_SEQ.NEXTVAL
-  		, #{memberId}
+  		, #{userId}
   		, #{name}
   		, #{password}
   		, #{birth}
   		, #{tel}
   		, #{gender}
-  		, #{memberEmail}
+  		, #{email}
   		, #{role}
   	)			
   </insert>
@@ -33,10 +33,10 @@
   <select id="getMemberByMap"
   				parameterType="Map"
   				resultType="MemberDto">
-  	SELECT MEMBER_NO, MEMBER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, MEMBER_EMAIL, ROLE
+  	SELECT MEMBER_NO, USER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, EMAIL, ROLE
   	  FROM MEMBER
   	  <where>
-  	    <if test="memberId!=null">MEMBER_Id = #{memberId}</if>
+  	    <if test="userId!=null">USER_Id = #{userId}</if>
   	  	<if test="email!=null">EMAIL = #{email}</if>
   	  	<if test="password!=null">AND PASSWORD = #{password}</if>
   	  </where>
@@ -45,17 +45,19 @@
   
   <!-- 
   parametertype이 Map인 이유:
-  (memberId, #memberId)
+  (userId, #userId)
   (email, #email)
   -->
   
     <select id="getMemberById"
           parameterType="String"
           resultType="MemberDto">
-      SELECT MEMBER_NO, MEMBER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, MEMBER_EMAIL, ROLE
+      SELECT MEMBER_NO, USER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, EMAIL, ROLE
         FROM MEMBER
-       WHERE MEMBER_ID = #{memberId} 
+       WHERE USER_ID = #{userId} 
     </select>
+    
+
   
   
     <update id="updateMember" parameterType="MemberDto">
@@ -63,9 +65,19 @@
          SET NAME = #{name}
            , BIRTH = #{birth}
            , TEL = #{tel}
-           , MEMBER_EMAIL = #{memberEmail}
-       WHERE MEMBER_ID = #{memberId} 
+           , EMAIL = #{email}
+       WHERE USER_ID = #{userId} 
+    </update>
+    
+    <update id="updatePw"
+            parameterType="String">
+      UPDATE MEMBER
+         SET PASSWORD = #{newpw}
+       WHERE USER_ID = #{userId}
     </update>
   
+
+
+
   
 </mapper>

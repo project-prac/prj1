@@ -77,12 +77,22 @@ public class UserController {
 	public String modifyMypage(HttpServletRequest request) {
 		
 		userService.modifyMember(request);
-		MemberDto member= userService.getMemberById(request.getParameter("memberId"));
+		MemberDto member= userService.getMemberById(request.getParameter("userId"));
 		
 		return "user/mypage";
 	}
 	
+	@GetMapping("/modifyPw.page")
+	public String modifyPwPage() {
+		return "user/modifyPw";
+	}
 	
+	@PostMapping("/modifyPw.do")
+	public String modifyPw(HttpServletRequest request) {
+		
+		userService.modifyPw(request);
+		return "user/modifyPw";
+	}
 
 	
 	

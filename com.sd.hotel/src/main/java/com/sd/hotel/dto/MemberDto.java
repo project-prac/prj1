@@ -11,8 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class MemberDto {
+public class MemberDto implements UserDto, UserDetailDto{
+	
 	private int memberNo;
-	private String memberId, name, password, tel, gender, memberEmail, role;
+	private String userId, name, password, tel, gender, email, role;
 	private Date birth;
+	
+	
+	
 }

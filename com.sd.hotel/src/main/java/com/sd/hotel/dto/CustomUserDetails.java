@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 
 @Data
-@RequiredArgsConstructor
+
 public class CustomUserDetails implements UserDetails {
 	
 	/*
@@ -37,9 +37,21 @@ public class CustomUserDetails implements UserDetails {
 	 * 직렬화된 객체가 해당 클래스의 현재 버전과 호환되는지 확인하는 데 사용됩니다. 
 	 * 만약 클래스가 변경되었지만 serialVersionUID가 일치하지 않으면 InvalidClassException이 발생할 수 있습니다.
 	*/
-	private final MemberDto member;
+	//private final MemberDto member;
 	//private EmployeeDto emp;
 	
+	private final UserDto user;
+	private final UserDetailDto userDetail;
+	
+	public CustomUserDetails(UserDto user) {
+		this.user = user;
+		this.userDetail = null;
+	}
+	
+	public CustomUserDetails(UserDto user, UserDetailDto userDetail) {
+		this.user = user;
+		this.userDetail = userDetail;
+	}
 
 	
 	@Override
@@ -51,7 +63,7 @@ public class CustomUserDetails implements UserDetails {
 			
 			@Override
 			public String getAuthority() {
-				return member.getRole();
+				return user.getRole();
 			}
 		});
 		return collection;
@@ -59,36 +71,42 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		System.out.println(member.getPassword());
-		return member.getPassword();
+		System.out.println(user.getPassword());
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return member.getMemberId();
+		return user.getUserId();
 	}
 	
+	
 	public String getName() {
-		return member.getName();
+		return user.getName();
 	}
 	
 	public String getMail() {
-		return member.getMemberEmail();
+		return userDetail.getEmail();
 	}
 			
 	public String getGender() {
-		return member.getGender();
+		return userDetail.getGender();
 	}
 
-	public MemberDto getMemberDto() {
-		return this.member;
-	}
 	public String getTel() {
-		return member.getTel();
+		return userDetail.getTel();
 	}
 	
 	public Date getBirth() {
-		return member.getBirth();
+		return userDetail.getBirth();
+	}
+	
+	public UserDto getUserDto() {
+		return this.user;
+	}
+	
+	public UserDetailDto getUserDetailDto() {
+		return this.userDetail;
 	}
 	
 
@@ -115,5 +133,6 @@ public class CustomUserDetails implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 
 }

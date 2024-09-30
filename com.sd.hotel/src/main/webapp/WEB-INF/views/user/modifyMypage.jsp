@@ -6,7 +6,7 @@
 
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
-<c:set var="user" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.memberDto}" />
+<c:set var="user" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.userDetailDto}" />
 
 <jsp:include page="../hotel/layout/header.jsp"/>
 
@@ -33,13 +33,13 @@
 				<div class="form-group">
 					<label for="InputId">아이디</label> <input
 						type="text" class="form-control" id="InputId"
-						placeholder="" name="memberId" value="${user.memberId}"  readonly>
+						placeholder="" name="userId" value="${user.userId}"  readonly>
 				</div>
 				
 				<div class="form-group">
 					<label for="exampleInputEmail1">이메일</label> <input
 						type="email" class="form-control" id="InputEmail"
-						name="memberEmail" value="${user.memberEmail}" readonly>
+						name="email" value="${user.email}" readonly>
 						<button type="button" id="modify-mail">수정</button>
 						<button type="button" id="verify-btn" >인증번호 보내기</button>
 				</div>

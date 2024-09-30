@@ -39,8 +39,8 @@
 						      action="${contextPath}/user/login.do" >
 							<div class="form-group">
 								<input type="text" class="form-control form-control-lg"
-									id="inpId" placeholder="아이디" name="memberId"
-									value="${sessionScope.memberId != null ? sessionScope.memberId : ''}"  >
+									id="inpId" placeholder="아이디" name="userId"
+									value="${sessionScope.userId != null ? sessionScope.userId : ''}"  >
 							</div>
 							
 							<c:if test="${not empty sessionScope.errorMessage}">
@@ -48,7 +48,7 @@
 					    </c:if>
 					    
 					    <c:remove var="errorMessage" scope="session"/>
-					    <c:remove var="memberId" scope="session"/>
+					    <c:remove var="userId" scope="session"/>
 
 							<div class="form-group">
 								<input type="password" class="form-control form-control-lg"

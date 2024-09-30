@@ -27,12 +27,15 @@ public class UserServiceImpl implements UserService {
 	private final MemberMapper memberMapper;
 	private final MyJavaMailUtils myJavaMailUtils;
 	private final CustomAuthenticationProvider authenticationProvider;
+	private final BCryptPasswordEncoder passwordEncoder;
 	
-	public UserServiceImpl(MemberMapper memberMapper, MyJavaMailUtils myJavaMailUtils, CustomAuthenticationProvider authenticationProvider) {
+	public UserServiceImpl(MemberMapper memberMapper, MyJavaMailUtils myJavaMailUtils, 
+			CustomAuthenticationProvider authenticationProvider, BCryptPasswordEncoder passwordEncoder) {
 		super();
 		this.memberMapper = memberMapper;
 		this.myJavaMailUtils = myJavaMailUtils;
 		this.authenticationProvider = authenticationProvider;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -72,18 +75,18 @@ public class UserServiceImpl implements UserService {
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		
-		String meberId = request.getParameter("memberId");
+		String userId = request.getParameter("userId");
 		String name = MySecurityUtils.getPrvetnXss(request.getParameter("name"));
 		String password = passwordEncoder.encode(request.getParameter("password"));
 		String tel = request.getParameter("tel");
 		String gender = request.getParameter("gender");
-		String email = request.getParameter("memberEmail");
+		String email = request.getParameter("email");
 		Date birth = Date.valueOf(request.getParameter("birth"));
 		String role = request.getParameter("role");
 		
 		MemberDto member = MemberDto.builder()
-													.memberId(meberId)
-													.memberEmail(email)
+													.userId(userId)
+													.email(email)
 													.password(password)
 													.name(name)
 													.tel(tel)
@@ -121,9 +124,9 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Override
-	public MemberDto getMemberById(String memberId) {
+	public MemberDto getMemberById(String userId) {
 
-		MemberDto member = memberMapper.getMemberById(memberId);
+		MemberDto member = memberMapper.getMemberById(userId);
 		
 		return member;
 	}
@@ -133,42 +136,65 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void modifyMember(HttpServletRequest request) {
 		
-		String memberId = request.getParameter("memberId");
+		String userId = request.getParameter("userId");
 		String name = request.getParameter("name");
 		Date birth = Date.valueOf(request.getParameter("birth"));
 		String tel = request.getParameter("tel");
-		String mail = request.getParameter("memberEmail");
+		String email = request.getParameter("email");
 		
-		System.out.println(mail);
+		//String password = memberMapper.getPasswordById(userId);
+		System.out.println(email);
 		
 		MemberDto member = MemberDto.builder()
-																.memberId(memberId)
+																.userId(userId)
 																.name(name)
 																.birth(birth)
 																.tel(tel)
-																.memberEmail(mail)
+																.email(email)
 															.build();
 		
-		System.out.println(member);
+		System.out.println("dd"+member);
 		
 		memberMapper.updateMember(member);
 		System.out.println("뀨"+memberMapper.updateMember(member));
 		
 		
-		MemberDto updateMember = memberMapper.getMemberById(memberId);
-		CustomUserDetails user = new CustomUserDetails(updateMember);
+		MemberDto updateMember = memberMapper.getMemberById(userId);
+
+		CustomUserDetails user = new CustomUserDetails(updateMember,updateMember);
 		
 		System.out.println("유저!!!:"+user);
 		
 		
 		Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
-		Authentication newauth = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(user,currentAuth.getCredentials() ,user.getAuthorities() ));
-   
-		System.out.println("???auth:"+newauth);
-		System.out.println("?");
-		SecurityContextHolder.getContext().setAuthentication(newauth);
+		//Authentication newauth = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(user,currentAuth.getCredentials() ,user.getAuthorities() ));
+	  Authentication newAuth = new UsernamePasswordAuthenticationToken(
+        user, currentAuth.getCredentials(), user.getAuthorities());
 
+	  SecurityContextHolder.getContext().setAuthentication(newAuth);
+	
 	}
 
 	
+		// 비밀번호 수정
+		@Override
+		public int modifyPw(HttpServletRequest request) {
+
+			String userId = request.getParameter("userId");
+			String pw = request.getParameter("pw");
+			String newpw = passwordEncoder.encode(request.getParameter("newpw"));
+			
+			MemberDto member = memberMapper.getMemberById(userId);
+			System.out.println("member:"+member);
+			
+			if(!passwordEncoder.matches(pw, member.getPassword())) {
+	      System.out.println("해당 회원이 존재하지 않습니다");
+	      return 0;
+	    }
+			
+			memberMapper.updatePw(userId, newpw);
+			return memberMapper.updatePw(userId, newpw);
+		}
+			
+			
 }

@@ -30,7 +30,7 @@
 				<div class="form-group">
 					<label for="InputId">아이디</label> <input
 						type="text" class="form-control" id="InputId"
-						placeholder="" name="memberId">
+						placeholder="" name="userId">
 					<button type="button" id="btn-id">중복확인</button>
 						<p id="id-comment"></p>
 				</div>
@@ -38,7 +38,7 @@
 				<div class="form-group">
 					<label for="exampleInputEmail1">이메일</label> <input
 						type="email" class="form-control" id="InputEmail"
-						placeholder="Email" name="memberEmail">
+						placeholder="Email" name="email">
 						<button type="button" id="btn-email">인증번호 보내기</button>
 				</div>
 				
