@@ -24,7 +24,8 @@ public class SecurityConfig {
 		// 경로에 대한 인가작업
 		http.authorizeHttpRequests((auth) -> auth
 
-				.requestMatchers("/admin/**").hasRole("ADMIN").requestMatchers("/user/mypage.page").hasRole("USER")
+				.requestMatchers("/admin/**").hasRole("ADMIN")
+				.requestMatchers("/user/mypage.page").hasAnyRole("USER","ADMIN","MANAGER")
 
 				.anyRequest().permitAll());
 
@@ -33,7 +34,7 @@ public class SecurityConfig {
 		 */
 
 		// 로그인페이지 설정
-		http.formLogin((auth) -> auth.usernameParameter("memberId").passwordParameter("password")
+		http.formLogin((auth) -> auth.usernameParameter("userId").passwordParameter("password")
 				.loginPage("/user/login.page").permitAll() // 로그인 페이지 모두에게 접근 가능
 				.loginProcessingUrl("/user/login.do") // loginProcessingUrl 의 기본값은 /login, login.do명령이 들어오면 스프링시큐리티 실시!
 				.defaultSuccessUrl("/", true) // 로그인 성공시 이동할 url

@@ -11,8 +11,10 @@ public interface MemberMapper {
 	
 	MemberDto getMemberByMap(Map<String, Object> map); 
 	int insertMember(MemberDto member);
-	MemberDto getMemberById(String memberId);
+	MemberDto getMemberById(String userId);
+
 	
 	int updateMember(MemberDto member);
+	int updatePw(String userId, String newpw);
 	
 }

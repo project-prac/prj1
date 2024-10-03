@@ -3,8 +3,81 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.sd.hotel.mapper.employeeMapper">
+<mapper namespace="com.sd.hotel.mapper.EmployeeMapper">
+  <!-- 
+  <select id="getIdList"
+          resultType="String">
+    SELECT USER_ID
+      FROM EMPLOYEE
+     ORDER BY USER_ID ASC
+  </select>
+  -->
+  <!--  
+  <select id="getId"
+          resultType="String">
+    SELECT MAX(USER_ID)
+      FROM EMPLOYEE
+     ORDER BY USER_ID ASC
+  </select>
+  -->
   
+    <select id="getId"
+          resultType="String">
+    SELECT USER_ID
+      FROM EMPLOYEE
+     WHERE TO_NUMBER(SUBSTR(USER_ID, 8)) = (
+                  SELECT MAX(TO_NUMBER(SUBSTR(USER_ID, 8)))
+                    FROM EMPLOYEE
+                    )
+    </select>
   
+  <insert id="addEmployee"
+          parameterType="EmployeeDto">
+    INSERT INTO EMPLOYEE(
+        EMP_NO
+      , USER_ID
+      , NAME
+      , PASSWORD
+      , BIRTH
+      , TEL
+      , GENDER
+      , EMAIL
+      
+     ) VALUES(
+        EMP_SEQ.NEXTVAL
+      , #{userId}
+      , #{name}
+      , #{password}
+      , #{birth}
+      , #{tel}
+      , #{gender}
+      , #{email}
+     
+     )
+  </insert>
+  
+  <select id="getEmployeeById"
+          parameterType="String"
+          resultType="EmployeeDto">
+    SELECT EMP_NO, USER_Id, NAME, PASSWORD, BIRTH, TEL, GENDER, EMAIL, ROLE
+      FROM EMPLOYEE
+     WHERE USER_ID = #{userId} 
+  </select>
+  
+  <update id="updateEmployee" parameterType="EmployeeDto">
+    UPDATE EMPLOYEE
+       SET NAME = #{name}
+           , BIRTH = #{birth}
+           , TEL = #{tel}
+           , EMAIL = #{email}
+     WHERE USER_ID = #{userId} 
+  </update>
+  
+   <update id="updatePw"
+            parameterType="String">
+      UPDATE EMPLOYEE
+         SET PASSWORD = #{newpw}
+       WHERE USER_ID = #{userId}
+    </update>
   
 </mapper>

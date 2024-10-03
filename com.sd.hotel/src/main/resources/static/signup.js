@@ -72,7 +72,7 @@ const fnCheckId = (e) =>{
       'Content-Type':'application/json'
     },
     body:JSON.stringify({
-      'memberId':inpId.value
+      'userId':inpId.value
     })
   })
   .then( console.log(inpId.value))

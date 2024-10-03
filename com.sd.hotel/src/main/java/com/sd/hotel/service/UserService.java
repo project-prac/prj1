@@ -23,5 +23,6 @@ public interface UserService {
 	
 	// 로그인 사용자 정보 수정
 	void modifyMember(HttpServletRequest request);
+	int modifyPw(HttpServletRequest request, HttpServletResponse response);
 	
 }

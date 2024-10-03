@@ -8,7 +8,7 @@
 <jsp:include page="../admin/layout/header.jsp" />
 
 
-Admin signup PAge
+
 <div class="main-panel">
 	<div class="content-wrapper">
 		<div class="row">

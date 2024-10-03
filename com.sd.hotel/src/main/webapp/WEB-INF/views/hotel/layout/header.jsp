@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
-<c:set var="member" value="${pageContext.request.userPrincipal.name}"/>
+<c:set var="user" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.userDetailDto}" />
+<c:set var="admin" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.userDto}" />
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
@@ -57,8 +58,7 @@
 					<ul class="nav navbar-nav menu_nav ml-auto">
 						<li class="nav-item active"><a class="nav-link"
 							href="/">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="about.html">About
-								us</a></li>
+						<li class="nav-item"><a class="nav-link" href="about.html">Room</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="accomodation.html">Accomodation</a></li>
 						<li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
@@ -75,6 +75,8 @@
 					</ul>
 				</div>
 			  <div class="sub-navbar">
+			  
+			  
 			   <ul class="navbar-nav">
 				   <sec:authorize access="isAnonymous()">
 				       <li class="nav-item">
@@ -84,14 +86,29 @@
 				           <a href="${contextPath}/user/signup.page">회원가입</a>
 				       </li>
 				   </sec:authorize>
-				
+				    
 				   <sec:authorize access="isAuthenticated()">
 				       <li class="nav-item">
 				           <a href="${contextPath}/user/logout">로그아웃</a>
 				       </li>
+				       <c:if test="${admin.role eq 'ROLE_ADMIN'}">
 				       <li class="nav-item">
-				           <a href="${contextPath}/user/mypage.page">마이페이지</a>
+                   <a href="${contextPath}/admin/index.page">관리자</a>
+               </li>
+				       <li class="nav-item">
+				           <a href="${contextPath}/admin/adminMypage.page">비밀번호 변경</a>
 				       </li>
+				       </c:if>
+				       <c:if test="${user.role eq 'ROLE_USER'}">
+				       <li class="nav-item">
+                   <a href="${contextPath}/user/mypage.page">마이페이지</a>
+               </li>
+				       </c:if>
+				       <c:if test="${user.role eq 'ROLE_MANAGER'}">
+               <li class="nav-item">
+                   <a href="${contextPath}/user/mypage.page">마이페이지</a>
+               </li>
+               </c:if>
 				   </sec:authorize>
 				</ul>
 			  </div>

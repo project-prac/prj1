@@ -6,7 +6,7 @@
 
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
-<c:set var="user" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.memberDto}" />
+<c:set var="user" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.userDetailDto}" />
 
 <jsp:include page="../hotel/layout/header.jsp"/>
 
@@ -18,7 +18,7 @@
 <div class="col-md-6 grid-margin stretch-card">
 	<div class="card">
 		<div class="card-body">
-			<h4 class="card-title">회원가입</h4>
+			<h4 class="card-title">내 정보수정</h4>
 			<p class="card-description">Basic form layout</p>
 			<form class="forms-sample"
 			       id = "frm-signup"
@@ -33,13 +33,13 @@
 				<div class="form-group">
 					<label for="InputId">아이디</label> <input
 						type="text" class="form-control" id="InputId"
-						placeholder="" name="memberId" value="${user.memberId}"  readonly>
+						placeholder="" name="userId" value="${user.userId}"  readonly>
 				</div>
 				
 				<div class="form-group">
 					<label for="exampleInputEmail1">이메일</label> <input
 						type="email" class="form-control" id="InputEmail"
-						name="memberEmail" value="${user.memberEmail}" readonly>
+						name="email" value="${user.email}" readonly>
 						<button type="button" id="modify-mail">수정</button>
 						<button type="button" id="verify-btn" >인증번호 보내기</button>
 				</div>
@@ -67,6 +67,7 @@
              value="${user.birth}"
            />
 				</div>
+				<input name="role" value="${user.role}">
         <!-- 
 				<input type="hidden" name="role" value="ROLE_USER">
 				<input type="hidden" name="password" value=${user.password}> -->
