@@ -46,6 +46,8 @@
         </div>
         
         <input type="hidden" name="userId" value="${user.userId}">
+        <input type="hidden" name="role" value="${user.role}">
+        
 
 				<button type="submit" id="submitBtn" class="btn btn-primary me-2">수정완료</button>
 				<div><a class="btn btn-light" href="${contextPath}/user/mypage.page">취소</a>
@@ -87,7 +89,7 @@ var newpw2 = document.getElementById('inp-newpw2');
 
 
 const fnCheck = (e) => {
-	alert('?');
+	//alert('?');
 	//fnPwCheck();
 	
 	if(newpw.value != newpw2.value){

@@ -18,7 +18,7 @@
 <div class="col-md-6 grid-margin stretch-card">
 	<div class="card">
 		<div class="card-body">
-			<h4 class="card-title">회원가입</h4>
+			<h4 class="card-title">내 정보수정</h4>
 			<p class="card-description">Basic form layout</p>
 			<form class="forms-sample"
 			       id = "frm-signup"
@@ -67,6 +67,7 @@
              value="${user.birth}"
            />
 				</div>
+				<input name="role" value="${user.role}">
         <!-- 
 				<input type="hidden" name="role" value="ROLE_USER">
 				<input type="hidden" name="password" value=${user.password}> -->

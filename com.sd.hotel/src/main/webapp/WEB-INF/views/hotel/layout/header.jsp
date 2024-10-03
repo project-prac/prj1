@@ -58,8 +58,7 @@
 					<ul class="nav navbar-nav menu_nav ml-auto">
 						<li class="nav-item active"><a class="nav-link"
 							href="/">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="about.html">About
-								us</a></li>
+						<li class="nav-item"><a class="nav-link" href="about.html">Room</a></li>
 						<li class="nav-item"><a class="nav-link"
 							href="accomodation.html">Accomodation</a></li>
 						<li class="nav-item"><a class="nav-link" href="gallery.html">Gallery</a></li>
@@ -94,7 +93,10 @@
 				       </li>
 				       <c:if test="${admin.role eq 'ROLE_ADMIN'}">
 				       <li class="nav-item">
-				           <a href="${contextPath}/admin/adminMypage.page">마이페이지</a>
+                   <a href="${contextPath}/admin/index.page">관리자</a>
+               </li>
+				       <li class="nav-item">
+				           <a href="${contextPath}/admin/adminMypage.page">비밀번호 변경</a>
 				       </li>
 				       </c:if>
 				       <c:if test="${user.role eq 'ROLE_USER'}">

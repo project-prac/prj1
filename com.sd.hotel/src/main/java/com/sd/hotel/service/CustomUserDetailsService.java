@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.sd.hotel.dto.ConfigAdminDto;
 import com.sd.hotel.dto.CustomUserDetails;
+import com.sd.hotel.dto.EmployeeDto;
 import com.sd.hotel.dto.MemberDto;
 import com.sd.hotel.mapper.ConfigAdminMapper;
+import com.sd.hotel.mapper.EmployeeMapper;
 import com.sd.hotel.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	*/
 	private final MemberMapper memberMapper;
 	private final ConfigAdminMapper adminMapper;
+	private final EmployeeMapper employeeMapper;
 
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -29,6 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 		
 		MemberDto member = memberMapper.getMemberById(userId);
 		ConfigAdminDto admin = adminMapper.getAdminById(userId);
+		EmployeeDto emp =  employeeMapper.getEmployeeById(userId);
 		
 		System.out.println(admin);
 		
@@ -42,7 +46,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 		if(member != null) {
 			return new CustomUserDetails(member, member);
 		}
-	
+		
+		if(emp != null) {
+			return new CustomUserDetails(emp, emp);
+		}
 		
 		
 		System.out.println("사용자정보를 찾을 수 없습니다.");

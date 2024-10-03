@@ -13,7 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sd.hotel.dto.CustomUserDetails;
+import com.sd.hotel.dto.EmployeeDto;
 import com.sd.hotel.dto.MemberDto;
+import com.sd.hotel.mapper.EmployeeMapper;
 import com.sd.hotel.mapper.MemberMapper;
 import com.sd.hotel.utils.MyJavaMailUtils;
 import com.sd.hotel.utils.MySecurityUtils;
@@ -28,14 +30,17 @@ public class UserServiceImpl implements UserService {
 	private final MyJavaMailUtils myJavaMailUtils;
 	private final CustomAuthenticationProvider authenticationProvider;
 	private final BCryptPasswordEncoder passwordEncoder;
+	private final EmployeeMapper employeeMapper;
 	
 	public UserServiceImpl(MemberMapper memberMapper, MyJavaMailUtils myJavaMailUtils, 
-			CustomAuthenticationProvider authenticationProvider, BCryptPasswordEncoder passwordEncoder) {
+			CustomAuthenticationProvider authenticationProvider, BCryptPasswordEncoder passwordEncoder,
+			EmployeeMapper employeeMapper) {
 		super();
 		this.memberMapper = memberMapper;
 		this.myJavaMailUtils = myJavaMailUtils;
 		this.authenticationProvider = authenticationProvider;
 		this.passwordEncoder = passwordEncoder;
+		this.employeeMapper = employeeMapper;
 	}
 
 	@Override
@@ -141,59 +146,135 @@ public class UserServiceImpl implements UserService {
 		Date birth = Date.valueOf(request.getParameter("birth"));
 		String tel = request.getParameter("tel");
 		String email = request.getParameter("email");
+		String role = request.getParameter("role");
 		
 		//String password = memberMapper.getPasswordById(userId);
 		System.out.println(email);
 		
-		MemberDto member = MemberDto.builder()
-																.userId(userId)
-																.name(name)
-																.birth(birth)
-																.tel(tel)
-																.email(email)
-															.build();
 		
-		System.out.println("dd"+member);
-		
-		memberMapper.updateMember(member);
-		System.out.println("뀨"+memberMapper.updateMember(member));
-		
-		
-		MemberDto updateMember = memberMapper.getMemberById(userId);
+		if(role.equals("ROLE_USER")) {
+			MemberDto member = MemberDto.builder()
+					.userId(userId)
+					.name(name)
+					.birth(birth)
+					.tel(tel)
+					.email(email)
+				.build();
 
-		CustomUserDetails user = new CustomUserDetails(updateMember,updateMember);
+				System.out.println("dd"+member);
+				
+				memberMapper.updateMember(member);
+				
+				System.out.println("뀨"+memberMapper.updateMember(member));
+				
+				
+				MemberDto updateMember = memberMapper.getMemberById(userId);
+				
+				CustomUserDetails user = new CustomUserDetails(updateMember,updateMember);
+				
+				System.out.println("유저!!!:"+user);
+				
+				
+				Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+				//Authentication newauth = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(user,currentAuth.getCredentials() ,user.getAuthorities() ));
+				Authentication newAuth = new UsernamePasswordAuthenticationToken(
+				user, currentAuth.getCredentials(), user.getAuthorities());
+				
+				SecurityContextHolder.getContext().setAuthentication(newAuth);
+				
+		}else if(role.equals("ROLE_MANAGER")) {
+			
+			EmployeeDto emp = EmployeeDto.builder()
+																	 .userId(userId)
+																	 .name(name)
+																	 .birth(birth)
+																	 .tel(tel)
+																	 .email(email)
+																.build();
+			System.out.println("dd"+emp);
+			
+			employeeMapper.updateEmployee(emp);
+			
+			EmployeeDto updateEmp = employeeMapper.getEmployeeById(userId);
+			CustomUserDetails user = new CustomUserDetails(updateEmp,updateEmp);
+			
+			
+			Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
+			//Authentication newauth = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(user,currentAuth.getCredentials() ,user.getAuthorities() ));
+			Authentication newAuth = new UsernamePasswordAuthenticationToken(
+			user, currentAuth.getCredentials(), user.getAuthorities());
+			
+			SecurityContextHolder.getContext().setAuthentication(newAuth);
+		}
 		
-		System.out.println("유저!!!:"+user);
 		
-		
-		Authentication currentAuth = SecurityContextHolder.getContext().getAuthentication();
-		//Authentication newauth = authenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(user,currentAuth.getCredentials() ,user.getAuthorities() ));
-	  Authentication newAuth = new UsernamePasswordAuthenticationToken(
-        user, currentAuth.getCredentials(), user.getAuthorities());
-
-	  SecurityContextHolder.getContext().setAuthentication(newAuth);
 	
 	}
 
 	
 		// 비밀번호 수정
 		@Override
-		public int modifyPw(HttpServletRequest request) {
+		public int modifyPw(HttpServletRequest request,  HttpServletResponse response) {
 
 			String userId = request.getParameter("userId");
 			String pw = request.getParameter("pw");
 			String newpw = passwordEncoder.encode(request.getParameter("newpw"));
+			String role = request.getParameter("role");
+			int result=0;
 			
-			MemberDto member = memberMapper.getMemberById(userId);
-			System.out.println("member:"+member);
+			if(role.equals("ROLE_USER")) {
+				
+				MemberDto member = memberMapper.getMemberById(userId);
+				System.out.println("member:"+member);
+				
+				if(!passwordEncoder.matches(pw, member.getPassword())) {
+		      System.out.println("비밀번호가 맞지 않습니다.");
+		      return 0;
+		    }
+				
+				memberMapper.updatePw(userId, newpw);
+				result = memberMapper.updatePw(userId, newpw);
+				//return memberMapper.updatePw(userId, newpw);
+				
+			}else if(role.equals("ROLE_MANAGER")) {
+				EmployeeDto emp = employeeMapper.getEmployeeById(userId);
+				
+				if(!passwordEncoder.matches(pw, emp.getPassword())) {
+		      System.out.println("비밀번호가 맞지 않습니다.");
+		      return 0;
+		    }
+				
+				result = employeeMapper.updatePw(userId, newpw);
+				
+			}
 			
-			if(!passwordEncoder.matches(pw, member.getPassword())) {
-	      System.out.println("해당 회원이 존재하지 않습니다");
-	      return 0;
-	    }
 			
-			memberMapper.updatePw(userId, newpw);
-			return memberMapper.updatePw(userId, newpw);
+			try {
+				
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");
+				
+				if(result == 1) {
+					
+					out.println("alert('비밀번호가 변경되었습니다.');");
+					out.println("location.href='" + request.getContextPath() + "/user/mypage.page';");
+					
+				}else {
+					out.println("alert('비밀번호 변경을 실패했습니다.');");
+					out.println("history.back();");
+				}
+				out.println("</script>");
+				out.flush();
+				out.close();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+	    //System.out.println("권한이 없습니다.");
+	    return result; 
+			
 		}
 			
 			

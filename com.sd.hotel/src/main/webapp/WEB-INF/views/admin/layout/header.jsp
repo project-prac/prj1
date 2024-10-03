@@ -5,6 +5,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
+<c:set var="user" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.userDetailDto}" />
+<c:set var="admin" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.userDto}" />
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,8 +56,16 @@
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
-            <h1 class="welcome-text">Good Morning, <span class="text-black fw-bold">John Doe</span></h1>
-            <h3 class="welcome-sub-text">Your performance summary this week </h3>
+          
+            <h1 class="welcome-text">안녕하세요, 
+            <c:if test="${admin.role eq 'ROLE_ADMIN'}">
+            <span class="text-black fw-bold">${admin.name}님!</span>
+            <a href="${contextPath}/admin/addEmployee.page">직원추가</a>
+            </c:if>
+            <c:if test="${admin.role eq 'ROLE_USER'}">
+            <span class="text-black fw-bold">${user.name}님!</span>
+            </c:if>
+            </h1>
           </li>
         </ul>
         <ul class="navbar-nav ms-auto">
@@ -381,9 +392,9 @@
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">
-              <i class="mdi mdi-grid-large menu-icon"></i>
-              <span class="menu-title">Dashboard</span>
+            <a class="nav-link" href="${contextPath}/admin/addEmployee.page">
+              <i class="menu-icon mdi mdi-account-circle-outline"></i>
+              <span class="menu-title">직원추가</span>
             </a>
           </li>
           <li class="nav-item nav-category">UI Elements</li>
