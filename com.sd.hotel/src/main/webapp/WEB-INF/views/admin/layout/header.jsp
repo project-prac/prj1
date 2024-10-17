@@ -1,6 +1,6 @@
 <!-- admin Header -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+  pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="<%=request.getContextPath()%>" />
@@ -25,14 +25,22 @@
   <link rel="stylesheet" href="/resources/admin/vendors/simple-line-icons/css/simple-line-icons.css">
   <link rel="stylesheet" href="/resources/admin/vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
-  <!-- Plugin css for this page -->
+  <!-- Plugin css for this page 
   <link rel="stylesheet" href="/resources/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
-  <link rel="stylesheet" href="/resources/admin/js/select.dataTables.min.css">
+  <link rel="stylesheet" href="/resources/admin/js/select.dataTables.min.css">-->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="/resources/admin/css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
+  
+  
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  
+  
+  
 </head>
 <body>
   <div class="container-scroller"> 
@@ -416,12 +424,17 @@
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#form-elements" aria-expanded="false" aria-controls="form-elements">
               <i class="menu-icon mdi mdi-card-text-outline"></i>
-              <span class="menu-title">Form elements</span>
+              <span class="menu-title">객실 관리</span>
               <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">Basic Elements</a></li>
+                <li class="nav-item"><a class="nav-link" href="${contextPath}/admin/room/roomList.page">객실목록</a></li>
+              </ul>
+            </div>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">객실등록</a></li>
               </ul>
             </div>
           </li>

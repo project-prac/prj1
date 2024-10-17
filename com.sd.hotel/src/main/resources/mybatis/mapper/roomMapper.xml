@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sd.hotel.mapper.RoomMapper">
+  
+
+  
+  <!-- 중분류까지의list확인 -->
+  <select id="getRoomList"
+          resultType="RoomDto">
+   SELECT ROOM_NO, ROOM_NAME, DEPTH, PARENT_NAME, INFO, PRICE, PEOPLE 
+     FROM ROOM
+    ORDER BY ROOM_NO
+  </select>
+  
+  <!-- 객실 수정 -->
+  <update id="modifyRoomInfo"
+          parameterType="RoomDto">
+    UPDATE ROOM
+       SET ROOM_NAME = #{roomName}
+         , INFO = #{info}
+         , PRICE = #{price}
+         , PEOPLE = #{people}
+     WHERE ROOM_NO = #{roomNo}
+  </update>
+  
+  
+  <!-- 객실roomNo 추가 -->
+  <insert id="roomNoRegister"
+          parameterType="roomDto">
+    INSERT INTO ROOM(
+                  ROOM_NO
+                , ROOM_NAME
+                , DEPTH
+                , PARENT_NAME  
+                ) VALUES(
+                  #{roomNo}
+                , #{roomName}
+                , #{depth}
+                , #{parentName}
+                )
+  </insert>
+  
+  <!-- 객실roomType 추가 -->
+  <insert id="roomTypeRegister"
+          parameterType="roomDto">
+      <selectKey order="BEFORE" keyProperty="roomNo" resultType="int" >
+        SELECT NVL(MAX(ROOM_NO), #{parentName}) + 1
+        FROM ROOM
+        WHERE PARENT_NAME = #{parentName}
+      </selectKey>
+          
+      INSERT INTO ROOM(
+                 ROOM_NO
+                , ROOM_NAME
+                , DEPTH
+                , PARENT_NAME
+                , INFO
+                , PRICE
+                , PEOPLE
+                , ROOM_NUM  
+                ) VALUES(
+                 #{roomNo}
+                , #{roomName}
+                , #{depth}
+                , #{parentName}
+                , #{info}
+                , #{price}
+                , #{people}
+                , #{roomNum}
+                )
+  </insert>
+  
+  <insert id="roomDetailRegister"
+          parameterType="roomDetailDto">
+    <selectKey order="BEFORE" keyProperty="roomDetailNo" resultType="int" >
+      SELECT 
+            CASE 
+                WHEN MAX(RD.ROOM_DETAIL_NO) IS NULL THEN #{roomNo} * 100 + 1
+                ELSE MAX(RD.ROOM_DETAIL_NO) + 1
+            END
+        FROM ROOM R 
+        LEFT JOIN ROOM_DETAIL RD ON R.ROOM_NO = RD.ROOM_NO
+        WHERE R.ROOM_NO = #{roomNo}              
+    </selectKey>
+    INSERT INTO ROOM_DETAIL(
+                 ROOM_NO
+                , ROOM_NAME
+                , ROOM_DETAIL_NO
+                
+                ) VALUES(
+                 #{roomNo}
+                , #{roomName}
+                ,#{roomDetailNo}
+               
+                )
+  
+  
+  </insert>
+  
+  
+  
+  
+
+
+
+  
+</mapper>

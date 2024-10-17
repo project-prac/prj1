@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+
+.list-area{display:flex}
+.list-area .lists{width:30%;}
+.list-area .list-detail{width:70%}
+
+
+
+.list-detail #room-info{display:none;}
+.room-area{margin-top:30px;border:1px solid #eee;padding:0 20px;}
+.room-area-header{padding:20px 0;cursor:pointer;}
+.room-area form{display:none;}
