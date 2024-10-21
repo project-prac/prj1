@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.sd.hotel.dto.RoomDetailDto;
 import com.sd.hotel.dto.RoomDto;
+import com.sd.hotel.dto.RoomImgDto;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,8 +18,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public interface AdminRoomService {
 	
 	List<RoomDto> getRoomList();
-	int modifyRoomInfo(HttpServletRequest request, HttpServletResponse response );
+	List<RoomDetailDto> getRoomDetailList();
+	List<RoomImgDto> getRoomImgList();
+	
 	int roomNoRegister(HttpServletRequest request, HttpServletResponse response);
-	Map<String, Object> roomTypeRegister(HttpServletRequest request);
-	//int roomDetailRegister();
+	Map<String, Object> roomTypeRegister(MultipartHttpServletRequest request);
+	
+	int modifyRoomInfo(HttpServletRequest request);
+	
 }

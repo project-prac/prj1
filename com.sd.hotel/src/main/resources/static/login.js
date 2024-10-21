@@ -35,12 +35,12 @@ fnLogin();
 
 
 /*로그인 실패*/
-
+/*
 function getErrorMessageFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('exception');
 }
-
+*/
 
 // 페이지가 로드될 때 실행
 /*

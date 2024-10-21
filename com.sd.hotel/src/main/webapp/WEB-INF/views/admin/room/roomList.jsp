@@ -43,6 +43,11 @@
                         <input type="text" class="form-control" id="roomName" name="roomName" />
                       </div>
                       <div class="form-group">
+                        <label for="roomName">객실수</label>
+                        <input type="text" class="form-control" id="form-roomNum" name="roomNum" />
+                      </div>
+                      
+                      <div class="form-group">
                         <label for="roomName">객실설명</label>
                         <input type="text" class="form-control" id="info" name="info"/>
                       </div>
@@ -53,6 +58,9 @@
                       <div class="form-group">
                         <label for="roomName">인원수</label>
                         <input type="text" class="form-control" id="people" name="people" />
+                      </div>
+                      <div class="roomImgLists">
+                        
                       </div>
                       
                       <button type="submit">수정완료</button>
@@ -82,17 +90,32 @@
                 <div class="room-area">
                    <div class="room-area-header">객실유형 추가하기<span>▼</span></div>
                    <form id="roomTypeRegisterForm"
-                         >
-                    <select id="roomNo-list2" name="roomNo"></select>     
+                         enctype="multipart/form-data">
+                    <select id="roomNo-list2" name="roomNo"></select>    <br> 
                     <label for="roomType-roomName">객실명</label>
-                    <input type="text" id="roomType-roomName" name="roomName">      
+                    <input type="text" id="roomType-roomName" name="roomName">     <br> 
                     <label for="roomType-roomName">정보</label>
-                    <input type="text" id="roomType-roomName" name="info">
+                    <input type="text" id="roomType-roomName" name="info"><br>
                     <label for="roomType-roomName">가격</label>
-                    <input type="text" id="roomType-roomName" name="price">
+                    <input type="text" id="roomType-roomName" name="price"><br>
                     <label for="roomType-roomName">인원수</label>
-                    <input type="text" id="roomType-roomName" name="people">
-                    <input type="text" id="roomNum" name="roomNum">
+                    <input type="text" id="roomType-roomName" name="people"><br>
+                    <label for="roomNum">객실수</label>
+                    <input type="text" id="roomNum" name="roomNum"><br>
+                    
+										<div class="file_area" id="file-area">
+										    <div id="files-button">
+										        내 PC
+										        <input type="file" name="files" id="files-input" multiple>
+										    </div>
+										
+										    <div id="file-lists">
+										    </div>
+										</div>
+                    <label for="files">첨부</label>
+                    
+                    
+                    
                     <input type="hidden" name="depth" value="1">    
                     <input type="hidden" id="parent-Name" name="parentName" >     
                     

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RoomImgDto {
-	int roomImgNo, roomInfoNo;
-	String roomImgName, uploadPath;
+	int roomImgNo, roomNo;
+	String roomImgName, uploadPath, filesystemName;
 }

@@ -11,8 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.sd.hotel.dto.RoomDetailDto;
 import com.sd.hotel.dto.RoomDto;
+import com.sd.hotel.dto.RoomImgDto;
 import com.sd.hotel.service.AdminRoomService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,20 +40,20 @@ public class AdminRoomController {
 	public ResponseEntity<Map<String, Object>> getRoomList() {
 		
 		List<RoomDto> roomList = adminRoomService.getRoomList();
+		List<RoomDetailDto> roomDetailList = adminRoomService.getRoomDetailList();
+		List<RoomImgDto> roomImgList = adminRoomService.getRoomImgList();
 		
 		Map<String, Object> response = new HashMap<>();
 		response.put("roomList", roomList);
+		response.put("roomImgList", roomImgList);
+		response.put("roomDetailList", roomDetailList);
+		System.out.println( "roomDetailList!!"+roomDetailList);
+		
+		System.out.println("roomImgList::"+roomImgList);
 		return ResponseEntity.ok(response);  
 	}
 
-	// 객실 목록 수정하기
-	@PostMapping("/roomModify.do")
-	public String modifyRoom(HttpServletRequest request, HttpServletResponse response) {
-
-		adminRoomService.modifyRoomInfo(request, response);
-		
-		return "admin/room/roomList";
-	}
+	
 	
 	//객실 대분류(roomNo :100 200 ..추가)
 	@PostMapping("/roomNoRegister.do")
@@ -62,7 +66,7 @@ public class AdminRoomController {
   //객실 유형분류()
 	@PostMapping("/roomTypeRegister.do")
 	@ResponseBody
-	public Map<String, Object> roomTypeRegister(HttpServletRequest request) {
+	public Map<String, Object> roomTypeRegister(MultipartHttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
     try {
         adminRoomService.roomTypeRegister(request);
@@ -71,6 +75,26 @@ public class AdminRoomController {
         response.put("success", false); // 처리 실패 시
     }
     return response; // JSON 형식으로 응답
+	}
+	
+	// 객실 목록 수정하기
+	/*
+	@PostMapping("/roomModify.do")
+	public String modifyRoom(HttpServletRequest request, HttpServletResponse response) {
+
+		adminRoomService.modifyRoomInfo(request, response);
+		
+		return "admin/room/roomList";
+	}*/
+	
+	@PostMapping("/roomModify.do")
+	@ResponseBody
+	public Map<String, Object> modifyRoom(MultipartHttpServletRequest request){
+		
+		adminRoomService.modifyRoomInfo(request);
+		
+		
+		return response;
 	}
 	
 }

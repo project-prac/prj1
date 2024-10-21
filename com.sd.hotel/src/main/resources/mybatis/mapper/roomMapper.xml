@@ -15,16 +15,23 @@
     ORDER BY ROOM_NO
   </select>
   
-  <!-- 객실 수정 -->
-  <update id="modifyRoomInfo"
-          parameterType="RoomDto">
-    UPDATE ROOM
-       SET ROOM_NAME = #{roomName}
-         , INFO = #{info}
-         , PRICE = #{price}
-         , PEOPLE = #{people}
-     WHERE ROOM_NO = #{roomNo}
-  </update>
+
+  <!-- detailRoom List 가져오기 -->
+  
+  <select id="getRoomDetailList"
+          resultType="RoomDetailDto">
+    SELECT ROOM_DETAIL_NO, ROOM_NO, ROOM_NAME
+      FROM ROOM_DETAIL
+      
+  </select>
+
+  
+  <select id="getRoomImgList"
+          resultType="RoomImgDto">
+  SELECT ROOM_NO, ROOM_IMG_NO, ROOM_IMG_NAME, UPLOAD_PATH, FILESYSTEM_NAME
+    FROM ROOM_IMG
+  
+  </select>
   
   
   <!-- 객실roomNo 추가 -->
@@ -101,10 +108,50 @@
   </insert>
   
   
+  <insert id="roomImgRegister"
+          parameterType="RoomImgDto">
+    INSERT INTO ROOM_IMG(
+                  ROOM_NO
+                , ROOM_IMG_NAME
+                , UPLOAD_PATH
+                , ROOM_IMG_NO
+                , FILESYSTEM_NAME
+                ) VALUES (
+                  #{roomNo}
+                , #{roomImgName}
+                , #{uploadPath}
+                , ROOM_IMG_SEQ.NEXTVAL
+                , #{filesystemName}
+                )
+                
+  </insert>
   
   
+  <!-- 수정 -->
+  <!-- 객실 수정 -->
+  <update id="modifyRoomInfo"
+          parameterType="RoomDto">
+    UPDATE ROOM
+       SET ROOM_NAME = #{roomName}
+         , INFO = #{info}
+         , PRICE = #{price}
+         , PEOPLE = #{people}
+     WHERE ROOM_NO = #{roomNo}
+  </update>
 
-
+  <update id="modifyRoomDetail">
+    UPDATE ROOM_DETAIL
+       SET ROOM_NAME = #{roomName}
+         
+  
+  </update>
+  
+  
+  <delete id="delteRoomDetail">
+    DELETE MIN(ROOM_DETAIL_NO)
+      FROM ROOM_DETAIL
+     WHERE ROOM_NO = #{roomNo} AND 
+  </delete>
 
   
 </mapper>

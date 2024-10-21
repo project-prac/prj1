@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
   //application.properties 파일의 설정값 저장
-  @Value("${service.file.uploadurl}")
+  @Value("${service.file.registerRoomUrl}")
   public String UP_DIR;
   
   @Override
@@ -31,6 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
       registry.addResourceHandler("/resources/**")
          .addResourceLocations("classpath:/static/");
+      
       registry.addResourceHandler(UP_DIR+"**")
          .addResourceLocations("file://" + UP_DIR);
   //    registry.addResourceHandler(UP_DIR+"blog/**")
