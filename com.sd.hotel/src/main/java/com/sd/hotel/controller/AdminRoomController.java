@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,9 +48,7 @@ public class AdminRoomController {
 		response.put("roomList", roomList);
 		response.put("roomImgList", roomImgList);
 		response.put("roomDetailList", roomDetailList);
-		System.out.println( "roomDetailList!!"+roomDetailList);
-		
-		System.out.println("roomImgList::"+roomImgList);
+
 		return ResponseEntity.ok(response);  
 	}
 
@@ -89,12 +88,27 @@ public class AdminRoomController {
 	
 	@PostMapping("/roomModify.do")
 	@ResponseBody
-	public Map<String, Object> modifyRoom(MultipartHttpServletRequest request){
+	public ResponseEntity<Map<String, Object>> modifyRoom(MultipartHttpServletRequest request){
 		
-		adminRoomService.modifyRoomInfo(request);
+		Map<String, Object> response = new HashMap<>();
 		
+		try {
+			// 객실정보
+			adminRoomService.modifyRoomInfo(request); // 1 or 0
+			
+			//객실 수
+			adminRoomService.modifyRoomNum(request);
+			
+			//객실이미지
+			//adminRoomService.modifyRoomImg(request);
+			
+			response.put("success", true);
+      return ResponseEntity.ok(response); // 200 OK 응답
+		} catch (Exception e) {
+			response.put("success", false);
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // 500 Internal Server Error 응답
+		}
 		
-		return response;
 	}
 	
 }

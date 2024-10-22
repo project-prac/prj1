@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -41,7 +42,6 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 		List<RoomDto> roomList = roomMapper.getRoomList();
 		return roomList;
 		
-	
 	}
 	
 	
@@ -58,30 +58,6 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 		return roomImgList;
 	}
 	
-	
-	
-	@Override
-	public int modifyRoomInfo(HttpServletRequest request) {
-		
-		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-		String roomName = request.getParameter("roomName");
-		String info = request.getParameter("info");
-		int price = Integer.parseInt( request.getParameter("price"));
-		int people = Integer.parseInt(request.getParameter("people"));
-		
-		RoomDto room = RoomDto.builder()
-														.roomNo(roomNo)
-														.roomName(roomName)
-														.info(info)
-														.price(price)
-														.people(people)
-													.build();
-		
-		
-		int updateRoom = roomMapper.modifyRoomInfo(room);
-		
-		return updateRoom;
-	}
 	
 	@Override
 	public int roomNoRegister(HttpServletRequest request, HttpServletResponse response) {
@@ -161,7 +137,6 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 					roomMapper.roomDetailRegister(detailRoom);
 				}
 				
-				System.out.println("hello");
 				// 첨부파일
 				List<MultipartFile> files = request.getFiles("files");
 				
@@ -207,6 +182,111 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 
 			
 	}
-  
+	
+	/*
+	@Override
+	public int modifyRoomInfo(MultipartHttpServletRequest request) {
+		
+		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
+		String roomName = request.getParameter("roomName");
+		String info = request.getParameter("info");
+		int price = Integer.parseInt( request.getParameter("price"));
+		int people = Integer.parseInt(request.getParameter("people"));
+		
+		RoomDto room = RoomDto.builder()
+														.roomNo(roomNo)
+														.roomName(roomName)
+														.info(info)
+														.price(price)
+														.people(people)
+													.build();
+		
+		
+		int updateRoom = roomMapper.modifyRoomInfo(room);
+		
+		return updateRoom;
+	}
+  */
+	
+	@Override
+	public Map<String, Object> modifyRoomInfo(MultipartHttpServletRequest request) {
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		
+		
+		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
+		String roomName = request.getParameter("roomName");
+		String info = request.getParameter("info");
+		int price = Integer.parseInt( request.getParameter("price"));
+		int people = Integer.parseInt(request.getParameter("people"));
+		
+		try {
+			RoomDto room = RoomDto.builder()
+					.roomNo(roomNo)
+					.roomName(roomName)
+					.info(info)
+					.price(price)
+					.people(people)
+				.build();
+			
+			roomMapper.modifyRoomInfo(room);
+			
+			response.put("success", true);
+		} catch (Exception e) {
+			response.put("errorMessage", e.getMessage());
+		}
+		
 
+		
+		return response;
+	}
+	
+	
+	@Override
+	@Transactional 
+	public Map<String, Object> modifyRoomNum(MultipartHttpServletRequest request) {
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
+		int originRoomNum = Integer.parseInt(request.getParameter("originNum"));
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		
+		String roomName = request.getParameter("roomName");
+		
+		try {
+			
+			if(originRoomNum > roomNum) {
+				
+				for(int i= 0; i<originRoomNum- roomNum;i++) {
+					int deleteCount = originRoomNum- roomNum;
+					roomMapper.delteRoomDetail(roomNo, deleteCount);
+				}
+				
+			}else if(originRoomNum < roomNum) {
+				for(int i = 0; i< roomNum-originRoomNum;i++) {
+					
+					RoomDetailDto detailRoom = RoomDetailDto.builder()
+	            .roomNo(roomNo)
+	            .roomName(roomName)
+	            .build();
+					roomMapper.roomDetailRegister(detailRoom);
+					
+				}
+				
+			}else {
+				roomMapper.modifyRoomDetail(roomName, roomNo);
+			}
+
+			response.put("success", true);
+		} catch (Exception e) {
+			
+			response.put("errorMessage", e.getMessage());
+		}
+		
+		return response;
+	}
+	
+	
 }

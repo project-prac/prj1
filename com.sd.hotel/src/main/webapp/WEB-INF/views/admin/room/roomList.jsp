@@ -35,8 +35,8 @@
                   </div>
                   <div class="list-detail">
                     <form id="room-info"
-                          method="POST"
-                          action="${contextPath}/admin/room/roomModify.do">
+                          enctype="multipart/form-data"
+                         >
                       <div class="form-group">
                         <input type="hidden" id="roomNo" name="roomNo">
                         <label for="roomName">객실명</label>
@@ -44,7 +44,8 @@
                       </div>
                       <div class="form-group">
                         <label for="roomName">객실수</label>
-                        <input type="text" class="form-control" id="form-roomNum" name="roomNum" />
+                        <input  class="form-control" id="new-roomNum" name="roomNum" />
+                        <input type="hidden" class="form-control" id="origin-roomNum" name="originNum" />
                       </div>
                       
                       <div class="form-group">
@@ -72,8 +73,7 @@
                 <div class="room-area" >
                   <div class="room-area-header">객실대분류 추가하기<span>▼</span></div>
                   <form id="roomNoRegister"
-                        method="POST"
-                        action="${contextPath}/admin/room/roomNoRegister.do">
+                       enctype="multipart/form-data">
                     <select id="roomNo-list" name="roomNo">
                       
                     </select>

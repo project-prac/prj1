@@ -24,6 +24,10 @@ public interface AdminRoomService {
 	int roomNoRegister(HttpServletRequest request, HttpServletResponse response);
 	Map<String, Object> roomTypeRegister(MultipartHttpServletRequest request);
 	
-	int modifyRoomInfo(HttpServletRequest request);
 	
+	//수정
+	Map<String, Object> modifyRoomInfo(MultipartHttpServletRequest request);
+	
+	
+	Map<String, Object> modifyRoomNum(MultipartHttpServletRequest request);
 }

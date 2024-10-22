@@ -139,18 +139,36 @@
      WHERE ROOM_NO = #{roomNo}
   </update>
 
+
+
+  <!-- 객실 detail 수 수정 -->
   <update id="modifyRoomDetail">
     UPDATE ROOM_DETAIL
        SET ROOM_NAME = #{roomName}
-         
-  
+     WHERE ROOM_NO = #{roomNo}
+    
   </update>
   
-  
   <delete id="delteRoomDetail">
-    DELETE MIN(ROOM_DETAIL_NO)
-      FROM ROOM_DETAIL
-     WHERE ROOM_NO = #{roomNo} AND 
+  <!--
+    DELETE FROM ROOM_DETAIL
+     WHERE ROOM_DETAIL_NO = (
+                              SELECT MAX(ROOM_DETAIL_NO)
+														    FROM ROOM_DETAIL
+														    WHERE ROOM_NO = #{roomNo}
+														);    성능이슈로 수정-->
+														
+														
+	   DELETE FROM ROOM_DETAIL
+		  WHERE ROOM_DETAIL_NO IN (
+														    SELECT ROOM_DETAIL_NO FROM (
+																										        SELECT ROOM_DETAIL_NO
+																										          FROM ROOM_DETAIL
+																										         WHERE ROOM_NO = #{roomNo}
+																										         ORDER BY ROOM_DETAIL_NO DESC
+														                                )
+		                              WHERE ROWNUM between 1 and #{deleteCount}
+                                )												
   </delete>
 
   

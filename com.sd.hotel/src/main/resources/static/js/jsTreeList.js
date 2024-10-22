@@ -78,7 +78,8 @@ $(document).ready(function() {
       if (selectedRoom) {
         $('#roomNo').val(selectedRoom.id);
         $('#roomName').val(selectedRoom.roomName);
-        $('#form-roomNum').val(selectedRoom.roomNum);
+        $('#new-roomNum').val(selectedRoom.roomNum);
+        $('#origin-roomNum').val(selectedRoom.roomNum);
       }
       if (roomDetail) {
         $('#info').val(roomDetail.info);
@@ -184,9 +185,8 @@ $(document).ready(function() {
       data: formData, // FormData 전송
       contentType: false, // FormData 사용 시 반드시 false로 설정
       processData: false, // FormData 사용 시 반드시 false로 설정
-      success: function(response, data) {
-        console.log(data);
-        console.log("response!!", response);
+      success: function(response) {
+        
         if (response.success) {
           alert('객실이 추가되었습니다.');
           location.reload();
@@ -328,18 +328,40 @@ $(document).ready(function() {
 
   /*객실수정*/
   $('#room-info').on('submit', function(event) {
+    
+    var formData = new FormData(this);
+    
     $.ajax({
-      type:'post',
+      type:'POST',
       url: '/admin/room/roomModify.do',
       data: formData, // FormData 전송
       contentType: false, // FormData 사용 시 반드시 false로 설정
       processData: false,
-      success:(resData) =>{
+      
+      success: function(response) {
         
-      } 
+        console.log("response:",response)
+        
+        if (response.success) {
+          
+          console.log(response); 
+          
+          alert('객실이 수정되었습니다.');
+          location.reload();
+        } else {
+          console.log(response); 
+          
+          alert('객실 수정에 실패했습니다. 다시 시도해주세요.');
+          location.reload();
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        console.log(errorThrown)
+        console.log(jqXHR)
+        alert('서버 오류가 발생했습니다.');
+      }
     })
-    
-    
     
   })
 

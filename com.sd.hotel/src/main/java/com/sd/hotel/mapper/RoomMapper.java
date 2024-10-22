@@ -14,10 +14,14 @@ public interface RoomMapper {
 	List<RoomDetailDto> getRoomDetailList();
 	List<RoomImgDto> getRoomImgList();
 	
-	int modifyRoomInfo(RoomDto room);
 	int roomNoRegister(RoomDto room);
 	int roomTypeRegister(RoomDto room);
 	int roomDetailRegister(RoomDetailDto detailRoom);
   int roomImgRegister(RoomImgDto roomImg);
   //int getDetailCount(int roomNo);
+  
+  
+  int modifyRoomInfo(RoomDto room);
+  int modifyRoomDetail(String roomName,int roomNo);
+  int delteRoomDetail(int roomNo,int deleteCount);
 }
