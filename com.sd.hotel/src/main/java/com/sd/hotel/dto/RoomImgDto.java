@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class RoomImgDto {
 	int roomImgNo, roomNo;
 	String roomImgName, uploadPath, filesystemName;
+	private transient long size; // DB에 매핑되지 않는 필드
 }

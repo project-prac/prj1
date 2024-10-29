@@ -60,8 +60,16 @@
                         <label for="roomName">인원수</label>
                         <input type="text" class="form-control" id="people" name="people" />
                       </div>
-                      <div class="roomImgLists">
+                      <div class="roomImgListsArea">
                         
+                        <div class="roomImgLists"></div>
+                        <div id="imgModify-button">
+                            내 PC
+                            <input type="file" name="files" id="modifyImgFile" multiple>
+                        </div>
+                        <div id="modifyImgLists">
+                        </div>
+                        <input type="hidden" id="clientImgNos" name="clientImgNos">
                       </div>
                       
                       <button type="submit">수정완료</button>
@@ -113,8 +121,6 @@
 										    </div>
 										</div>
                     <label for="files">첨부</label>
-                    
-                    
                     
                     <input type="hidden" name="depth" value="1">    
                     <input type="hidden" id="parent-Name" name="parentName" >     

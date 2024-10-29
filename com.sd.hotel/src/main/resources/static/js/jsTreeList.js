@@ -24,7 +24,6 @@ $(document).ready(function() {
       roomImgList = data.roomImgList;
       roomDetailList = data.roomDetailList; //detailRoom의 수
 
-
       // 각 roomNo에 연결된 roomDetail의 개수를 계산
       const roomDetailCountMap = roomDetailList.reduce((acc, detail) => {
         const roomNo = detail.roomNo;
@@ -92,22 +91,200 @@ $(document).ready(function() {
     //이미지 추가
     const roomImgContainer = document.querySelector('.roomImgLists');
     roomImgContainer.innerHTML = '';  // 기존 이미지 초기화
-
-
+    let clientImgNos = []; //DB에서 불러온 이미지들의 roomImgNo
+    
     if (!roomImg || roomImg.length === 0) {
       roomImgContainer.innerHTML = '<p>No images available</p>';  // 이미지가 없을 때 메시지
     } else {
       roomImg.forEach(img => {
 
         const imgElement = document.createElement('img');
-        imgElement.src = `${img.uploadPath}/${img.filesystemName}`; // 경로 수정        imgElement.style.width = '100px'; // 이미지 크기 설정 (원하는 대로 조정)
+        imgElement.src = `${img.uploadPath}/${img.filesystemName}`; 
         imgElement.style.height = '100px'; // 이미지 크기 설정 (원하는 대로 조정)
         imgElement.style.marginRight = '10px'; // 이미지 간격 설정
         roomImgContainer.appendChild(imgElement);
+        
+        clientImgNos.push(img.roomImgNo);
+
       });
     }
+    $('#clientImgNos').val(clientImgNos);
+    
+    
+    
+    const roomImgListContainer = document.querySelector('#modifyImgLists');
+    roomImgListContainer.innerHTML = '';
 
+    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+    const MAX_FILE_COUNT = 4; // 최대 파일 개수
+    let imgModifyInput = document.getElementById('modifyImgFile');
+    let modifyBtn = document.getElementById('imgModify-button');
+    let originImgFiles = [];
+
+
+    function originImgPush() {
+      roomImg.forEach(img => {
+        originImgFiles.push(img)
+      })
+    }
+    originImgPush();
+    console.log(originImgFiles)
+
+    modifyBtn.addEventListener('click', function(e) {
+      imgModifyInput.click();
+    })
+
+    imgModifyInput.addEventListener('change', function(e) {
+      modifyAddFiles(Array.from(imgModifyInput.files));
+    })
+
+    function modifyAddFiles(newFiles) {
+
+      let totalSize = originImgFiles.reduce((sum, file) => sum + file.size, 0);
+
+      let hasDuplicateFile = false;
+      let hasExceededCount = false;
+      let hasExceededSize = false;
+
+      newFiles.forEach(file => {
+
+        if (originImgFiles.some(img => file.name === img.roomImgName)) {
+          hasDuplicateFile = true;
+          return;
+        }
+
+        if (originImgFiles.length >= MAX_FILE_COUNT) {
+          hasExceededCount = true;
+          return;
+        }
+
+
+        if (file.size + totalSize > MAX_FILE_SIZE) {
+          hasExceededSize = true;
+          return;
+        }
+
+        totalSize += file.size;
+        newFiles = []; // 초기화 후 다시 넣음
+        newFiles.push(file);
+        originImgFiles.push(file);
+        updateImgListContainer(newFiles);
+
+      })
+
+      if (hasDuplicateFile) {
+        alert('중복된 파일은 업로드할 수 없습니다.');
+      }
+      if (hasExceededCount) {
+        alert('최대 4개의 파일만 업로드할 수 있습니다.');
+      }
+      if (hasExceededSize) {
+        alert('전체 파일 크기는 10MB를 초과할 수 없습니다.');
+      }
+      console.log(originImgFiles);
+
+    }
+
+    function displayInitialImgLists() {
+      originImgFiles.forEach(file => {
+        addFileToList(file);
+      })
+
+    }
+
+    displayInitialImgLists();
+
+
+    // 파일 추가 후 초기화
+    function updateImgListContainer(newFiles) {
+      newFiles.forEach(file => {
+
+        addFileToList(file);
+      })
+    }
+
+
+    // 이미지 목록에 파일 추가 및 삭제 버튼 설정
+    function addFileToList(file, index) {
+
+      let listsItem = document.createElement('p');
+      let imgName = file.roomImgName || file.name; // 파일명 표시
+      listsItem.innerText = imgName;
+
+      let removeBtn = document.createElement('button');
+      removeBtn.textContent = 'x';
+      removeBtn.style.marginLeft = '10px';
+
+      // 삭제 버튼 클릭 시 이벤트 설정
+      removeBtn.addEventListener('click', function() {
+        removeFile(file);  // 파일 삭제 함수 호출
+        roomImgListContainer.removeChild(listsItem);  // 화면에서 목록 삭제
+      });
+
+      listsItem.appendChild(removeBtn);
+      roomImgListContainer.appendChild(listsItem);
+
+    }
+
+    // 파일 삭제 함수
+    function removeFile(file) {
+      originImgFiles = originImgFiles.filter(imgFile => imgFile !== file);
+      clientImgNos = clientImgNos.filter(imgNo => imgNo !== file.roomImgNo)
+      $('#clientImgNos').val(clientImgNos);
+      console.log("Updated originImgFiles:", originImgFiles);
+      console.log(clientImgNos)
+    }
+    
   });
+
+
+
+  /*---------------------------------------------------------------*/
+
+
+
+
+  /*객실수정*/
+  $('#room-info').on('submit', function(event) {
+
+    event.preventDefault();
+    //$('#clientImgNos').val(JSON.stringify(clientImgNos));
+    
+    var formData = new FormData(this);
+
+    $.ajax({
+      type: 'POST',
+      url: '/admin/room/roomModify.do',
+      data: formData, // FormData 전송
+      contentType: false, // FormData 사용 시 반드시 false로 설정
+      processData: false,
+
+      success: function(response, data) {
+
+        if (response.success) {
+
+          console.log(response);
+
+          alert('객실이 수정되었습니다.');
+          location.reload();
+        } else {
+          console.log(response);
+
+          alert('객실 수정에 실패했습니다. 다시 시도해주세요.');
+          location.reload();
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus);
+        console.log(errorThrown)
+        console.log(jqXHR)
+        alert('서버 오류가 발생했습니다.');
+      }
+    })
+
+  })
+
+
 
   function roomNoOptions(roomList) {
     const roomNoList = [100, 200, 300, 400, 500, 600, 700, 800, 900];
@@ -186,7 +363,7 @@ $(document).ready(function() {
       contentType: false, // FormData 사용 시 반드시 false로 설정
       processData: false, // FormData 사용 시 반드시 false로 설정
       success: function(response) {
-        
+
         if (response.success) {
           alert('객실이 추가되었습니다.');
           location.reload();
@@ -326,44 +503,6 @@ $(document).ready(function() {
   }
 
 
-  /*객실수정*/
-  $('#room-info').on('submit', function(event) {
-    
-    var formData = new FormData(this);
-    
-    $.ajax({
-      type:'POST',
-      url: '/admin/room/roomModify.do',
-      data: formData, // FormData 전송
-      contentType: false, // FormData 사용 시 반드시 false로 설정
-      processData: false,
-      
-      success: function(response) {
-        
-        console.log("response:",response)
-        
-        if (response.success) {
-          
-          console.log(response); 
-          
-          alert('객실이 수정되었습니다.');
-          location.reload();
-        } else {
-          console.log(response); 
-          
-          alert('객실 수정에 실패했습니다. 다시 시도해주세요.');
-          location.reload();
-        }
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-        console.log(errorThrown)
-        console.log(jqXHR)
-        alert('서버 오류가 발생했습니다.');
-      }
-    })
-    
-  })
 
 
 

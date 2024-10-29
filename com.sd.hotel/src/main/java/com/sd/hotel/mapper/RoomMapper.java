@@ -13,6 +13,8 @@ public interface RoomMapper {
 	List<RoomDto> getRoomList();
 	List<RoomDetailDto> getRoomDetailList();
 	List<RoomImgDto> getRoomImgList();
+	List<RoomImgDto> getRoomImgListByNo(int roomNo);
+	
 	
 	int roomNoRegister(RoomDto room);
 	int roomTypeRegister(RoomDto room);
@@ -23,5 +25,7 @@ public interface RoomMapper {
   
   int modifyRoomInfo(RoomDto room);
   int modifyRoomDetail(String roomName,int roomNo);
-  int delteRoomDetail(int roomNo,int deleteCount);
+  int delteRoomDetail(int roomNo);
+  
+  int deleteRoomImg(int roomImgNo);
 }

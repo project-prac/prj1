@@ -34,6 +34,14 @@
   </select>
   
   
+  <!-- RoomNo로 imglist가져오기 -->
+  <select id="getRoomImgListByNo"
+          resultType="RoomImgDto">
+  SELECT ROOM_NO, ROOM_IMG_NO, ROOM_IMG_NAME, UPLOAD_PATH, FILESYSTEM_NAME
+    FROM ROOM_IMG
+   WHERE ROOM_NO = #{roomNo}
+  </select>
+  
   <!-- 객실roomNo 추가 -->
   <insert id="roomNoRegister"
           parameterType="roomDto">
@@ -150,26 +158,25 @@
   </update>
   
   <delete id="delteRoomDetail">
-  <!--
-    DELETE FROM ROOM_DETAIL
-     WHERE ROOM_DETAIL_NO = (
-                              SELECT MAX(ROOM_DETAIL_NO)
-														    FROM ROOM_DETAIL
-														    WHERE ROOM_NO = #{roomNo}
-														);    성능이슈로 수정-->
-														
-														
-	   DELETE FROM ROOM_DETAIL
-		  WHERE ROOM_DETAIL_NO IN (
-														    SELECT ROOM_DETAIL_NO FROM (
-																										        SELECT ROOM_DETAIL_NO
-																										          FROM ROOM_DETAIL
-																										         WHERE ROOM_NO = #{roomNo}
-																										         ORDER BY ROOM_DETAIL_NO DESC
-														                                )
-		                              WHERE ROWNUM between 1 and #{deleteCount}
-                                )												
-  </delete>
 
+      DELETE FROM ROOM_DETAIL
+      WHERE ROOM_DETAIL_NO IN (
+                                SELECT ROOM_DETAIL_NO FROM (
+                                                            SELECT ROOM_DETAIL_NO
+                                                              FROM ROOM_DETAIL
+                                                             WHERE ROOM_NO = #{roomNo}
+                                                             ORDER BY ROOM_DETAIL_NO DESC
+                                                            )
+                                  WHERE ROWNUM =1
+                                )                               
+                                
+                                							
+  </delete>
+  
+  <!-- roomImg지우기 -->
+  <delete id="deleteRoomImg">
+    DELETE FROM ROOM_IMG
+     WHERE ROOM_IMG_NO = #{roomImgNo}
+  </delete>
   
 </mapper>

@@ -87,7 +87,6 @@ public class AdminRoomController {
 	}*/
 	
 	@PostMapping("/roomModify.do")
-	@ResponseBody
 	public ResponseEntity<Map<String, Object>> modifyRoom(MultipartHttpServletRequest request){
 		
 		Map<String, Object> response = new HashMap<>();
@@ -100,7 +99,7 @@ public class AdminRoomController {
 			adminRoomService.modifyRoomNum(request);
 			
 			//객실이미지
-			//adminRoomService.modifyRoomImg(request);
+			adminRoomService.modifyRoomImg(request);
 			
 			response.put("success", true);
       return ResponseEntity.ok(response); // 200 OK 응답
