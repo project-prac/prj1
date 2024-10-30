@@ -81,12 +81,10 @@
 	          <label for="gender-woman" style="display:inline-block;width:120px;">여자</label>
 	          <input type="radio" class="form-control" id="gender-woman" name="gender" value="여">
           </div>
-          
-          
+
         </div>
 				<input type="hidden" name="role" value="ROLE_USER">
-				
-				
+
 				<div class="form-check form-check-flat form-check-primary">
 					<label class="form-check-label"> <input type="checkbox"
 						class="form-check-input"> Remember me

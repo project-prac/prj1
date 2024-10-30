@@ -44,7 +44,7 @@
 							</div>
 							
 							<c:if test="${not empty sessionScope.errorMessage}">
-					        <script>alert('${sessionScope.errorMessage}');</script>
+					         <script>alert('${sessionScope.errorMessage}');</script> 
 					    </c:if>
 					    
 					    <c:remove var="errorMessage" scope="session"/>

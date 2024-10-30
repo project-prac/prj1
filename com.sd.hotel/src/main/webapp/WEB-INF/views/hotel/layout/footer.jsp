@@ -100,6 +100,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
    <script src="/resources/hotel/js/stellar.js"></script>
    <script src="/resources/hotel/vendors/lightbox/simpleLightbox.min.js"></script>
    <script src="/resources/hotel/js/custom.js"></script>
-
+   <script src="/resources/hotel/js/layout-header.js"></script>
+  
 </body>
 </html>

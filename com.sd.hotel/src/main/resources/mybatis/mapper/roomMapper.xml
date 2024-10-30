@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sd.hotel.mapper.RoomMapper">
+  
+
+  
+  <!-- 중분류까지의list확인 -->
+  <select id="getRoomList"
+          resultType="RoomDto">
+   SELECT ROOM_NO, ROOM_NAME, DEPTH, PARENT_NAME, INFO, PRICE, PEOPLE 
+     FROM ROOM
+    ORDER BY ROOM_NO
+  </select>
+  
+
+  <!-- detailRoom List 가져오기 -->
+  
+  <select id="getRoomDetailList"
+          resultType="RoomDetailDto">
+    SELECT ROOM_DETAIL_NO, ROOM_NO, ROOM_NAME
+      FROM ROOM_DETAIL
+      
+  </select>
+
+  
+  <select id="getRoomImgList"
+          resultType="RoomImgDto">
+  SELECT ROOM_NO, ROOM_IMG_NO, ROOM_IMG_NAME, UPLOAD_PATH, FILESYSTEM_NAME
+    FROM ROOM_IMG
+  
+  </select>
+  
+  
+  
+  <!-- RoomNo로 room정보 가져오기 -->
+  <select id="getRoombyRoomNo"
+          resultType="RoomDto">
+    SELECT ROOM_NO, ROOM_NAME, INFO, PRICE, PEOPLE, ROOM_NUM
+      FROM ROOM
+     WHERE ROOM_NO = #{roomNo}
+  </select>
+  
+  
+  
+  <!-- RoomNo로 imglist가져오기 -->
+  <select id="getRoomImgListByNo"
+          resultType="RoomImgDto">
+  SELECT ROOM_NO, ROOM_IMG_NO, ROOM_IMG_NAME, UPLOAD_PATH, FILESYSTEM_NAME
+    FROM ROOM_IMG
+   WHERE ROOM_NO = #{roomNo}
+  </select>
+  
+  <!-- 객실roomNo 추가 -->
+  <insert id="roomNoRegister"
+          parameterType="roomDto">
+    INSERT INTO ROOM(
+                  ROOM_NO
+                , ROOM_NAME
+                , DEPTH
+                , PARENT_NAME  
+                ) VALUES(
+                  #{roomNo}
+                , #{roomName}
+                , #{depth}
+                , #{parentName}
+                )
+  </insert>
+  
+  <!-- 객실roomType 추가 -->
+  <insert id="roomTypeRegister"
+          parameterType="roomDto">
+      <selectKey order="BEFORE" keyProperty="roomNo" resultType="int" >
+        SELECT NVL(MAX(ROOM_NO), #{parentName}) + 1
+        FROM ROOM
+        WHERE PARENT_NAME = #{parentName}
+      </selectKey>
+          
+      INSERT INTO ROOM(
+                 ROOM_NO
+                , ROOM_NAME
+                , DEPTH
+                , PARENT_NAME
+                , INFO
+                , PRICE
+                , PEOPLE
+                , ROOM_NUM  
+                ) VALUES(
+                 #{roomNo}
+                , #{roomName}
+                , #{depth}
+                , #{parentName}
+                , #{info}
+                , #{price}
+                , #{people}
+                , #{roomNum}
+                )
+  </insert>
+  
+  <insert id="roomDetailRegister"
+          parameterType="roomDetailDto">
+    <selectKey order="BEFORE" keyProperty="roomDetailNo" resultType="int" >
+      SELECT 
+            CASE 
+                WHEN MAX(RD.ROOM_DETAIL_NO) IS NULL THEN #{roomNo} * 100 + 1
+                ELSE MAX(RD.ROOM_DETAIL_NO) + 1
+            END
+        FROM ROOM R 
+        LEFT JOIN ROOM_DETAIL RD ON R.ROOM_NO = RD.ROOM_NO
+        WHERE R.ROOM_NO = #{roomNo}              
+    </selectKey>
+    INSERT INTO ROOM_DETAIL(
+                 ROOM_NO
+                , ROOM_NAME
+                , ROOM_DETAIL_NO
+                
+                ) VALUES(
+                 #{roomNo}
+                , #{roomName}
+                ,#{roomDetailNo}
+               
+                )
+  
+  
+  </insert>
+  
+  
+  <insert id="roomImgRegister"
+          parameterType="RoomImgDto">
+    INSERT INTO ROOM_IMG(
+                  ROOM_NO
+                , ROOM_IMG_NAME
+                , UPLOAD_PATH
+                , ROOM_IMG_NO
+                , FILESYSTEM_NAME
+                ) VALUES (
+                  #{roomNo}
+                , #{roomImgName}
+                , #{uploadPath}
+                , ROOM_IMG_SEQ.NEXTVAL
+                , #{filesystemName}
+                )
+                
+  </insert>
+  
+  
+  <!-- 수정 -->
+  <!-- 객실 수정 -->
+  <update id="modifyRoomInfo"
+          parameterType="RoomDto">
+    UPDATE ROOM
+       SET ROOM_NAME = #{roomName}
+         , INFO = #{info}
+         , PRICE = #{price}
+         , PEOPLE = #{people}
+     WHERE ROOM_NO = #{roomNo}
+  </update>
+
+
+
+  <!-- 객실 detail 수 수정 -->
+  <update id="modifyRoomDetail">
+    UPDATE ROOM_DETAIL
+       SET ROOM_NAME = #{roomName}
+     WHERE ROOM_NO = #{roomNo}
+    
+  </update>
+  
+  <delete id="delteRoomDetail">
+
+      DELETE FROM ROOM_DETAIL
+      WHERE ROOM_DETAIL_NO IN (
+                                SELECT ROOM_DETAIL_NO FROM (
+                                                            SELECT ROOM_DETAIL_NO
+                                                              FROM ROOM_DETAIL
+                                                             WHERE ROOM_NO = #{roomNo}
+                                                             ORDER BY ROOM_DETAIL_NO DESC
+                                                            )
+                                  WHERE ROWNUM =1
+                                )                               
+                                
+                                							
+  </delete>
+  
+  <!-- roomImg지우기 -->
+  <delete id="deleteRoomImg">
+    DELETE FROM ROOM_IMG
+     WHERE ROOM_IMG_NO = #{roomImgNo}
+  </delete>
+  
+  
+  
+  
+</mapper>
