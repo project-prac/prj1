@@ -34,6 +34,17 @@
   </select>
   
   
+  
+  <!-- RoomNo로 room정보 가져오기 -->
+  <select id="getRoombyRoomNo"
+          resultType="RoomDto">
+    SELECT ROOM_NO, ROOM_NAME, INFO, PRICE, PEOPLE, ROOM_NUM
+      FROM ROOM
+     WHERE ROOM_NO = #{roomNo}
+  </select>
+  
+  
+  
   <!-- RoomNo로 imglist가져오기 -->
   <select id="getRoomImgListByNo"
           resultType="RoomImgDto">
@@ -178,5 +189,8 @@
     DELETE FROM ROOM_IMG
      WHERE ROOM_IMG_NO = #{roomImgNo}
   </delete>
+  
+  
+  
   
 </mapper>

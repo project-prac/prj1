@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="/resources/hotel/css/layout-header.css">
   <!--jQuery  -->
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
@@ -60,7 +61,7 @@
 					<ul class="nav navbar-nav menu_nav ml-auto">
 						<li class="nav-item active"><a class="nav-link"
 							href="/">Home</a></li>
-						<li class="nav-item room"><a class="nav-link" href="${contextPath}/hotel/room/room.page">객실</a>
+						<li class="nav-item room"><a class="nav-link" href="${contextPath}/hotel/room/room.do">객실</a>
 						  <div class="room-lists-area">
 						    <ul class="room-lists">
 	                <li><a href="">스탠다드</a></li>

@@ -331,5 +331,17 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 		return response;
 
 	}
+	
+	
+	@Override
+	public RoomDto getRoombyRoomNo(int roomNo) {
+		return roomMapper.getRoombyRoomNo(roomNo);
+	}
+	
+	@Override
+	public List<RoomImgDto> getRoomImgListByNo(int roomNo) {
+		return roomMapper.getRoomImgListByNo(roomNo);
+	}
+	
 
 }

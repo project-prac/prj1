@@ -12,10 +12,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.16/themes/default/style.min.css">
 
 
-
-
-
-
 <div class="main-panel">
   <div class="content-wrapper">
     <div class="row">
@@ -161,7 +157,6 @@
 
 
 
-<script src="${contextPath}/resources/js/roomList.js"></script>
 <jsp:include page="../../admin/layout/footer.jsp" />
 
 

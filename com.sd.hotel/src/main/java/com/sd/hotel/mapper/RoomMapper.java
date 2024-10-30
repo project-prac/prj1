@@ -28,4 +28,9 @@ public interface RoomMapper {
   int delteRoomDetail(int roomNo);
   
   int deleteRoomImg(int roomImgNo);
+  
+  RoomDto getRoombyRoomNo(int roomNo);
+  
+  
+  
 }

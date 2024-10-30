@@ -27,8 +27,10 @@ public interface AdminRoomService {
 	
 	//수정
 	Map<String, Object> modifyRoomInfo(MultipartHttpServletRequest request);
-	
 	Map<String, Object> modifyRoomNum(MultipartHttpServletRequest request);
-	
 	Map<String, Object> modifyRoomImg(MultipartHttpServletRequest request);
+	
+	
+	RoomDto getRoombyRoomNo(int roomNo);
+	List<RoomImgDto> getRoomImgListByNo(int roomNo);
 }
