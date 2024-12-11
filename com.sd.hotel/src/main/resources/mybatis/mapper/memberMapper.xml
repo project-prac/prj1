@@ -38,7 +38,7 @@
   	  <where>
   	    <if test="userId!=null">USER_Id = #{userId}</if>
   	  	<if test="email!=null">EMAIL = #{email}</if>
-  	  	<if test="password!=null">AND PASSWORD = #{password}</if>
+  	  	<if test="password!=null">PASSWORD = #{password}</if>
   	  </where>
   	  <!-- EMAIL 이 빈값이 아니면 조건 추가 -->
   </select>

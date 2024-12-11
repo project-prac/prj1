@@ -23,7 +23,8 @@ public class UserRoomController {
 
 	
 	@GetMapping("/room.do")
-	public String roomPage(@RequestParam(value="roomNo", required=true, defaultValue="101")  int roomNo, Model model) {
+	public String roomPage(@RequestParam(value="roomNo", defaultValue="101")  Integer roomNo, Model model) {
+		/*defaultValue 를 지정해주었느니 required=true 는 딱히 필요가없음*/
 		
 		model.addAttribute("roomList",adminRoomService.getRoomList());
 		model.addAttribute("roomInfo",adminRoomService.getRoombyRoomNo(roomNo));

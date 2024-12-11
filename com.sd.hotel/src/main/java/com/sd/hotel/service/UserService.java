@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
-import com.sd.hotel.dto.CustomUserDetails;
 import com.sd.hotel.dto.MemberDto;
 
 import jakarta.servlet.http.HttpServletRequest;

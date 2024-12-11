@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 
 
 @Data
-
 public class CustomUserDetails implements UserDetails {
 	
 	/*

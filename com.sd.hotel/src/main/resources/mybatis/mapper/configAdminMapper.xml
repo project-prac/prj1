@@ -13,4 +13,11 @@
      WHERE USER_ID = #{userId}
   </select>
   
+  <update id="updatePw"
+          parameterType="String">
+    UPDATE CONFIG_ADMIN
+       SET PASSWORD = #{password}
+     WHERE USER_ID = #{userId}
+  </update>
+  
 </mapper>

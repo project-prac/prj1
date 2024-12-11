@@ -12,9 +12,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.sd.hotel.dto.ConfigAdminDto;
 import com.sd.hotel.dto.CustomUserDetails;
 import com.sd.hotel.dto.EmployeeDto;
 import com.sd.hotel.dto.MemberDto;
+import com.sd.hotel.mapper.ConfigAdminMapper;
 import com.sd.hotel.mapper.EmployeeMapper;
 import com.sd.hotel.mapper.MemberMapper;
 import com.sd.hotel.utils.MyJavaMailUtils;
@@ -31,16 +33,19 @@ public class UserServiceImpl implements UserService {
 	private final CustomAuthenticationProvider authenticationProvider;
 	private final BCryptPasswordEncoder passwordEncoder;
 	private final EmployeeMapper employeeMapper;
+	private final ConfigAdminMapper adminMapper;
+	
 	
 	public UserServiceImpl(MemberMapper memberMapper, MyJavaMailUtils myJavaMailUtils, 
 			CustomAuthenticationProvider authenticationProvider, BCryptPasswordEncoder passwordEncoder,
-			EmployeeMapper employeeMapper) {
+			EmployeeMapper employeeMapper,ConfigAdminMapper adminMapper) {
 		super();
 		this.memberMapper = memberMapper;
 		this.myJavaMailUtils = myJavaMailUtils;
 		this.authenticationProvider = authenticationProvider;
 		this.passwordEncoder = passwordEncoder;
 		this.employeeMapper = employeeMapper;
+		this.adminMapper = adminMapper;
 	}
 
 	@Override
@@ -245,9 +250,20 @@ public class UserServiceImpl implements UserService {
 		    }
 				
 				result = employeeMapper.updatePw(userId, newpw);
+			}
+			/*
+			else if(role.equals("ROLE_ADMIN")) {
+				ConfigAdminDto admin = adminMapper.getAdminById(userId);
+				
+				if(!passwordEncoder.matches(pw, admin.getPassword())) {
+		      System.out.println("비밀번호가 맞지 않습니다.");
+		      return 0;
+		    }
 				
 			}
+			*/
 			
+			System.out.println("result:" + result);
 			
 			try {
 				
