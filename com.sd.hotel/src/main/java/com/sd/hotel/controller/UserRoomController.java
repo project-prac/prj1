@@ -26,12 +26,23 @@ public class UserRoomController {
 	public String roomPage(@RequestParam(value="roomNo", defaultValue="101")  Integer roomNo, Model model) {
 		/*defaultValue 를 지정해주었느니 required=true 는 딱히 필요가없음*/
 		
+		/*
 		model.addAttribute("roomList",adminRoomService.getRoomList());
 		model.addAttribute("roomInfo",adminRoomService.getRoombyRoomNo(roomNo));
 		model.addAttribute("roomImg",adminRoomService.getRoomImgListByNo(roomNo));
+		return "hotel/room/room";*/
 		
-		return "hotel/room/room";
+    
+    try {
+      model.addAttribute("roomList", adminRoomService.getRoomList());
+      model.addAttribute("roomInfo", adminRoomService.getRoombyRoomNo(roomNo));
+      model.addAttribute("roomImg", adminRoomService.getRoomImgListByNo(roomNo));
+    } catch (NumberFormatException e) {
+        return "redirect:/error"; 
+    }
+
+    return "hotel/room/room";
+		
 	}
 
-	
 }

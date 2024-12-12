@@ -33,8 +33,7 @@
 <div class="left-nav-area">
 	<ul class="">
 	 <c:forEach items="${roomList}" var="roomParent">
-      <c:choose>
-        <c:when test="${roomParent.depth == 0}">
+        <c:if test="${roomParent.depth == 0}">
           <li>${roomParent.roomName}
             <ul>
               <c:forEach items="${roomList}" var="roomChild">
@@ -44,9 +43,12 @@
               </c:forEach>
             </ul>
           </li>
-        </c:when>
-      </c:choose>
-    </c:forEach>		
+        </c:if>
+    </c:forEach>
+    
+
+    
+    		
 	</ul>
 </div>
 
