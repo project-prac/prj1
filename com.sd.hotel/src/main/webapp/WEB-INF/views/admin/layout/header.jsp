@@ -434,7 +434,7 @@
             </div>
             <div class="collapse" id="form-elements">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"><a class="nav-link" href="pages/forms/basic_elements.html">객실등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="${contextPath}/admin/reservation/reservation.page">예약현황</a></li>
               </ul>
             </div>
           </li>

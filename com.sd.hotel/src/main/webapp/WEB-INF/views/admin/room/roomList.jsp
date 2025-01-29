@@ -77,7 +77,9 @@
                 <div class="room-area" >
                   <div class="room-area-header">객실대분류 추가하기<span>▼</span></div>
                   <form id="roomNoRegister"
-                       enctype="multipart/form-data">
+                       enctype="multipart/form-data"
+                       action="${contextPath}/admin/room/roomNoRegister.do"
+                       method="POST">
                     <select id="roomNo-list" name="roomNo">
                       
                     </select>
@@ -105,7 +107,7 @@
                     <label for="roomType-roomName">인원수</label>
                     <input type="text" id="roomType-roomName" name="people"><br>
                     <label for="roomNum">객실수</label>
-                    <input type="text" id="roomNum" name="roomNum"><br>
+                    <input type="text" id="roomNum" name="totalRoom"><br>
                     
 										<div class="file_area" id="file-area">
 										    <div id="files-button">

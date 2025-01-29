@@ -26,6 +26,8 @@ public class SecurityConfig {
 
 				.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/user/mypage.page").hasAnyRole("USER","ADMIN","MANAGER")
+				
+				.requestMatchers("/hotel/room/roomReserve.page").hasAnyRole("USER","ADMIN","MANAGER")
 
 				.anyRequest().permitAll());
 

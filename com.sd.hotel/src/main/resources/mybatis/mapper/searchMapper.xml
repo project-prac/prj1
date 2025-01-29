@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sd.hotel.mapper.SearchMapper">
+
+	<resultMap type="RoomDto" id="SearchResult">
+		<id property="roomNo" column="ROOM_NO" />
+		<result property="price" column="PRICE" />
+		<result property="guestCount" column="GUEST_COUNT" />
+		<result property="roomName" column="ROOM_NAME" />
+		<result property="info" column="INFO" />
+		<result property="availableRoom" column="AVAILABLE_ROOM" />
+    <collection property="images" javaType="java.util.List" ofType="RoomImgDto">
+	    <id property="roomImgNo" column="ROOM_IMG_NO"></id>
+	    <result property="uploadPath" column="UPLOAD_PATH"></result>
+	    <result property="filesystemName" column="FILESYSTEM_NAME"></result>
+	  </collection>
+	</resultMap>
+<!-- 
+collection : 1:M의 관계의 테이블 조인시 사용
+javaType : 자바의 자료형, 패키지 경로까지 입력
+ofType : 반환받을 자료형
+ -->
+
+<!--  
+	<select id="getSearchResult" resultMap="SearchResult" >
+       <![CDATA[
+    SELECT R.ROOM_NO , R.ROOM_NAME, R.INFO, R.PRICE, R.PEOPLE,
+           I.ROOM_IMG_NO, I.UPLOAD_PATH, I.FILESYSTEM_NAME
+    FROM ROOM R
+    JOIN ROOM_IMG I
+      ON R.ROOM_NO = I.ROOM_NO
+    WHERE R.PEOPLE >= #{guestCount}
+      AND R.ROOM_NO NOT IN (
+        SELECT ROOM_NO
+          FROM RESERVATION
+         WHERE (CHECK_IN_DATE < #{checkOut} 
+           AND CHECK_OUT_DATE > #{checkIn})
+      )
+     
+    ]]>
+	</select>
+-->
+
+<!-- 수정 -->
+<select id="getSearchResult" resultMap="SearchResult">
+    <![CDATA[
+    SELECT R.ROOM_NO , R.ROOM_NAME, R.INFO, R.PRICE, R.GUEST_COUNT,
+           I.ROOM_IMG_NO, I.UPLOAD_PATH, I.FILESYSTEM_NAME
+      FROM ROOM R
+      JOIN ROOM_IMG I
+        ON R.ROOM_NO = I.ROOM_NO
+     WHERE NOT EXISTS (
+          SELECT 1
+            FROM RESERVATION RES
+           WHERE R.ROOM_NO = RES.ROOM_NO
+             AND RES.CHECK_IN_DATE < #{checkOut}
+             AND RES.CHECK_OUT_DATE > #{checkIn}
+             AND RES.STATUS IN ('reserved', 'completed')
+           GROUP BY RES.ROOM_NO
+          HAVING COUNT(RES.ROOM_NO) = 5
+        )AND GUEST_COUNT>=#{guestCount}
+    ]]>
+</select>
+
+
+
+
+
+</mapper>

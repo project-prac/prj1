@@ -24,4 +24,8 @@ public interface UserService {
 	void modifyMember(HttpServletRequest request);
 	int modifyPw(HttpServletRequest request, HttpServletResponse response);
 	
+	//userId통해 memberNo가져옴
+	int getMemberNo(String userId);
+
+	
 }

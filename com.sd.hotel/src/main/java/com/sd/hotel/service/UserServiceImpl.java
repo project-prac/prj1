@@ -293,5 +293,10 @@ public class UserServiceImpl implements UserService {
 			
 		}
 			
+		@Override
+		public int getMemberNo(String userId) {
+			
+			return memberMapper.getMemberNo(userId);
+		}
 			
 }

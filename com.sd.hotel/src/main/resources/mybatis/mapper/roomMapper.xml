@@ -10,7 +10,7 @@
   <!-- 중분류까지의list확인 -->
   <select id="getRoomList"
           resultType="RoomDto">
-   SELECT ROOM_NO, ROOM_NAME, DEPTH, PARENT_NAME, INFO, PRICE, PEOPLE 
+   SELECT ROOM_NO, ROOM_NAME, DEPTH, PARENT_NAME, INFO, PRICE, GUEST_COUNT 
      FROM ROOM
     ORDER BY ROOM_NO
   </select>
@@ -38,7 +38,7 @@
   <!-- RoomNo로 room정보 가져오기 -->
   <select id="getRoombyRoomNo"
           resultType="RoomDto">
-    SELECT ROOM_NO, ROOM_NAME, INFO, PRICE, PEOPLE, ROOM_NUM
+    SELECT ROOM_NO, ROOM_NAME, INFO, PRICE, GUEST_COUNT, TOTAL_ROOM
       FROM ROOM
      WHERE ROOM_NO = #{roomNo}
   </select>
@@ -85,8 +85,9 @@
                 , PARENT_NAME
                 , INFO
                 , PRICE
-                , PEOPLE
-                , ROOM_NUM  
+                , GUEST_COUNT
+                , TOTAL_ROOM  
+                , AVAILABLE_ROOM
                 ) VALUES(
                  #{roomNo}
                 , #{roomName}
@@ -94,8 +95,9 @@
                 , #{parentName}
                 , #{info}
                 , #{price}
-                , #{people}
-                , #{roomNum}
+                , #{guestCount}
+                , #{totalRoom}
+                , #{availableRoom}
                 )
   </insert>
   
@@ -154,7 +156,7 @@
        SET ROOM_NAME = #{roomName}
          , INFO = #{info}
          , PRICE = #{price}
-         , PEOPLE = #{people}
+         , GUEST_COUNT = #{guestCount}
      WHERE ROOM_NO = #{roomNo}
   </update>
 
@@ -192,5 +194,136 @@
   
   
   
+  <!-- 객실예약  관련  -->
+  
+  
+  <!-- 예약테이블 추가 -->
+  <insert id="roomReserve"
+          parameterType = "ReservationDto">
+   <selectKey order="BEFORE" keyProperty="reservationNo" resultType="int">
+      SELECT RES_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
+
+      INSERT INTO RESERVATION(
+                    RESERVATION_NO
+                  , MEMBER_NO
+                  , ROOM_NO
+                  , RESERVED_DATE
+                  , CHECK_IN_DATE
+                  , CHECK_OUT_DATE
+                  , STATUS
+                  , GUEST_COUNT
+                  , RES_NAME
+                  , RES_PHONE
+                  , RES_MAIL
+                  , RES_NOTE
+                  )VALUES(
+                    #{reservationNo}
+                  , #{memberNo}
+                  , #{roomNo}
+                  , CURRENT_DATE
+                  , #{checkInDate}
+                  , #{checkOutDate}
+                  , #{status}
+                  , #{guestCount}
+                  , #{resName}
+                  , #{resPhone}
+                  , #{resMail}
+                  , #{resNote}
+                    )
+      
+  </insert>
+  
+  <!-- 객실테이블에 객실수 변경 추가 -->
+  <update id="roomUpdate">
+     UPDATE ROOM
+        SET RESERVED_ROOM = RESERVED_ROOM + 1,
+            AVAILABLE_ROOM = AVAILABLE_ROOM -1
+      WHERE ROOM_NO = #{roomNo}
+  
+  </update>
+  
+  
+  <!-- 회원의 객실 예약 목록 가져오기 -->
+  <select id="getReservedRoom"
+          resultType="ReservationDto">
+    SELECT RESERVATION_NO 
+         , ROOM_NO
+         , MEMBER_NO 
+         , RESERVED_DATE
+         , CHECK_IN_DATE
+         , CHECK_OUT_DATE
+         , STATUS
+         , GUEST_COUNT
+         , RES_NAME
+         , RES_PHONE
+         , RES_MAIL
+         , RES_NOTE
+      FROM RESERVATION
+     WHERE MEMBER_NO = #{memberNo} 
+       AND CHECK_IN_DATE >= TO_DATE(TO_CHAR(CURRENT_DATE, 'YYYY-MM-DD'), 'YYYY-MM-DD')
+       AND STATUS IN (#{reserved}, #{completed}) 
+     ORDER BY CHECK_IN_DATE 
+  </select>
+  
+  
+  <resultMap type="ReservationDto" id="RoomDetailMap">
+    <id property="reservationNo"    column="RESERVATION_NO"/>
+    <result property="memberNo"     column="MEMBER_NO"/>
+    <result property="roomNo"       column="ROOM_NO"/>
+    <result property="guestCount"   column="GUEST_COUNT"/>
+    <result property="reservedDate" column="RESERVED_DATE"/>
+    <result property="checkInDate"  column="CHECK_IN_DATE"/>
+    <result property="checkOutDate" column="CHECK_OUT_DATE"/>
+    <result property="status"       column="STATUS"/>
+    <result property="resName"      column="RES_NAME"/>
+    <result property="resPhone"     column="RES_PHONE"/>
+    <result property="resMail"      column="RES_MAIL"/>
+    <result property="resNote"      column="RES_NOTE"/>
+    <collection property="room" javaType="RoomDto">
+      <id property="roomNo" column="ROOM_NO"></id>
+      <result property="roomName" column="ROOM_NAME"/>
+    </collection>
+    
+  </resultMap>
+  
+  <!-- 회원의 객실 예약 상세 가져오기 -->
+  <select id="getReservedRoomDetail"
+          resultMap="RoomDetailMap"
+         >
+    SELECT RES.RESERVATION_NO , RES.MEMBER_NO, RES.ROOM_NO
+         , RES.GUEST_COUNT ,RES.RESERVED_DATE , RES.CHECK_IN_DATE
+         , RES.CHECK_OUT_DATE, RES.STATUS, RES.RES_NAME
+         , RES.RES_PHONE, RES.RES_MAIL, RES.RES_NOTE
+         , R.ROOM_NAME
+      FROM RESERVATION RES
+      JOIN ROOM R
+        ON RES.ROOM_NO = R.ROOM_NO
+     WHERE RESERVATION_NO = #{reservationNo}
+  </select>
+
+
+
+  
+
+
+  <!-- 예약 삭제  -->
+  
+  <!-- 예약 삭제 : 예약테이블 항목삭제 -->
+  <update id="cancelReservation">
+    UPDATE RESERVATION
+       SET STATUS = #{status}
+     WHERE RESERVATION_NO = #{reservationNo}
+  </update>
+  
+  <!-- 예약 삭제 : 객실테이블 객실 수 수정 -->
+   <update id="roomRemoveUpdate">
+    UPDATE ROOM
+       SET RESERVED_ROOM = RESERVED_ROOM - 1,
+           AVAILABLE_ROOM = AVAILABLE_ROOM + 1
+     WHERE ROOM_NO = #{roomNo}
+   </update>
+    
   
 </mapper>

@@ -11,6 +11,7 @@ $(document).ready(function() {
     headers: {
       'Content-Type': 'application/json'
     }
+    
   })
 
     .then(response => response.json())

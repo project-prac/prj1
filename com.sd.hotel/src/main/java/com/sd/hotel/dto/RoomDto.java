@@ -1,6 +1,7 @@
 package com.sd.hotel.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RoomDto {
-	int roomNo, depth, price, people, roomNum;
-	String roomName, parentName, info;
+	private int roomNo, depth, price, people, availableRoom,reservedRoom, totalRoom ,guestCount;
+	private String roomName, parentName, info;
+	private List<RoomImgDto> images;
 }

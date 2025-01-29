@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+/*┌--------------------------------------
+  │     sub페이지 기본설정 ★                             
+  └-------------------------------------*/
+
+  .sub{width:100%;min-height:800px;background:#F4F5F7;margin-top:80px;padding:50px 0 20px;}
+  .sub_in{width:100%;max-width:1400px;margin:0 auto;background:#fff;padding:40px 20px 80px;}
+  .sub_title{font-size:28px;font-family:var(Manrope);margin-bottom:30px;}
+
+
+/*┌--------------------------------------
+  │     myPageList.jsp ★                             
+  └-------------------------------------*/  
+  .mypageInfo{font-family: var(--Noto);border: 1px solid #e2e2e2;}
+  .mypageInfo li{display: flex;padding:10px 0px 10px 5px}
+  .mypageInfo li:nth-child(2n+1){width: 100%;background: #eeeeee;}
+  .mypageInfo li .info_t{width:8%;max-width:110px;font-weight:bold}
+
+
+  .mypageList{margin-top: 30px;;}
+  .mypageList{width: 100%;}
+  .mypageList li:nth-child(2n+1){width: 100%;background: #eeeeee;}
+  .mypageList li>a{display: inline-block;padding:10px 15px;}
+  .mypageList li>a:hover{font-weight: bold}
+  
+  
+/*┌--------------------------------------
+  │     myReserve.jsp                        
+  └-------------------------------------*/  
+.res_count{margin-bottom:30px;font-weight: bold;}
+
+.list{margin-top:30px;}
+.list_con{border:1px solid #e2e2e2;}
+.list_con .con{width:100%;display: flex;}
+.list_con .con:nth-child(2n){ background: #eeeeee;}
+.list_con p{padding:10px;}
+.list_con .con p:nth-child(1){width:12%;max-width:160px;}
+  
+
+.reservedDetail_p{margin:50px 0 10px;}
+
+#btn_remove{height:50px;padding:3px 10px; border:1px solid #bdbdbd}

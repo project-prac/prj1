@@ -42,15 +42,25 @@ public class CustomUserDetails implements UserDetails {
 	private final UserDto user;
 	private final UserDetailDto userDetail;
 	
+	//private final Integer memberNo;
+	
 	public CustomUserDetails(UserDto user) {
 		this.user = user;
 		this.userDetail = null;
+	//	this.memberNo = null;
 	}
 	
 	public CustomUserDetails(UserDto user, UserDetailDto userDetail) {
 		this.user = user;
 		this.userDetail = userDetail;
+		//this.memberNo = null;
 	}
+	
+	public CustomUserDetails(UserDto user, UserDetailDto userDetail,Integer memberNo) {
+		this.user = user;
+		this.userDetail = userDetail;
+		//this.memberNo = memberNo;
+	} 
 
 	
 	@Override
@@ -109,6 +119,10 @@ public class CustomUserDetails implements UserDetails {
 	}
 	
 
+	/**/
+
+	
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub

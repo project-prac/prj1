@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class RoomInfoDto {
-	private int roomTypeNo, roomInfoNo, price, people;
-	private String roomInfoName, Info;
+public class PaymentDto {
+	private int paymentNo, memberNo, reservationNo, paymentAmount;
+	private Date paymentDate;
+	private String paymentMethod, paymentStatus;
 }
