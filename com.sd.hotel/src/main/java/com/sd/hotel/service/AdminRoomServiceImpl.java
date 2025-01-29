@@ -2,6 +2,7 @@ package com.sd.hotel.service;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -113,17 +114,18 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			String info = request.getParameter("info");
 			int price = Integer.parseInt(request.getParameter("price"));
 			int people = Integer.parseInt(request.getParameter("people"));
-			int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+			int totalRoom = Integer.parseInt(request.getParameter("totalRoom"));
 
+			
 			RoomDto room = RoomDto.builder().roomName(roomName).depth(depth).parentName(parentName).info(info).price(price)
-					.people(people).roomNum(roomNum).build();
+					.people(people).totalRoom(totalRoom).availableRoom(totalRoom).build();
 
 			int insertRoom = roomMapper.roomTypeRegister(room);
 			int registeredRoomNo = room.getRoomNo();
 
 			if (insertRoom == 1) {
 
-				for (int i = 0; i < roomNum; i++) {
+				for (int i = 0; i < totalRoom; i++) {
 					RoomDetailDto detailRoom = RoomDetailDto.builder().roomNo(registeredRoomNo).roomName(roomName).build();
 					roomMapper.roomDetailRegister(detailRoom);
 				}
@@ -167,62 +169,52 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 
 	}
 
-	/*
-	 * @Override public int modifyRoomInfo(MultipartHttpServletRequest request) {
-	 * 
-	 * int roomNo = Integer.parseInt(request.getParameter("roomNo")); String
-	 * roomName = request.getParameter("roomName"); String info =
-	 * request.getParameter("info"); int price = Integer.parseInt(
-	 * request.getParameter("price")); int people =
-	 * Integer.parseInt(request.getParameter("people"));
-	 * 
-	 * RoomDto room = RoomDto.builder() .roomNo(roomNo) .roomName(roomName)
-	 * .info(info) .price(price) .people(people) .build();
-	 * 
-	 * 
-	 * int updateRoom = roomMapper.modifyRoomInfo(room);
-	 * 
-	 * return updateRoom; }
-	 */
+	
 
 	@Override
-	public Map<String, Object> modifyRoomInfo(MultipartHttpServletRequest request) {
-
-		Map<String, Object> response = new HashMap<>();
-
-		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-		String roomName = request.getParameter("roomName");
-		String info = request.getParameter("info");
-		int price = Integer.parseInt(request.getParameter("price"));
-		int people = Integer.parseInt(request.getParameter("people"));
+	public boolean modifyRoomInfo(MultipartHttpServletRequest request) {
 
 		try {
-			RoomDto room = RoomDto.builder().roomNo(roomNo).roomName(roomName).info(info).price(price).people(people).build();
+			int roomNo = Integer.parseInt(request.getParameter("roomNo"));
+			String roomName = request.getParameter("roomName");
+			String info = request.getParameter("info");
+			int price = Integer.parseInt(request.getParameter("price"));
+			int people = Integer.parseInt(request.getParameter("people"));
 
-			roomMapper.modifyRoomInfo(room);
-
-			response.put("success", true);
+			RoomDto room = RoomDto.builder()
+															.roomNo(roomNo)
+															.roomName(roomName)
+															.info(info)
+															.price(price)
+															.people(people)
+														.build();
+			
+			int updateRoomInfo =  roomMapper.modifyRoomInfo(room);
+			return updateRoomInfo > 0;
+			
 		} catch (Exception e) {
-			response.put("errorMessage", e.getMessage());
+			e.printStackTrace();
+			return false;
 		}
-
-		return response;
+		
+		
+		
+		
+		
 	}
 
 	@Override
 	@Transactional
-	public Map<String, Object> modifyRoomNum(MultipartHttpServletRequest request) {
-
-		Map<String, Object> response = new HashMap<>();
-
-		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-		int originRoomNum = Integer.parseInt(request.getParameter("originNum"));
-		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
-
-		String roomName = request.getParameter("roomName");
-
+	public boolean modifyRoomNum(MultipartHttpServletRequest request) {
+		
+		
 		try {
-
+			
+			int roomNo = Integer.parseInt(request.getParameter("roomNo"));
+			int originRoomNum = Integer.parseInt(request.getParameter("originNum"));
+			int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+			String roomName = request.getParameter("roomName");
+			
 			if (originRoomNum > roomNum) {
 
 				for (int i = 0; i < originRoomNum - roomNum; i++) {
@@ -240,54 +232,50 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			} else {
 				roomMapper.modifyRoomDetail(roomName, roomNo);
 			}
-
-			response.put("success", true);
+			
+			return true;
+			
 		} catch (Exception e) {
-
-			response.put("errorMessage", e.getMessage());
+			e.printStackTrace();
+			return false;
 		}
 
-		return response;
 	}
 
 	@Override
 	@Transactional
-	public Map<String, Object> modifyRoomImg(MultipartHttpServletRequest request) {
-
-		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-
-		Map<String, Object> response = new HashMap<>();
+	public boolean modifyRoomImg(MultipartHttpServletRequest request) {
 
 		try {
+			
+			int roomNo = Integer.parseInt(request.getParameter("roomNo"));
 
 			// DB에 저장된 기존 이미지 목록 가져오기
 			List<RoomImgDto> roomImgList = roomMapper.getRoomImgListByNo(roomNo);
 			
-			System.out.println("roomImgList::" + roomImgList);
-
 			// DB에 있는 roomImgNo 리스트 생성
 			List<Integer> dbImgNos = roomImgList.stream().map(RoomImgDto::getRoomImgNo).collect(Collectors.toList());
+			
+			
+			// 남아있는 roomImgNo 리스트
+			String[] clientImgNoStrings = request.getParameterValues("clientImgNos"); 
+			
+	    List<Integer> clientImgNos = (clientImgNoStrings != null && clientImgNoStrings.length > 0 && !clientImgNoStrings[0].isEmpty())
+          ? Arrays.stream(clientImgNoStrings[0].split(","))
+                  .filter(str -> !str.isEmpty()) // 빈 문자열 제거
+                  .map(Integer::parseInt)
+                  .collect(Collectors.toList())
+          : new ArrayList<>(); // 비어있을 경우 빈 리스트로 초기화
 
-			System.out.println("dbImgNos::" + dbImgNos);
 			
-			// 클라이언트에서 유지할 roomImgNo 리스트를 받아온다고 가정
 			
-			String[] clientImgNoStrings = request.getParameterValues("clientImgNos");
-			List<Integer> clientImgNos = Arrays.stream(clientImgNoStrings[0].split(","))
-			        .map(Integer::parseInt)
-			        .collect(Collectors.toList());
-			
-			System.out.println("clientImgNos::" + clientImgNos);
-			
-
 			// 삭제할 이미지 구분 (DB에는 있지만 클라이언트에서 삭제된 이미지)
 			
 			List<Integer> deleteImgNos = dbImgNos.stream().filter(no -> !clientImgNos.contains(no))
 					.collect(Collectors.toList());
+		
 
 			System.out.println("deleteImgNos::" +deleteImgNos);
-			
-			
 			
 			// 이미지 삭제
 			for (int roomImgNo : deleteImgNos) {
@@ -320,15 +308,14 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 				}
 
 			}
-
-			response.put("success", true);
+			
+			return true;
 		} catch (Exception e) {
 
 			e.printStackTrace();
-			response.put("errorMessage", e.getMessage());
+			return false;
 		}
 
-		return response;
 
 	}
 	

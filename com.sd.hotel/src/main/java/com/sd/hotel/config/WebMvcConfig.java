@@ -2,9 +2,12 @@ package com.sd.hotel.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+
 
 
 @Configuration
@@ -12,6 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
   //application.properties 파일의 설정값 저장
   @Value("${service.file.registerRoomUrl}")
   public String UP_DIR;
+  
   
   @Override
   public void addViewControllers(ViewControllerRegistry registry){
@@ -37,5 +41,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
   //    registry.addResourceHandler(UP_DIR+"blog/**")
   //       .addResourceLocations("file://" + UP_DIR);
   }
+   
 
 }

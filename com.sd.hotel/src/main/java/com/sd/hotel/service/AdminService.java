@@ -16,4 +16,5 @@ public interface AdminService {
 	 String getId();
 	 void addEmployee(HttpServletRequest request, HttpServletResponse response);
 	 
+	 Map<String, Object> modifyFirstPw(HttpServletRequest request, );
 }

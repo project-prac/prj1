@@ -28,11 +28,30 @@ public class AdminController {
 	public String getMypage() {
 		return "admin/adminMypage";
 	}
-	
+	/*
 	@PostMapping("/modifyAdminPw.do")
 	public String modifyAdminPw() {
 		
+		
+		
 		return "admin/adminMypage";
+	}*/
+	
+	@PostMapping("modifyAdminPw.do")
+	public Map<String, Object> modifyFirstPw(HttpServletRequest request, HttpServletResponse response){
+		
+		Map<String, Object> response = new HashMap<>();
+		
+		try {
+			adminService.
+			response.put("success", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.put("success", false);
+
+		}
+		
+		return response;
 	}
 	
 	@GetMapping("/index.page")

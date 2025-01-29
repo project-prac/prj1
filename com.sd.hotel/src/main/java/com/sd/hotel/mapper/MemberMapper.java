@@ -13,6 +13,8 @@ public interface MemberMapper {
 	int insertMember(MemberDto member);
 	MemberDto getMemberById(String userId);
 
+	// memberNo가져오기 위함..
+	int getMemberNo(String userId);
 	
 	int updateMember(MemberDto member);
 	int updatePw(String userId, String newpw);

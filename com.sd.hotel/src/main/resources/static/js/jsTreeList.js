@@ -1,10 +1,6 @@
 
 $(document).ready(function() {
 
-  // 컨텍스트 경로 추출함수
-
-
-
   let jsTreeData = [];
   let roomList;
   let roomImgList;
@@ -15,6 +11,7 @@ $(document).ready(function() {
     headers: {
       'Content-Type': 'application/json'
     }
+    
   })
 
     .then(response => response.json())
@@ -27,12 +24,15 @@ $(document).ready(function() {
       // 각 roomNo에 연결된 roomDetail의 개수를 계산
       const roomDetailCountMap = roomDetailList.reduce((acc, detail) => {
         const roomNo = detail.roomNo;
-        if (!acc[roomNo]) {
+        if (acc[roomNo] === undefined) { // acc객체에 해당 roomNo가 있는지 확인
           acc[roomNo] = 0;
         }
         acc[roomNo]++;
         return acc;
-      }, {});
+      }, {}); // 초기값 빈 객체로 설정
+      /*roomDetailCountMap = {101:1, 102:1, 103:1}.. 이런식으로 담길것
+      */ 
+
 
       jsTreeData = roomList.map(room => {
         const detailCount = roomDetailCountMap[room.roomNo] || 0;
@@ -45,8 +45,7 @@ $(document).ready(function() {
           state: { opened: false }
         }
       });
-      // console.log(jsTreeData)
-
+      
       // jstree Start~~
       $('#jstree').jstree({
         'core': {
@@ -59,7 +58,6 @@ $(document).ready(function() {
 
 
     })
-
 
 
   // jsTree node클릭시 정보open
@@ -88,7 +86,7 @@ $(document).ready(function() {
       roomInfo.style.display = "block";
     }
 
-    //이미지 추가
+    // 이미지 불러오기
     const roomImgContainer = document.querySelector('.roomImgLists');
     roomImgContainer.innerHTML = '';  // 기존 이미지 초기화
     let clientImgNos = []; //DB에서 불러온 이미지들의 roomImgNo
@@ -105,13 +103,12 @@ $(document).ready(function() {
         roomImgContainer.appendChild(imgElement);
         
         clientImgNos.push(img.roomImgNo);
-
-      });
+       });
     }
     $('#clientImgNos').val(clientImgNos);
     
     
-    
+    // 이미지 수정
     const roomImgListContainer = document.querySelector('#modifyImgLists');
     roomImgListContainer.innerHTML = '';
 
@@ -119,56 +116,64 @@ $(document).ready(function() {
     const MAX_FILE_COUNT = 4; // 최대 파일 개수
     let imgModifyInput = document.getElementById('modifyImgFile');
     let modifyBtn = document.getElementById('imgModify-button');
-    let originImgFiles = [];
+    let originImgFiles = []; // 화면에 표시되는 현재이미지 파일 목록
 
-
+    // 초기 이미지 파일 목록 불러오기
     function originImgPush() {
       roomImg.forEach(img => {
-        originImgFiles.push(img)
+        originImgFiles.push(img) // 서버에서 불러온 이미지 목록 배열에 추가
+        
       })
     }
     originImgPush();
     console.log(originImgFiles)
 
+    // 이미지 추가 클릭시 파일 선택창 열리게
     modifyBtn.addEventListener('click', function(e) {
-      imgModifyInput.click();
+      imgModifyInput.click(); //선택 창을 강제로 열음
     })
-
+    
+    
     imgModifyInput.addEventListener('change', function(e) {
-      modifyAddFiles(Array.from(imgModifyInput.files));
+      modifyAddFiles(Array.from(imgModifyInput.files)); //선택한 파일을 배열로 변환 후 이미지 추가
     })
-
+    
+    // 이미지 추가함수
     function modifyAddFiles(newFiles) {
 
-      let totalSize = originImgFiles.reduce((sum, file) => sum + file.size, 0);
+      let totalSize = originImgFiles.reduce((sum, file) => sum + file.size, 0); // 현재 총 파일 크기
 
-      let hasDuplicateFile = false;
-      let hasExceededCount = false;
-      let hasExceededSize = false;
+      let hasDuplicateFile = false; //중복된 파일 여부
+      let hasExceededCount = false; // 파일 개수 초과 여부
+      let hasExceededSize = false;  // 파일 크기 초과 여부
 
       newFiles.forEach(file => {
-
+      
+        // 중복 파일 체크
         if (originImgFiles.some(img => file.name === img.roomImgName)) {
           hasDuplicateFile = true;
-          return;
+          return; //중복일시 추가하지않음
         }
-
+        
+        // 파일 개수 초과 체크
         if (originImgFiles.length >= MAX_FILE_COUNT) {
           hasExceededCount = true;
-          return;
+          return; // 개수 초과일시 추가하지않음
         }
 
-
+        // 파일 크기 초과 체크
         if (file.size + totalSize > MAX_FILE_SIZE) {
           hasExceededSize = true;
-          return;
+          return; // 용량 초과시 추가하지않음
         }
-
+        
+        
+        // 차일 추가 및 총 파일 크기 갱신
         totalSize += file.size;
         newFiles = []; // 초기화 후 다시 넣음
         newFiles.push(file);
-        originImgFiles.push(file);
-        updateImgListContainer(newFiles);
+        originImgFiles.push(file); //파일 목록에 추가
+        updateImgListContainer(newFiles); //화면에 새 파일 표시
 
       })
 
@@ -185,6 +190,7 @@ $(document).ready(function() {
 
     }
 
+    // 초기 이미지 목록을 화면에 표시
     function displayInitialImgLists() {
       originImgFiles.forEach(file => {
         addFileToList(file);
@@ -192,23 +198,22 @@ $(document).ready(function() {
 
     }
 
-    displayInitialImgLists();
+    displayInitialImgLists(); // 페이지 로드시 초기 이미지 목록 화면에 표시
 
 
-    // 파일 추가 후 초기화
+    // 새로 추가한 파일 목록 화면에 업데이트
     function updateImgListContainer(newFiles) {
       newFiles.forEach(file => {
-
-        addFileToList(file);
+        addFileToList(file); 
       })
     }
 
 
     // 이미지 목록에 파일 추가 및 삭제 버튼 설정
-    function addFileToList(file, index) {
+    function addFileToList(file) {
 
       let listsItem = document.createElement('p');
-      let imgName = file.roomImgName || file.name; // 파일명 표시
+      let imgName = file.roomImgName || file.name;  // 파일 이름 설정 (서버 파일은 roomImgName, 선택한 파일은 name)
       listsItem.innerText = imgName;
 
       let removeBtn = document.createElement('button');
@@ -228,8 +233,11 @@ $(document).ready(function() {
 
     // 파일 삭제 함수
     function removeFile(file) {
+      //파일 목록(originImgFiles)에서 해당 파일 제거
       originImgFiles = originImgFiles.filter(imgFile => imgFile !== file);
+      // clientImgNos 목록에서도 해당 파일의 imgNo 제거
       clientImgNos = clientImgNos.filter(imgNo => imgNo !== file.roomImgNo)
+      // 서버에 보낼 데이터로 hidden input 값 설정
       $('#clientImgNos').val(clientImgNos);
       console.log("Updated originImgFiles:", originImgFiles);
       console.log(clientImgNos)
@@ -259,7 +267,7 @@ $(document).ready(function() {
       contentType: false, // FormData 사용 시 반드시 false로 설정
       processData: false,
 
-      success: function(response, data) {
+      success: function(response) {
 
         if (response.success) {
 
@@ -323,6 +331,7 @@ $(document).ready(function() {
     roomNoSelect.change(function() {
       selectedValue = $(this).val();
       $('#parent-Name').val(selectedValue)
+     
     })
 
   }
@@ -346,6 +355,7 @@ $(document).ready(function() {
       formData.append('files', file); // 'files'는 서버에서 받을 이름으로 설정
     });
 
+    //확인코드
     for (var pair of formData.entries()) {
       if (pair[1] instanceof File) {
         console.log(pair[0] + ': ' + pair[1].name + ', size: ' + pair[1].size + ' bytes'); // 파일 이름과 크기를 출력

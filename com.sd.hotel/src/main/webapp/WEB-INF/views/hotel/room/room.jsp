@@ -11,166 +11,116 @@
 <c:set var="room" value="${roomInfo}" />
 
 <jsp:include page="../../hotel/layout/header.jsp" />
-<link rel="stylesheet" href="/resources/hotel/css/room.css">
+<!-- <link rel="stylesheet" href="/resources/hotel/css/room.css"> -->
+<link rel="stylesheet" href="/resources/hotel/css/roomCss.css">
 
-<!--================Breadcrumb Area =================-->
-<section class="breadcrumb_area">
-	<div class="overlay bg-parallax" data-stellar-ratio="0.8"
-		data-stellar-vertical-offset="0" data-background=""></div>
-	<div class="container">
-		<div class="page-cover text-center">
-			<h2 class="page-cover-tittle">Accomodation</h2>
-			<ol class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
-				<li class="active">Accomodation</li>
-			</ol>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+
+
+
+<div class="sub">
+  <div class="sub_in roomJsp" >
+    
+    <!-- == left nav == -->
+		<div class="left-nav-area">
+		  <p class="left-nav-title"> 객실</p>
+		  <ul class="roomList">
+		   <c:forEach items="${roomList}" var="roomParent">
+		        <c:if test="${roomParent.depth == 0}">
+		          <li class="depth1">
+		            <p>${roomParent.roomName}</p>
+		            <ul>
+		              <c:forEach items="${roomList}" var="roomChild">
+		                 <c:if test="${roomChild.parentName != '#' && roomParent.roomNo == roomChild.parentName}">
+		                  <li class="roomName depth2" data-room-no="${roomChild.roomNo}">${roomChild.roomName}</li>
+		                </c:if>
+		              </c:forEach>
+		            </ul>
+		          </li>
+		        </c:if>
+		    </c:forEach>   
+		  </ul>
 		</div>
-	</div>
-</section>
-<!--================Breadcrumb Area =================-->
+    <!-- == left nav End== -->
+    
+    <!-- Room상세 Start -->
+    <div class="roomCon">
+      <p class="title">${room.roomName}</p>
+      
+      <!--  
+      <c:forEach items="${roomImg}" var="img">
+       <img src="${img.uploadPath}/${img.filesystemName}">
+      </c:forEach>
 
-<!-- == left nav == -->
-<div class="left-nav-area">
-	<ul class="">
-	 <c:forEach items="${roomList}" var="roomParent">
-      <c:choose>
-        <c:when test="${roomParent.depth == 0}">
-          <li>${roomParent.roomName}
-            <ul>
-              <c:forEach items="${roomList}" var="roomChild">
-                 <c:if test="${roomChild.parentName != '#' && roomParent.roomNo == roomChild.parentName}">
-                  <li class="roomName" data-room-no="${roomChild.roomNo}">${roomChild.roomName}</li>
-                </c:if>
-              </c:forEach>
-            </ul>
+-->
+      
+      <div class="roomImg">
+      
+          <!-- Swiper -->
+
+					  <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+					    <div class="swiper-wrapper">
+					      <c:forEach items="${roomImg}" var="img">
+					      <div class="swiper-slide">
+					        <img src="${img.uploadPath}/${img.filesystemName}">
+					      </div>
+					      </c:forEach>
+					      
+					    </div>
+					    <div class="swiper-button-next"></div>
+					    <div class="swiper-button-prev"></div>
+					  </div>
+					  <div thumbsSlider="" class="swiper mySwiper">
+					    <div class="swiper-wrapper bottom-swiper">
+					      <c:forEach items="${roomImg}" var="img">
+					      <div class="swiper-slide">
+					        <img src="${img.uploadPath}/${img.filesystemName}" />
+					      </div>
+					      </c:forEach>
+					    </div>
+					  </div>
+      
+      
+      
+      </div>
+      <div class="roomInfo">
+        <p class="title"> 객실 정보</p>
+        <ul>
+          <li>
+            <p class="tit">정보</p>
+            <p class="con"> ${room.info}</p>
           </li>
-        </c:when>
-      </c:choose>
-    </c:forEach>		
-	</ul>
+          <li>
+            <p class="tit">인원</p>
+            <p class="con"> ${room.guestCount}</p>
+          </li>
+          <li>
+            <p class="tit">가격</p>
+            <p class="con">
+              <fmt:formatNumber type="number" maxFractionDigits="3" value="${room.price}" /> 원
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    
+    <!-- Room상세 End -->
+    
+  </div>
 </div>
 
-<!--================ Accomodation Area  =================-->
-<section class="accomodation_area section_gap">
-	<div class="container">
-		<div class="section_title text-center">
-			<h2 class="title_color">${room.roomName}</h2>
-			<c:forEach items="${roomImg}" var="img">
-			 <img src="${img.uploadPath}/${img.filesystemName}">
-			</c:forEach>
-			<p>We all live in an age that belongs to the young at heart. Life
-				that is becoming extremely fast,</p>
-		</div>
-		
-		<style>
-		.area{display:flex;}
-		</style>
-		
-		<div class="row mb_30">
-			<div class="col-md-6 d_flex align-items-center" >
-				<div class="accomodation_item text-left">
-					<div class="hotel_img">
-						<img src="image/room1.jpg" alt="">
-					</div>
-					<a href="#"><h4 class="sec_h4">${room.roomName}</h4></a>
-					<div class="area">
-					가격 :
-					 <h5>
-           <fmt:formatNumber type="number" maxFractionDigits="3" value="${room.price}" /> 원
-           </h5>
-					</div>
-					<div class="area">
-					정보 : ${room.info}
-					</div>
-					<div class="area">
-					인원 : ${room.people}
-					</div>
-					
-				</div>
-			</div>
-			
-		</div>
-	</div>
-</section>
-<!--================ Accomodation Area  =================-->
-<!--================Booking Tabel Area =================-->
-<section class="hotel_booking_area">
-	<div class="container">
-		<div class="row hotel_booking_table">
-			<div class="col-md-3">
-				<h2>
-					Book<br> Your Room
-				</h2>
-			</div>
-			<div class="col-md-9">
-				<div class="boking_table">
-					<div class="row">
-						<div class="col-md-4">
-							<div class="book_tabel_item">
-								<div class="form-group">
-									<div class='input-group date' id='datetimepicker11'>
-										<input type='text' class="form-control"
-											placeholder="Arrival Date" /> <span
-											class="input-group-addon"> <i class="fa fa-calendar"
-											aria-hidden="true"></i>
-										</span>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class='input-group date' id='datetimepicker1'>
-										<input type='text' class="form-control"
-											placeholder="Departure Date" /> <span
-											class="input-group-addon"> <i class="fa fa-calendar"
-											aria-hidden="true"></i>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="book_tabel_item">
-								<div class="input-group">
-									<select class="wide">
-										<option data-display="Adult">Adult</option>
-										<option value="1">Old</option>
-										<option value="2">Younger</option>
-										<option value="3">Potato</option>
-									</select>
-								</div>
-								<div class="input-group">
-									<select class="wide">
-										<option data-display="Child">Child</option>
-										<option value="1">Child</option>
-										<option value="2">Baby</option>
-										<option value="3">Child</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="book_tabel_item">
-								<div class="input-group">
-									<select class="wide">
-										<option data-display="Child">Number of Rooms</option>
-										<option value="1">Room 01</option>
-										<option value="2">Room 02</option>
-										<option value="3">Room 03</option>
-									</select>
-								</div>
-								<a class="book_now_btn button_hover" href="#">Book Now</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!--================Booking Tabel Area  =================-->
 
 
 
 
 
-<script src="${contextPath}/resources/js/roomList.js"></script>
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="${contextPath}/resources/js/room.js"></script>
 <jsp:include page="../../hotel/layout/footer.jsp" />

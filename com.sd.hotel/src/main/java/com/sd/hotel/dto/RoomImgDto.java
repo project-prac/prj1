@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RoomImgDto {
-	int roomImgNo, roomNo;
-	String roomImgName, uploadPath, filesystemName;
+	private int roomImgNo, roomNo;
+	private String roomImgName, uploadPath, filesystemName;
 	private transient long size; // DB에 매핑되지 않는 필드
 }

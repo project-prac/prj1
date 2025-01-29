@@ -1,5 +1,6 @@
 package com.sd.hotel.controller;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sd.hotel.dto.CustomUserDetails;
 import com.sd.hotel.dto.MemberDto;
+import com.sd.hotel.dto.ReservationDto;
+import com.sd.hotel.service.UserRoomService;
 import com.sd.hotel.service.UserService;
 
 
@@ -28,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	
 	private final UserService userService;
+	private final UserRoomService userRoomService;
 	
 	@GetMapping("/signup.page")
 	public String signup() {
@@ -68,6 +73,11 @@ public class UserController {
 		return "user/mypage";
 	}
 	
+	@GetMapping("/mypageList.page")
+	public String myPageList() {
+		return "user/mypageList";
+	}
+	
 	@GetMapping("/modifyMypage.page")
 	public String getMypage() {
 		return "user/modifyMypage";
@@ -93,7 +103,36 @@ public class UserController {
 		userService.modifyPw(request, response);
 		return "user/modifyPw";
 	}
-
+	
+	/*마이페이지 내 예약 내역확인*/
+	@GetMapping("/myReserve.do")
+	public String myReservePage(Authentication authentication,Model model) {
+		
+		String userID = authentication.getName();
+		int memberNo = userService.getMemberNo(userID);
+		
+		System.out.println(memberNo);
+		
+		List<ReservationDto> reservedRoom = userRoomService.getReservedRoom(memberNo);
+		
+		System.out.println("reservedRoom::"+reservedRoom);
+		model.addAttribute("reservedRoom",reservedRoom );
+		
+		
+		return "user/myReserve";
+	}
+	
+	
+	/*마이페이지 내 예약 상세보기*/
+	@PostMapping("/myReserveDetail.do")
+	public String getReservedDetail(@RequestParam("reservationNo") int reservationNo,  Model model) {
+		
+		ReservationDto reservedRoom = userRoomService.getReservedRoomDetail(reservationNo);
+		model.addAttribute("reservedRoom",reservedRoom );
+		
+		return "user/myReserveDetail";
+	}
+	
 	
 	
 	

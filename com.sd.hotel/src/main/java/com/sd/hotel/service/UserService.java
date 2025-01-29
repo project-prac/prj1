@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 
-import com.sd.hotel.dto.CustomUserDetails;
 import com.sd.hotel.dto.MemberDto;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,5 +23,9 @@ public interface UserService {
 	// 로그인 사용자 정보 수정
 	void modifyMember(HttpServletRequest request);
 	int modifyPw(HttpServletRequest request, HttpServletResponse response);
+	
+	//userId통해 memberNo가져옴
+	int getMemberNo(String userId);
+
 	
 }

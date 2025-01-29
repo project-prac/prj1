@@ -7,4 +7,5 @@ import com.sd.hotel.dto.ConfigAdminDto;
 @Mapper
 public interface ConfigAdminMapper {
 	ConfigAdminDto getAdminById(String userId);
+	int updatePw(String userId);
 }

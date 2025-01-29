@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RoomInfoDto {
-	int roomTypeNo, roomInfoNo, price, people;
-	String roomInfoName, Info;
+	private int roomTypeNo, roomInfoNo, price, people;
+	private String roomInfoName, Info;
 }
