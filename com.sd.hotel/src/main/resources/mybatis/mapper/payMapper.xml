@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sd.hotel.mapper.PayMapper">
+
+  <insert id="roomPay"
+          parameterType="paymentDto">
+    <selectKey order="BEFORE" keyProperty="paymentNo" resultType="int">
+      SELECT PAY_SEQ.NEXTVAL
+        FROM DUAL
+    </selectKey>
+        INSERT INTO PAYMENT(
+                  PAYMENT_NO
+                , MEMBER_NO
+                , RESERVATION_NO
+                , PAYMENT_AMOUNT
+                , PAYMENT_DATE
+
+                ) VALUES(
+                  #{paymentNo}
+                , #{memberNo}
+                , #{reservationNo}
+                , #{paymentAmount}
+                , CURRENT_DATE
+
+                )
+  </insert>
+
+  <!--결제에 의한 RESERVATION 테이블 STATUS변경   -->
+   <update id="statusCompleted">
+    UPDATE RESERVATION
+       SET STATUS = #{status}
+     WHERE RESERVATION_NO = #{reservationNo}
+   </update>
+
+<!--
+  <select id="getPayInfoByResNo"
+          result>
+    SELECT PAYMENT_NO, MEMBER_NO, RESERVATION_NO, PAYMENT_AMOUNT
+         , PAYMENT_DATE, PAYMENT_METHOD, PAYMENT_STATUS
+      FROM PAYMENT
+     WHERE RESERVATION_NO = #{reservationNo}
+  
+  </select>
+  -->
+</mapper>

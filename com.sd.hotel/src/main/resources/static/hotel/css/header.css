@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Manrope:wght@200..800&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+/*
+css 폰트
+font-family: "Kanit", serif;
+font-family: "Manrope", serif;
+font-family: "Anton", serif;
+font-family: "Noto Sans", serif;
+*/
+
+:root{
+  --Anton: "Anton", serif;
+  --Noto :  "Noto Sans";
+  --Manrope:"Manrope";
+  --Kanit: "Kanit", serif;
+}
+
+/*reset*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body{
+  line-height: 1;
+  font-family: var(--Noto);
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a{    text-decoration: none;color:#000}
+/*┌--------------------------------------
+  │     Header ★                             
+  └-------------------------------------*/
+
+#header{position: fixed;top: 0;left:0;
+width: 100%;background: #fff;z-index:5000}
+#header .header_in{width:100%; max-width:1920px;margin:0 auto; height:80px;
+display: flex;justify-content: space-between;align-items: center;}
+
+.logo a{display: block;font-family: var(--Anton);
+font-size: 50px;}
+
+.nav {height:100%;}
+.nav .nav_ul{height:100%;display: flex; }
+.nav .nav_ul>li{position:relative;}
+.nav .nav_ul>li>a{display:block;height:100%;padding:0 20px;line-height:80px;transition:all 0.3s}
+.nav .nav_ul>li>a:hover{}
+.nav .sub_ul{position:absolute;background:#fff;width:120%;
+left:50%;transform:translateX(-50%)}
+.nav .sub_ul>li>a{display:block;width:100%;height:40px;line-height:40px;border:#000;}
+
+.gnb ul{display: flex;}

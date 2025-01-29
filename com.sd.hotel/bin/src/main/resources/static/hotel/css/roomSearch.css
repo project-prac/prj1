@@ -1,0 +1,75 @@
+@charset "UTF-8";
+/*┌--------------------------------------
+  │     sub페이지 기본설정 ★                             
+  └-------------------------------------*/
+
+  .sub{width:100%;min-height:800px;background:#F4F5F7;margin-top:80px;padding:50px 0 20px;}
+  .sub_in{width:100%;max-width:1400px;margin:0 auto;background:#fff;padding:40px 20px 80px;}
+  .sub_title{font-size:28px;font-family:var(Manrope);margin-bottom:30px;}
+
+
+/*┌--------------------------------------
+  │     객실 검색쪽.jsp ★                             
+  └-------------------------------------*/
+.search_area{width:80%;height:450px;margin:0 auto;
+  background:#eee;
+  
+}
+#form_search{width:80%;}
+
+/*┌--------------------------------------
+  │     roomSearchResult.jsp ★                             
+  └-------------------------------------*/
+  
+  .searchResult .sub_title {width:85%;margin: 0 auto 30px;text-align:center;padding-bottom:14px;border-bottom: 4px solid #796f50;}
+  
+  
+  .research_result .list{width:80%;margin:0 auto 34px;; padding: 10px 10px 40px;
+  border:1px solid #eee }
+  
+  
+  
+/*스와이퍼부분*/
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    
+ /* roomInfo 객실정보 부분 (roomCss발췌)*/
+ .roomInfo{margin-top:40px;}
+	.roomInfo .title{font-size: 18px;
+	    font-weight: bold;
+	    color: #796f50;
+	    width:100%;
+	border-bottom:4px solid #796f50;
+	margin-bottom:20px;padding-bottom:14px;}
+	
+	.roomInfo>ul>li{display:flex;}
+	.roomInfo>ul>li p{padding:10px 0;}
+	.roomInfo>ul>li .tit{width:15%;font-size:20px;background:#796f50;color:#fff;text-align:center}
+	.roomInfo>ul>li .con{font-size:18px;padding-left:16px;}
+ 
+/*┌--------------------------------------
+  │     roomReserve.jsp ★                             
+  └-------------------------------------*/
+  
+  /*항목의 input*/
+  .con_input{border:none;font-size: 20px;}
+  .con_reserve{height:36px;border:1px solid #e8e8e8;font-size: 20px;}

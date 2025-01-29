@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+
+/*┌--------------------------------------
+  │     Main ★                             
+  └-------------------------------------*/
+.section_in{width:100%;max-width:1920px; margin:0 auto;}
+
+#main{width: 100%;height:100vh;
+  background:url(/resources/hotel/images/bg2.jpg) no-repeat;background-size: cover;
+
+}
+#main .section_in{position: relative;height: 100%;;}
+#main .search_area{width:80%;height:450px;
+  background:rgba(255,255,255,0.4);
+  position: absolute;bottom:20px;left:50%;transform: translateX(-50%);
+}
+
+#form_search{width: 100%;font-family: var(--Manrope);padding:20px;color:#b3b3b3;}
+#form_search #calendar-container{display: flex;justify-content: space-around;align-items: flex-end;}
+#form_search label{color:#b3b3b3;font-size:14px;font-weight: bold;}
+#form_search input{color:#b3b3b3;;font-size:20px;margin-top:6px;}
+#form_search #chekin{}
+
+#form_search .hr1{width:80%;margin:20px auto;background: #fff;}
+
+
+#section1{}

@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+
+
+/*┌--------------------------------------
+  │     sub페이지 기본설정 ★                             
+  └-------------------------------------*/
+
+.sub{width:100%;min-height:800px;background:#F4F5F7;margin-top:80px;padding:50px 0;}
+.sub_in{width:100%;max-width:1400px;margin:0 auto;background:#fff;padding:40px 20px 80px;}
+.sub_title{font-size:28px;font-family:var(Manrope);margin-bottom:30px;}
+
+
+/*┌--------------------------------------
+  │     room.jsp ★                             
+  └-------------------------------------*/
+
+.roomJsp{display:flex;justify-content: space-between}
+
+.left-nav-area{
+  width:20%;
+  max-width:300px;
+  padding:20px;
+  background:#eee4c3;
+  box-sizing:border-box;
+}
+.left-nav-title{font-size:24px;font-weight:bold;color:#796f50;
+padding-bottom:5px; border-bottom:4px solid #574d30;margin-bottom:40px;}
+
+
+.left-nav-area .roomList{}
+.left-nav-area .depth1{font-size:18px;font-weight:bold;color:#796f50;
+margin-bottom:20px;}
+.left-nav-area .depth1>p{padding-bottom:6px;border-bottom:1px dashed }
+
+.left-nav-area .depth2{font-size:14px;font-weight:bold;color:#b3a479;
+padding:15px 4px;cursor:pointer}
+
+.roomImg{margin-top:12px;}
+
+/* swiper 부분 */
+    .swiper {
+      width: 100%;
+      height: 300px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .swiper-slide {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .mySwiper2 {
+      height: 500px;
+      width: 100%;
+    }
+
+    .mySwiper {
+      height: 170px;
+      box-sizing: border-box;
+      padding: 10px 0;
+      margin-top:20px;
+    }
+    .bottom-swiper{}
+
+    .mySwiper .swiper-slide {
+      width: 25%;
+      height: 100%;
+      opacity: 0.4;
+      cursor:pointer;
+      transition:all 0.3s;
+    }
+    .mySwiper .swiper-slide:hover{
+    border:6px solid #eee4c3}
+
+    .mySwiper .swiper-slide-thumb-active {
+      opacity: 1;
+    }
+
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+
+.roomCon{width:78%;}
+.roomCon .title{font-size:28px;}
+
+.roomInfo{margin-top:40px;}
+.roomInfo .title{font-size: 18px;
+    font-weight: bold;
+    color: #796f50;
+    width:80%;
+border-bottom:4px solid #796f50;
+margin-bottom:20px;padding-bottom:14px;}
+
+.roomInfo>ul>li{display:flex;}
+.roomInfo>ul>li p{padding:10px 0;}
+.roomInfo>ul>li .tit{width:15%;font-size:20px;background:#796f50;color:#fff;text-align:center}
+.roomInfo>ul>li .con{font-size:18px;padding-left:16px;}
+
+
+
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.sd.hotel.mapper.ConfigAdminMapper">
+  
+  <select id="getAdminById"
+          parameterType="String"
+          resultType="ConfigAdminDto">
+    SELECT ADMIN_NO, ROLE, USER_ID, NAME, PASSWORD
+      FROM CONFIG_ADMIN
+     WHERE USER_ID = #{userId}
+  </select>
+  
+  <update id="updatePw"
+          parameterType="String">
+    UPDATE CONFIG_ADMIN
+       SET PASSWORD = #{password}
+     WHERE USER_ID = #{userId}
+  </update>
+  
+</mapper>
