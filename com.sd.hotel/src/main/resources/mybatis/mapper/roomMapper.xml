@@ -10,7 +10,7 @@
   <!-- 중분류까지의list확인 -->
   <select id="getRoomList"
           resultType="RoomDto">
-   SELECT ROOM_NO, ROOM_NAME, DEPTH, PARENT_NAME, INFO, PRICE, GUEST_COUNT 
+   SELECT ROOM_NO, ROOM_NAME, DEPTH, PARENT_NAME, INFO, PRICE, GUEST_COUNT,TOTAL_ROOM 
      FROM ROOM
     ORDER BY ROOM_NO
   </select>

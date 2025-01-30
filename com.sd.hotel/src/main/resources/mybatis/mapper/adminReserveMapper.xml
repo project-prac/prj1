@@ -5,10 +5,46 @@
 
 <mapper namespace="com.sd.hotel.mapper.AdminReserveMapper">
 
+  <resultMap type="ReservationDto" id="ResResult">
+    <id       property="reservationNo"     column="RESERVATION_NO"/>
+    <result   property="memberNo"         column="MEMBER_NO"/>
+    <result   property="roomNo"           column="ROOM_NO"/>
+    <result   property="checkInDate"      column="CHECK_IN_DATE"/>
+    <result   property="checkOutDate"     column="CHECK_OUT_DATE"/>
+    <result   property="resName"          column="RES_NAME"/>
+    <result   property="resPhone"         column="RES_PHONE"/>
+    <result   property="resNote"          column="RES_NOTE"/>
+    <result   property="guestCount"       column="GUEST_COUNT"/>
+    <collection property="room" javaType="RoomDto">
+      <id property="roomNo" column="ROOM_NO"/>
+      <result property="roomName" column="ROOM_NAME"/>
+    </collection>
+  </resultMap>
+
+  <!-- 예약목록 전체 가져오기 -->
+  <select id="getResAll"
+            resultType="ReservationDto">
+    SELECT RESERVATION_NO, MEMBER_NO, ROOM_NO, CHECK_IN_DATE
+      FROM RESERVATION
+  </select>
 
 
+  <!-- 날짜로 예약목록 가져오기 -->
+  <select id="getResByDate"
+          resultMap="ResResult">
+    SELECT RES.RESERVATION_NO, RES.ROOM_NO, RES.MEMBER_NO,
+           RES.RES_NAME, RES.RES_PHONE, COALESCE(RES.RES_NOTE, ' ') AS RES_NOTE,
+           RES.CHECK_IN_DATE, RES.CHECK_OUT_DATE, RES.GUEST_COUNT, 
+           RES.STATUS,
+           R.ROOM_NAME
+      FROM RESERVATION RES
+      JOIN ROOM R
+        ON RES.ROOM_NO = R.ROOM_NO
+     WHERE STATUS IN('completed','reserved')
+       AND CHECK_IN_DATE = #{today}
+  </select>
 
-
+  
 
 
 

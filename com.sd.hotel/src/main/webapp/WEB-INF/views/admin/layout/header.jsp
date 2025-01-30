@@ -437,6 +437,11 @@
                 <li class="nav-item"><a class="nav-link" href="${contextPath}/admin/reservation/reservation.page">예약현황</a></li>
               </ul>
             </div>
+            <div class="collapse" id="form-elements">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="${contextPath}/admin/reservation/calendar.page">예약현황달력</a></li>
+              </ul>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#charts" aria-expanded="false" aria-controls="charts">

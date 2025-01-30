@@ -24,7 +24,7 @@ public class SecurityConfig {
 		// 경로에 대한 인가작업
 		http.authorizeHttpRequests((auth) -> auth
 
-				.requestMatchers("/admin/**").hasRole("ADMIN")
+				//.requestMatchers("/admin/**").hasRole("ADMIN")
 				.requestMatchers("/user/mypage.page").hasAnyRole("USER","ADMIN","MANAGER")
 				
 				.requestMatchers("/hotel/room/roomReserve.page").hasAnyRole("USER","ADMIN","MANAGER")
