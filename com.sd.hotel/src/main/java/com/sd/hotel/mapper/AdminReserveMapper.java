@@ -17,5 +17,5 @@ public interface AdminReserveMapper {
 
 	List<ReservationDto> getResByDate(LocalDate today);
 	
-	List<ReservationDto> getResAll();
+	List<ReservationDto> getResAll(String date);
 }

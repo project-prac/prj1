@@ -26,6 +26,7 @@
             resultType="ReservationDto">
     SELECT RESERVATION_NO, MEMBER_NO, ROOM_NO, CHECK_IN_DATE
       FROM RESERVATION
+     WHERE TO_CHAR(CHECK_IN_DATE, 'YYYY-MM-DD') = #{date}
   </select>
 
 

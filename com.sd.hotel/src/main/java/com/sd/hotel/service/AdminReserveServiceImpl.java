@@ -31,10 +31,10 @@ public class AdminReserveServiceImpl implements AdminReserveService {
 	}
 	
 	@Override
-	public List<ReservationDto> getResAll() {
+	public List<ReservationDto> getResAll(String date) {
 		
 		
 		
-		return adminReserveMapper.getResAll();
+		return adminReserveMapper.getResAll(date);
 	}
 }

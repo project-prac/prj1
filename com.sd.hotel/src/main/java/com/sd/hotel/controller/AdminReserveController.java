@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -63,7 +64,7 @@ public class AdminReserveController {
 	
 	
 	// 객실 정보 가져오기
-	/*
+	
 	@PostMapping("/roomList.do")
 	public ResponseEntity<Map<String, Object>> getRoomList(){
 		
@@ -73,9 +74,10 @@ public class AdminReserveController {
 		response.put("roomList", roomList);
 		
 		return ResponseEntity.ok(response);
-	}*/
+	}
 	
 	//예약 정보 가져오기
+	/*
 	@PostMapping("/resList.do")
 	public ResponseEntity<Map<String, Object>> getResList(){
 		
@@ -89,6 +91,24 @@ public class AdminReserveController {
 		response.put("roomList", roomList);
 		
 		return ResponseEntity.ok(response);
+	}*/
+	
+	//예약 정보 가져오기
+	
+	@PostMapping("/resList.do")
+	public ResponseEntity<Map<String, Object>> getResList(@RequestBody Map<String, String> params){
+		
+		String reservationDate = params.get("reservationDate");
+		
+		List<ReservationDto> reserves = ademinReserveService.getResAll(reservationDate);
+		//List<RoomDto> roomList = adminRoomService.getRoomList();
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("reserves", reserves);
+		//response.put("roomList", roomList);
+		
+		return ResponseEntity.ok(response);
 	}
+	
 	
 }
