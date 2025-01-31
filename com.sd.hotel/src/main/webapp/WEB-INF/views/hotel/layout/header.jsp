@@ -27,11 +27,6 @@
 <link rel="stylesheet" href="/resources/hotel/css/index.css">
 
 
-<!-- 
-<link rel="stylesheet" href="/resources/hotel/css/style.css">
-<link rel="stylesheet" href="/resources/hotel/css/responsive.css">
-<link rel="stylesheet" href="/resources/hotel/css/layout-header.css">
- -->
 
 <!--script-->
 <!--jQuery  -->
@@ -42,17 +37,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+<script src="${contextPath}/js/header.js"></script>
 
 </head>
 <body>
 
-	<!-- 
-<sec:authorize access="isAuthenticated()">
-    <p>안녕하세요, <sec:authentication property="name"/>님!</p>
-    <a href="${contextPath}/logout">로그아웃</a>
-  </sec:authorize>
- -->
 
 
 	<header id="header">
@@ -62,8 +51,8 @@
 			</h1>
 			<nav class="nav">
 				<ul class="nav_ul">
-					<li><a href="/">HOME</a></li>
-					<li>
+					<li class="nav_li"><a href="/">HOME</a></li>
+					<li class="nav_li">
 					 <a href="${contextPath}/hotel/room/room.do">객실</a>
 					 <ul class="sub_ul">
 					   <li><a href="">스탠다느</a></li>
@@ -74,11 +63,13 @@
 				</ul>
 			</nav>
 			<div class="gnb">
+			<sec:authorize access="isAuthenticated()">
 				<p>
 					안녕하세요,
 					<sec:authentication property="name" />
 					님!
 				</p>
+			</sec:authorize>
 				<ul>
 					<sec:authorize access="isAnonymous()">
 						<li><a href="${contextPath}/user/login.page">로그인</a></li>
