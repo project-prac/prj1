@@ -101,6 +101,7 @@ public class AdminReserveController {
 	public ResponseEntity<Map<String, Object>> getResList(@RequestBody Map<String, String> params){
 		
 		String reservationDate = params.get("reservationDate");
+		System.out.println("reservationDate" +reservationDate);
 		
 		List<ReservationDto> reserves = ademinReserveService.getResAll(reservationDate);
 		//List<RoomDto> roomList = adminRoomService.getRoomList();

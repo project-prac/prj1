@@ -9,8 +9,7 @@
 
 <jsp:include page="../../admin/layout/header.jsp" />
 
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/main.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/main.min.js"></script>
+
 
 
 <c:set var="date" value="${date}"/>
@@ -26,8 +25,8 @@
           <div class="tab-content tab-content-basic">
             <div class="card">
               <div class="card-body">
-                <h4>dddd</h4>
-                <p id="today"> .. ${date}</p>
+                <h4>예약현황</h4>
+                <p id="today">${date}</p>
                 
                 <style>
                 .list{list-style:none;margin-bottom:20px;
