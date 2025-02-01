@@ -37,9 +37,12 @@
                 
                 <ul id="list_checkIn">
                 <!-- 
-                  <li class="list">
+                  <li class="list"> 
+                    <p>room101<-객실명 : 예약된객실수 / 총객실수</p>
                     <div class="row">
-                      <div class="row_tit"></div>
+                      예약자명 / 예약자 연락처 /
+                      <div class="row_tit">예약상태 ; 'reserved' or 'completed'</div>
+                      <p> 상세보기 </p> <-누르면 넘어가도록
                     </div>
                     <div class="row">
                       <div class="row_tit">예약번호:</div>
