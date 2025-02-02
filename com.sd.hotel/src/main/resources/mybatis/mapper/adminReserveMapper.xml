@@ -24,7 +24,7 @@
   <!-- 예약목록 전체 가져오기 -->
   <select id="getResAll"
             resultType="ReservationDto">
-    SELECT RESERVATION_NO, MEMBER_NO, ROOM_NO, CHECK_IN_DATE
+    SELECT RESERVATION_NO, MEMBER_NO, ROOM_NO, CHECK_IN_DATE, RES_NAME
       FROM RESERVATION
      WHERE TO_CHAR(CHECK_IN_DATE, 'YYYY-MM-DD') = #{date}
   </select>
