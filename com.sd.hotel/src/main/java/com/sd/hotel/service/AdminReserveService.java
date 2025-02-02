@@ -11,5 +11,6 @@ import com.sd.hotel.dto.ReservationDto;
 public interface AdminReserveService {
 	
 	List<ReservationDto> getResByDate(LocalDate today);
+	List<ReservationDto> getResCheckIn(LocalDate today);
 	List<ReservationDto> getResAll(String date);
 }

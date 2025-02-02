@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-  fetch('/admin/reservation/roomList.do', {
+
+
+  fetch('/admin/room/roomListByCategory.do', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -9,21 +11,23 @@ document.addEventListener('DOMContentLoaded', function() {
   })
     .then(response => response.json())
     .then(data => {
-      let rooLists = data.roomList;
+      let roomLists = data.roomList;
+      
       let roomArray = [];
 
 
-
+      // 이번달+- 10일 구해내는 함수
       function getDateRange(year, month) {
         
         let dates = [];
 
         /* 이전 달 10일 */
-        
         let prevMonthLastDay = new Date(year, month, 0).getDate();
         // └─ 현재 월의 0번째 날, 이전 달의 마지막 날
         let prevMonthYear = month === 0 ? year - 1 : year;
+        // └─ 작년으로 설정
         let prevMonth = month === 0 ? 11 : month - 1;
+        
         // 이전달의 10일전부터~
         for (let day = prevMonthLastDay - 9; day <= prevMonthLastDay; day++) {
           dates.push(moment([prevMonthYear, prevMonth, day]).format('YYYY-MM-DD'));
@@ -41,7 +45,8 @@ document.addEventListener('DOMContentLoaded', function() {
         for (let day = 1; day <= 10; day++) {
           dates.push(moment([nextMonthYear, nextMonth, day]).format('YYYY-MM-DD'));
         }
-
+          
+        //console.log(dates);  
         return dates;
       }
 
@@ -49,13 +54,14 @@ document.addEventListener('DOMContentLoaded', function() {
       let currentDate = new Date();
       let year = currentDate.getFullYear();
       let month = currentDate.getMonth();
-      let dateRange = getDateRange(year, month);
+      
+      let dateRange = getDateRange(year, month); //오늘날짜 기준
 
 
       // 비동기 처리
       let fetchPromises = dateRange.map(targetDate => {
         return fngetResList(targetDate).then(reserves => {
-          rooLists.forEach(roomList => {
+          roomLists.forEach(roomList => {
             if (roomList.depth != 0) {
               let reservedCount = reserves.filter(reservation => reservation.roomNo === roomList.roomNo).length;
               roomArray.push({
@@ -78,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
           eventClick: function(info) {
             var eventDate = info.event.start; // Date 객체
             var formattedDate =  moment(eventDate).format('YYYY-MM-DD');//
-            console.log(formattedDate);
+            //console.log(formattedDate);
             window.location.href = `/admin/reservation/reservedList.do?date=${formattedDate}`;
 
           }
@@ -88,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     });
 
+
+  //예약목록 불러옴
   function fngetResList(date) {
     return fetch('/admin/reservation/resList.do', {
       method: 'POST',
@@ -102,9 +110,3 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-
-
-/*
-
-
-*/

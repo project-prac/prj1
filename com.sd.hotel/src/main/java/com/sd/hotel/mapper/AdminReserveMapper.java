@@ -16,6 +16,7 @@ import com.sd.hotel.dto.RoomImgDto;
 public interface AdminReserveMapper {
 
 	List<ReservationDto> getResByDate(LocalDate today);
+	List<ReservationDto> getResCheckIn(LocalDate today);
 	
 	List<ReservationDto> getResAll(String date);
 }

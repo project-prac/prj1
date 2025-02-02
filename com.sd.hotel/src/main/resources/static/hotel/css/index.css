@@ -17,12 +17,18 @@
 }
 
 #form_search{width: 100%;font-family: var(--Manrope);padding:20px;color:#b3b3b3;}
+#form_search .container{width:100%;}
 #form_search #calendar-container{display: flex;justify-content: space-around;align-items: flex-end;}
-#form_search label{color:#b3b3b3;font-size:14px;font-weight: bold;}
-#form_search input{color:#b3b3b3;;font-size:20px;margin-top:6px;}
+#form_search label{color:#fff;font-size:15px;font-weight: bold;}
+#form_search input{color:#b3b3b3;;font-size:20px;margin-top:6px;border:1px solid #eee}
 #form_search #chekin{}
 
 #form_search .hr1{width:80%;margin:20px auto;background: #fff;}
+
+
+#form_search .dropdown{width:100%}
+#form_search #search{width:100px;height:24px;background:#796f50;border:1px solid #796f50;color:#fff}
+
 
 
 #section1{}

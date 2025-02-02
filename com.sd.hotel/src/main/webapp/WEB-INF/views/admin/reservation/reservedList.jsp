@@ -6,6 +6,7 @@
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
 
 <link rel="stylesheet" href="/resources/admin/css/sd-room.css">
+<link rel="stylesheet" href="/resources/admin/css/reservation.css">
 
 <jsp:include page="../../admin/layout/header.jsp" />
 

@@ -86,7 +86,7 @@
 
 
 
-<script src="${contextPath}/js/adminReservation.js"></script>
+<script src="${contextPath}/js/todayCheckIn.js"></script>
 
 <jsp:include page="../../admin/layout/footer.jsp" />
 

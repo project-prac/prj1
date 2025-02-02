@@ -24,9 +24,25 @@
   <!-- 예약목록 전체 가져오기 -->
   <select id="getResAll"
             resultType="ReservationDto">
-    SELECT RESERVATION_NO, MEMBER_NO, ROOM_NO, CHECK_IN_DATE, RES_NAME
+    SELECT RESERVATION_NO, MEMBER_NO, ROOM_NO, CHECK_IN_DATE, RES_NAME,
+           RES_PHONE, RES_NOTE, STATUS
       FROM RESERVATION
      WHERE TO_CHAR(CHECK_IN_DATE, 'YYYY-MM-DD') = #{date}
+  </select>
+
+  <!-- 체크인 목록 가져오기 -->
+  <select id="getResCheckIn"
+          resultMap="ResResult">
+    SELECT RES.RESERVATION_NO, RES.ROOM_NO, RES.MEMBER_NO,
+           RES.RES_NAME, RES.RES_PHONE, COALESCE(RES.RES_NOTE, ' ') AS RES_NOTE,
+           RES.CHECK_IN_DATE, RES.CHECK_OUT_DATE, RES.GUEST_COUNT, 
+           RES.STATUS,
+           R.ROOM_NAME
+      FROM RESERVATION RES
+      JOIN ROOM R
+        ON RES.ROOM_NO = R.ROOM_NO
+     WHERE STATUS IN('completed')
+       AND CHECK_IN_DATE = #{today}          
   </select>
 
 

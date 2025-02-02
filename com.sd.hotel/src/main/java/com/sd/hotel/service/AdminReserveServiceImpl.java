@@ -22,7 +22,6 @@ public class AdminReserveServiceImpl implements AdminReserveService {
 	public List<ReservationDto> getResByDate(LocalDate today) {
 		
 		
-		
 		List<ReservationDto> reserves = adminReserveMapper.getResByDate(today);
 		System.out.println( "service reserves:"+reserves);
 		
@@ -36,5 +35,11 @@ public class AdminReserveServiceImpl implements AdminReserveService {
 		
 		
 		return adminReserveMapper.getResAll(date);
+	}
+	
+	@Override
+	public List<ReservationDto> getResCheckIn(LocalDate today) {
+		
+		return adminReserveMapper.getResCheckIn(today);
 	}
 }
