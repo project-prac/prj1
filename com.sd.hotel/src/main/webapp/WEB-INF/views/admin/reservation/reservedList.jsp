@@ -6,14 +6,14 @@
 <c:set var="dt" value="<%=System.currentTimeMillis()%>" />
 
 <link rel="stylesheet" href="/resources/admin/css/sd-room.css">
+<link rel="stylesheet" href="/resources/admin/css/reservation.css">
 
 <jsp:include page="../../admin/layout/header.jsp" />
 
-<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/main.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/main.min.js"></script>
 
 
 
+<c:set var="date" value="${date}"/>
 
 <div class="main-panel">
   <div class="content-wrapper">
@@ -26,8 +26,8 @@
           <div class="tab-content tab-content-basic">
             <div class="card">
               <div class="card-body">
-                <h4>오늘 체크인 목록</h4>
-                <p id="today"></p>
+                <h4>예약현황</h4>
+                <p id="today">${date}</p>
                 
                 <style>
                 .list{list-style:none;margin-bottom:20px;
@@ -38,9 +38,12 @@
                 
                 <ul id="list_checkIn">
                 <!-- 
-                  <li class="list">
+                  <li class="list"> 
+                    <p>room101<-객실명 : 예약된객실수 / 총객실수</p>
                     <div class="row">
-                      <div class="row_tit"></div>
+                      예약자명 / 예약자 연락처 /
+                      <div class="row_tit">예약상태 ; 'reserved' or 'completed'</div>
+                      <p> 상세보기 </p> <-누르면 넘어가도록
                     </div>
                     <div class="row">
                       <div class="row_tit">예약번호:</div>
@@ -86,7 +89,7 @@
 
 
 
-<script src="${contextPath}/js/adminReservation.js"></script>
+<script src="${contextPath}/js/reservedList.js"></script>
 
 <jsp:include page="../../admin/layout/footer.jsp" />
 

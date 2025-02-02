@@ -9,8 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sd.hotel.dto.ReservationDto;
@@ -31,10 +34,13 @@ public class AdminReserveController {
 	private final AdminReserveService ademinReserveService;
 	private final AdminRoomService adminRoomService;
 	
-	@GetMapping("/reservation.page")
+	
+	
+	
+	//오늘체크인페이지 가기
+	@GetMapping("/todayCheckIn.page")
 	public String goReservationPage() {
-		
-		return "admin/reservation/reservation";
+		return "admin/reservation/todayCheckIn";
 	}
 	
 	
@@ -53,8 +59,23 @@ public class AdminReserveController {
 	}
 	
 	
+	//상태가 reserved 말고 completed인 것만 가져오게
+	@PostMapping("/todayCheckIn.do")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> todayCheckIn() {
+		
+		LocalDate today = LocalDate.now();
+		
+		List<ReservationDto> reserves = ademinReserveService.getResCheckIn(today);
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("reserves", reserves);
+		
+		return ResponseEntity.ok(response);
+	}
 	
 	
+	// 달력페이지
 	@GetMapping("/calendar.page")
 	public String goCalendarPage() {
 		
@@ -62,33 +83,29 @@ public class AdminReserveController {
 	}
 	
 	
-	// 객실 정보 가져오기
-	/*
-	@PostMapping("/roomList.do")
-	public ResponseEntity<Map<String, Object>> getRoomList(){
-		
-		List<RoomDto> roomList = adminRoomService.getRoomList();
-		
-		Map<String, Object> response = new HashMap<>();
-		response.put("roomList", roomList);
-		
-		return ResponseEntity.ok(response);
-	}*/
-	
 	//예약 정보 가져오기
+	
 	@PostMapping("/resList.do")
-	public ResponseEntity<Map<String, Object>> getResList(){
+	public ResponseEntity<Map<String, Object>> getResList(@RequestBody Map<String, String> params){
 		
-		//LocalDate today = LocalDate.now();
-		
-		List<ReservationDto> reserves = ademinReserveService.getResAll();
-		List<RoomDto> roomList = adminRoomService.getRoomList();
+		String date = params.get("reservationDate");		
+		List<ReservationDto> reserves = ademinReserveService.getResAll(date);
 		
 		Map<String, Object> response = new HashMap<>();
 		response.put("reserves", reserves);
-		response.put("roomList", roomList);
 		
 		return ResponseEntity.ok(response);
 	}
+	
+	// reservedList(예약목록 페이지) 로 넘어가기
+	@GetMapping("/reservedList.do")
+	public String goReservedListPage(@RequestParam String date,
+																		Model model) {
+    //System.out.println("Selected date: " + date);
+    
+    model.addAttribute("date", date);
+		return "admin/reservation/reservedList";
+	}
+	
 	
 }

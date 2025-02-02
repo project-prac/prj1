@@ -51,6 +51,21 @@ public class AdminRoomController {
 
 		return ResponseEntity.ok(response);
 	}
+	
+	
+	//객실목록 (100,101,102.. 불러오기)
+	@PostMapping("/roomListByCategory.do")
+	public ResponseEntity<Map<String, Object>> getRoomLists(){
+		
+		List<RoomDto> roomList = adminRoomService.getRoomList();
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("roomList", roomList);
+		
+		return ResponseEntity.ok(response);
+	}
+	
+	
 
 	// 객실 대분류(roomNo :100 200 ..추가)
 	@PostMapping("/roomNoRegister.do")

@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+/*┌--------------------------------------
+  │     sub페이지 기본설정 ★                             
+  └-------------------------------------*/
+
+  .sub{width:100%;min-height:800px;background:#F4F5F7;margin-top:80px;padding:50px 0 20px;}
+  .sub_in{width:100%;max-width:1400px;margin:0 auto;background:#fff;padding:40px 20px 80px;}
+  .sub_title{font-size:28px;font-family:var(Manrope);margin-bottom:30px;}
+
+/*┌--------------------------------------
+  │     회원가입 signup.jsp ★                             
+  └-------------------------------------*/
+
+#frm-signup{
+
+}
+
+#frm-signup .form-group{border-bottom:1px solid #eee;line-height:40px;}
+#frm-signup label{display:inline-block;width:20%;font-size:18px;;height:40px;}
+#frm-signup input{height:26px;}
