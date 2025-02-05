@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded',function(){
   
   var userId = document.getElementById('userId');
   
-  fetch(fnGetContextPath()+'/getId.do',{
-    method:'POST',
+  fetch(fnGetContextPath()+'/getId',{
+    method:'GET',
     headers:{
       'Content-Type':'application/json'
     }
@@ -30,16 +30,11 @@ document.addEventListener('DOMContentLoaded',function(){
       
       console.log(getId.substring(7));
       var num = Number(getId.substring(7))+1
-      console.log(num)
-      console.log(manager+num)
+
       newId = manager+num;
-      console.log(newId)
-      //userId.name=newId;
       userId.value=newId;
-      console.log(typeof newId);
     }else{
       newId='manager1'
-      //userId.name=newId
       userId.value=newId;
     }
   })

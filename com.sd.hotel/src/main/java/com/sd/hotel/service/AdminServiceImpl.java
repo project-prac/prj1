@@ -76,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
 			
 			if(insertCount == 1) {
 				out.println("alert('회원추가가 완료되었습니다.')");
-				out.print("location.href='"+request.getContextPath()+"/admin/addEmployee.page';");
+				out.print("location.href='"+request.getContextPath()+"/admin/employees/new';");
 				
 			}else {
 				out.println("alert('회원추가가 실패했습니다.');");

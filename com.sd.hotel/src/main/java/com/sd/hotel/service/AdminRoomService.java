@@ -21,7 +21,7 @@ public interface AdminRoomService {
 	List<RoomDetailDto> getRoomDetailList();
 	List<RoomImgDto> getRoomImgList();
 	
-	int roomNoRegister(HttpServletRequest request, HttpServletResponse response);
+	int roomNoRegister(RoomDto roomDto);
 	Map<String, Object> roomTypeRegister(MultipartHttpServletRequest request);
 	
 	

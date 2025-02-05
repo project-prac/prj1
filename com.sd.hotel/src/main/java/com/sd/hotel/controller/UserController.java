@@ -133,7 +133,15 @@ public class UserController {
 		return "user/myReserveDetail";
 	}
 	
+	/* ↓ 코드 수정 
+	@GetMapping("/reservations/{reservationNo}")
+	public String getReservedDetail(@RequestParam("reservationNo") int reservationNo,  Model model) {
+		
+		ReservationDto reservedRoom = userRoomService.getReservedRoomDetail(reservationNo);
+		model.addAttribute("reservedRoom",reservedRoom );
+		
+		return "user/myReserveDetail";
+	}
 	
-	
-	
+	*/
 }

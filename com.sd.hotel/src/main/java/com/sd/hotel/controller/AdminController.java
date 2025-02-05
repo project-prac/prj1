@@ -24,18 +24,48 @@ public class AdminController {
 
 	private final AdminService adminService;
 	
-	@GetMapping("/adminMypage.page")
-	public String getMypage() {
-		return "admin/adminMypage";
+	/* 코드 수정 중 */
+	
+	@GetMapping("/index")
+	public String indexPage() {
+		return "admin/index";
 	}
-	/*
-	@PostMapping("/modifyAdminPw.do")
-	public String modifyAdminPw() {
+	
+	@GetMapping("/mypage")
+	public String getMypage() {
+		return "admin/mypage";
+	}
+	
+	
+	//직원추가 
+	@GetMapping("/employees/new")
+	public String addEmployeePage() {
+		return "admin/employees/new";
+	}
+	
+	@PostMapping("/employees")
+	public void addEmployee(HttpServletRequest request, HttpServletResponse response) {
+		adminService.addEmployee(request, response);
+	}
+	
+	@GetMapping(value="/getId", produces="application/json")
+	public ResponseEntity<Map<String, String>> getId() {
+		String getId = adminService.getId();
+		Map<String, String> response = new HashMap<>();
+		response.put("userId", getId);
 		
-		
-		
-		return "admin/adminMypage";
-	}*/
+		return ResponseEntity.ok(response);
+	}
+	
+	
+	/* ------ */
+	
+	
+	
+	
+	
+
+
 	
 	@PostMapping("modifyAdminPw.do")
 	public Map<String, Object> modifyFirstPw(HttpServletRequest request, HttpServletResponse response){
@@ -54,37 +84,8 @@ public class AdminController {
 		return response;
 	}
 	
-	@GetMapping("/index.page")
-	public String indexPage() {
-		return "admin/index";
-	}
-	
-	@GetMapping("/addEmployee.page")
-	public String addEmployeePage() {
-		return "admin/addEmployee";
-	}
-	
-	@PostMapping("/addEmployee.do")
-	public void addEmployee(HttpServletRequest request, HttpServletResponse response) {
-		
-		adminService.addEmployee(request, response);
-	}
-	
-	/*
-	@PostMapping(value="/getId.do", produces="application/json")
-	public ResponseEntity<List<String>> getId() {
-		List<String> idList = adminService.getIdList();
-		return ResponseEntity.ok(idList);
-	}
-	*/
-	@PostMapping(value="/getId.do", produces="application/json")
-	public ResponseEntity<Map<String, String>> getId() {
-		String getId = adminService.getId();
-		Map<String, String> response = new HashMap<>();
-		response.put("userId", getId);
-		
-		return ResponseEntity.ok(response);
-	}
+
+
 	
 	
 	
