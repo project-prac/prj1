@@ -11,7 +11,7 @@ $(document).ready(function() {
     headers: {
       'Content-Type': 'application/json'
     }
-    
+
   })
 
     .then(response => response.json())
@@ -31,7 +31,7 @@ $(document).ready(function() {
         return acc;
       }, {}); // 초기값 빈 객체로 설정
       /*roomDetailCountMap = {101:1, 102:1, 103:1}.. 이런식으로 담길것
-      */ 
+      */
 
 
       jsTreeData = roomList.map(room => {
@@ -45,7 +45,7 @@ $(document).ready(function() {
           state: { opened: false }
         }
       });
-      
+
       // jstree Start~~
       $('#jstree').jstree({
         'core': {
@@ -90,24 +90,24 @@ $(document).ready(function() {
     const roomImgContainer = document.querySelector('.roomImgLists');
     roomImgContainer.innerHTML = '';  // 기존 이미지 초기화
     let clientImgNos = []; //DB에서 불러온 이미지들의 roomImgNo
-    
+
     if (!roomImg || roomImg.length === 0) {
       roomImgContainer.innerHTML = '<p>No images available</p>';  // 이미지가 없을 때 메시지
     } else {
       roomImg.forEach(img => {
 
         const imgElement = document.createElement('img');
-        imgElement.src = `${img.uploadPath}/${img.filesystemName}`; 
+        imgElement.src = `${img.uploadPath}/${img.filesystemName}`;
         imgElement.style.height = '100px'; // 이미지 크기 설정 (원하는 대로 조정)
         imgElement.style.marginRight = '10px'; // 이미지 간격 설정
         roomImgContainer.appendChild(imgElement);
-        
+
         clientImgNos.push(img.roomImgNo);
-       });
+      });
     }
     $('#clientImgNos').val(clientImgNos);
-    
-    
+
+
     // 이미지 수정
     const roomImgListContainer = document.querySelector('#modifyImgLists');
     roomImgListContainer.innerHTML = '';
@@ -122,7 +122,7 @@ $(document).ready(function() {
     function originImgPush() {
       roomImg.forEach(img => {
         originImgFiles.push(img) // 서버에서 불러온 이미지 목록 배열에 추가
-        
+
       })
     }
     originImgPush();
@@ -132,12 +132,12 @@ $(document).ready(function() {
     modifyBtn.addEventListener('click', function(e) {
       imgModifyInput.click(); //선택 창을 강제로 열음
     })
-    
-    
+
+
     imgModifyInput.addEventListener('change', function(e) {
       modifyAddFiles(Array.from(imgModifyInput.files)); //선택한 파일을 배열로 변환 후 이미지 추가
     })
-    
+
     // 이미지 추가함수
     function modifyAddFiles(newFiles) {
 
@@ -148,13 +148,13 @@ $(document).ready(function() {
       let hasExceededSize = false;  // 파일 크기 초과 여부
 
       newFiles.forEach(file => {
-      
+
         // 중복 파일 체크
         if (originImgFiles.some(img => file.name === img.roomImgName)) {
           hasDuplicateFile = true;
           return; //중복일시 추가하지않음
         }
-        
+
         // 파일 개수 초과 체크
         if (originImgFiles.length >= MAX_FILE_COUNT) {
           hasExceededCount = true;
@@ -166,8 +166,8 @@ $(document).ready(function() {
           hasExceededSize = true;
           return; // 용량 초과시 추가하지않음
         }
-        
-        
+
+
         // 차일 추가 및 총 파일 크기 갱신
         totalSize += file.size;
         newFiles = []; // 초기화 후 다시 넣음
@@ -204,7 +204,7 @@ $(document).ready(function() {
     // 새로 추가한 파일 목록 화면에 업데이트
     function updateImgListContainer(newFiles) {
       newFiles.forEach(file => {
-        addFileToList(file); 
+        addFileToList(file);
       })
     }
 
@@ -242,7 +242,7 @@ $(document).ready(function() {
       console.log("Updated originImgFiles:", originImgFiles);
       console.log(clientImgNos)
     }
-    
+
   });
 
 
@@ -257,7 +257,7 @@ $(document).ready(function() {
 
     event.preventDefault();
     //$('#clientImgNos').val(JSON.stringify(clientImgNos));
-    
+
     var formData = new FormData(this);
 
     $.ajax({
@@ -331,10 +331,12 @@ $(document).ready(function() {
     roomNoSelect.change(function() {
       selectedValue = $(this).val();
       $('#parent-Name').val(selectedValue)
-     
+
     })
 
   }
+
+
 
 
 
@@ -342,11 +344,84 @@ $(document).ready(function() {
     $(this).next('form').stop(true, true).slideToggle(200);
   })
 
+  ////객실대분류Form 빈칸체크
+  const fnCheckNoForm = (e) => {
 
-  /**/
+    let noCheck = false;
+
+    const roomName = document.getElementById("roomNo-roomName");
+
+    if (!roomName.value.trim()) {
+      noCheck = true;
+      alert('객실명을 입력해주세요')
+    }
+    return noCheck;
+  }
+
+
+  $('#roomNoRegister').on('submit', function(event) {
+
+    const roomName = document.getElementById("roomNo-roomName");
+
+    if (!roomName.value.trim()) {
+      event.preventDefault();
+      alert('객실명을 입력해주세요');
+      return;
+    }
+
+    if (fnCheckNoForm()) {
+      return; // 빈 필드가 있으면 여기서 중단
+    }
+
+
+  })
+
+
+  //객실유형Form 빈칸체크
+  const fnCheckTypeForm = (e) => {
+
+    const roomName = document.getElementById("type-name");
+    const info = document.getElementById("type-info");
+    const price = document.getElementById("type-price");
+    const people = document.getElementById("type-people");
+    const totalRoom = document.getElementById("roomNum");
+
+
+    //  trim 있어야 빈칸 넘어가는 거 방지
+    if (!roomName.value.trim()) {
+      alert('객실명을 입력해주세요');
+      return false;
+    }
+    if (!info.value.trim()) {
+      alert('객실정보를 입력해주세요');
+      return false;
+    }
+    if (!price.value.trim()) {
+      alert('객실가격을 입력해주세요');
+      return false;
+    }
+    if (!people.value.trim()) {
+      alert('객실인원을 입력해주세요');
+      return false;
+    }
+    if (!totalRoom.value.trim()) {
+      alert('객실수를 입력해주세요');
+      return false;
+    }
+    return true;
+
+
+  }
+
+
   $('#roomTypeRegisterForm').on('submit', function(event) {
 
     event.preventDefault(); // 기본 제출 방지
+
+    if (!fnCheckTypeForm(event)) {
+      return; // 빈 필드가 있으면 여기서 중단
+    }
+
 
     var formData = new FormData(this); // FormData 객체 생성 (this는 폼)
 
@@ -368,7 +443,7 @@ $(document).ready(function() {
 
     $.ajax({
       type: 'POST',
-      url: '/admin/room/roomTypeRegister.do', // 요청할 URL
+      url: '/admin/room/types', // 요청할 URL
       data: formData, // FormData 전송
       contentType: false, // FormData 사용 시 반드시 false로 설정
       processData: false, // FormData 사용 시 반드시 false로 설정
@@ -383,12 +458,13 @@ $(document).ready(function() {
         }
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        console.log(textStatus);
-        console.log(errorThrown)
-        console.log(jqXHR)
+        //console.log(textStatus);
+        //console.log(errorThrown)
+        //console.log(jqXHR)
         alert('서버 오류가 발생했습니다.');
       }
     });
+
 
 
   });

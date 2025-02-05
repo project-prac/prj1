@@ -77,7 +77,7 @@
     <div class="section_title">객실대분류 추가하기<span>▼</span></div>
 	    <form id="roomNoRegister"
 	         enctype="multipart/form-data"
-	         action="${contextPath}/admin/room/roomNoRegister.do"
+	         action="${contextPath}/admin/room/categories"
 	         method="POST">
 	      <select id="roomNo-list" name="roomNo">
 	        
@@ -100,19 +100,19 @@
 	   <select id="roomNo-list2" name="roomNo"></select>    
 	    <div class="form-group">
 		    <label for="roomType-roomName">객실명</label>
-	      <input type="text" id="roomType-roomName" name="roomName">  
+	      <input type="text" id="type-name" name="roomName">  
 	    </div>
       <div class="form-group">
         <label for="roomType-roomName">정보</label>
-        <input type="text" id="roomType-roomName" name="info">
+        <input type="text" id="type-info" name="info">
       </div>
       <div class="form-group">
         <label for="roomType-roomName">가격</label>
-        <input type="text" id="roomType-roomName" name="price">
+        <input type="text" id="type-price" name="price">
       </div>
       <div class="form-group">
         <label for="roomType-roomName">인원수</label>
-        <input type="text" id="roomType-roomName" name="people">
+        <input type="text" id="type-people" name="people">
       </div>
       <div class="form-group">
         <label for="roomNum">객실수</label>
@@ -139,7 +139,17 @@
   
 </div>
 
+<!-- msg -->
 
+<c:if test="${not empty roomNoSuccess}">
+    <script>alert('${roomNoSuccess}');</script>
+</c:if>
+<c:if test="${not empty roomNoFail}">
+    <script>alert('${roomNoFail}');</script>
+</c:if>
+
+
+<script src="${contextPath}/js/admin/room/list.js"></script>
 <jsp:include page="../../admin/layout/footer.jsp" />
 
 

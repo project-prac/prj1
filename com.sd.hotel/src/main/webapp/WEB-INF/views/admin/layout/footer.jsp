@@ -20,7 +20,7 @@
   
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.16/jstree.min.js"></script> 
-  <script src="${contextPath}/js/jsTreeList.js"></script>
+  
 </body>
 
 </html>

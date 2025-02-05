@@ -9,11 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sd.hotel.dto.RoomDetailDto;
 import com.sd.hotel.dto.RoomDto;
@@ -78,15 +80,23 @@ public class AdminRoomController {
 	
 
 	// 객실 대분류(roomNo :100 200 ..추가)
-	@PostMapping("/roomNoRegister.do")
-	public String roomNoRegister(HttpServletRequest request, HttpServletResponse response) {
+	@PostMapping("/categories")
+	public String roomNoRegister(@ModelAttribute RoomDto roomDto, RedirectAttributes redirectAttributes) {
 
-		adminRoomService.roomNoRegister(request, response);
-		return "admin/room/roomNoRegister";
+		int registercount = adminRoomService.roomNoRegister(roomDto);
+		
+		
+		if(registercount > 0) {
+			redirectAttributes.addFlashAttribute("roomNoSuccess", "객실이 추가 되었습니다.");
+		}else {
+			redirectAttributes.addFlashAttribute("roomNoFail", "객실추가에 실패했습니다.");
+		}
+		
+		return "redirect:/admin/room/list";
 	}
 
 	// 객실 유형분류()
-	@PostMapping("/roomTypeRegister.do")
+	@PostMapping("/types")
 	@ResponseBody
 	public Map<String, Object> roomTypeRegister(MultipartHttpServletRequest request) {
 		Map<String, Object> response = new HashMap<>();
@@ -99,15 +109,7 @@ public class AdminRoomController {
 		return response; // JSON 형식으로 응답
 	}
 
-	// 객실 목록 수정하기
-	/*
-	 * @PostMapping("/roomModify.do") public String modifyRoom(HttpServletRequest
-	 * request, HttpServletResponse response) {
-	 * 
-	 * adminRoomService.modifyRoomInfo(request, response);
-	 * 
-	 * return "admin/room/roomList"; }
-	 */
+
 
 	@PostMapping("/roomModify.do")
 	public ResponseEntity<Map<String, Object>> modifyRoom(MultipartHttpServletRequest request) {

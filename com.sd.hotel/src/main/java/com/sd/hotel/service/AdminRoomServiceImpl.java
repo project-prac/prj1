@@ -69,36 +69,23 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 	}
 
 	@Override
-	public int roomNoRegister(HttpServletRequest request, HttpServletResponse response) {
-
-		int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-		String roomName = request.getParameter("roomName");
-		int depth = Integer.parseInt(request.getParameter("depth"));
-		String parentName = request.getParameter("parentName");
-
-		RoomDto room = RoomDto.builder().roomNo(roomNo).roomName(roomName).depth(depth).parentName(parentName).build();
-
-		int insertRoom = roomMapper.roomNoRegister(room);
+	public int roomNoRegister(RoomDto roomDto) {
 
 		try {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>");
-			if (insertRoom == 1) {
-				out.println("alert('추가되었습니다.');");
-				out.println("location.href='" + request.getContextPath() + "/admin/room/roomList.page';");
-			} else {
-				out.println("alert('객실추가를 실패했습니다.');");
-				out.println("history.back();");
+			
+			int insertRoom = roomMapper.roomNoRegister(roomDto);
+
+			if(insertRoom > 0) {
+				return 1;
+			}else {
+				throw new RuntimeException("실패");
 			}
-			out.println("</script>");
-			out.flush();
-			out.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		}
-
-		return insertRoom;
+		
 	}
 
 	@Override
