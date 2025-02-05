@@ -78,8 +78,8 @@
 					<sec:authorize access="isAuthenticated()">
 						<li><a href="${contextPath}/user/logout">로그아웃</a></li>
 						<c:if test="${admin.role eq 'ROLE_ADMIN'}">
-							<li><a href="${contextPath}/admin/index.page">관리자</a></li>
-							<li><a href="${contextPath}/admin/adminMypage.page">비밀번호
+							<li><a href="${contextPath}/admin/index">관리자</a></li>
+							<li><a href="${contextPath}/admin/mypage">비밀번호
 									변경</a></li>
 						</c:if>
 						<c:if test="${user.role eq 'ROLE_USER'}">

@@ -7,13 +7,22 @@
 
 <link rel="stylesheet" href="/resources/admin/css/sd-room.css">
 <link rel="stylesheet" href="/resources/admin/css/reservation.css">
+<link rel="stylesheet" href="/resources/admin/css/sub.css">
 
 <jsp:include page="../../admin/layout/header.jsp" />
 
-
-
-
 <c:set var="date" value="${date}"/>
+
+
+<div class="sub_in">
+  <div class="sub_title">예약현황</div>
+  <p id="today">${date}</p>
+  <ul id="list_checkIn">
+
+  </ul>
+  
+</div>
+
 
 <div class="main-panel">
   <div class="content-wrapper">
@@ -27,7 +36,7 @@
             <div class="card">
               <div class="card-body">
                 <h4>예약현황</h4>
-                <p id="today">${date}</p>
+                
                 
                 <style>
                 .list{list-style:none;margin-bottom:20px;
@@ -36,45 +45,7 @@
                 .list .row .row_tit{width:24%;}
                 </style>
                 
-                <ul id="list_checkIn">
-                <!-- 
-                  <li class="list"> 
-                    <p>room101<-객실명 : 예약된객실수 / 총객실수</p>
-                    <div class="row">
-                      예약자명 / 예약자 연락처 /
-                      <div class="row_tit">예약상태 ; 'reserved' or 'completed'</div>
-                      <p> 상세보기 </p> <-누르면 넘어가도록
-                    </div>
-                    <div class="row">
-                      <div class="row_tit">예약번호:</div>
-                      <div id="resNo"></div>
-                    </div>
-                    <div class="row">
-                      <div class="row_tit">예약자명:</div>
-                      <div id="resName"></div>
-                    </div>
-                    <div class="row">
-                      <div class="row_tit">연락처</div>
-                      <div id="resPhone"></div>
-                    </div>
-                    <div class="row">
-                      <div class="row_tit">객실명:</div>
-                      <div id="roomName"></div>
-                    </div>
-                    <div class="row">
-                      <div class="row_tit">체크인-체크아웃</div>
-                      <div id="checkIn"></div>
-                      <div id="checkOut"></div>
-                    </div>
-                    <div class="row">
-                      <div class="row_tit">인원수</div>
-                      <div id="guestCount"></div>
-                    </div>
-                    <div class="row">
-                      <div class="row_tit"></div>
-                    </div>
-                  </li>   -->              
-                </ul>
+
                 
                 
               </div>

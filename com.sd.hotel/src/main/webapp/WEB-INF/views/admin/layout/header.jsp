@@ -20,7 +20,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Star Admin2 </title>
-  <!-- plugins:css -->
+  <!-- plugins:css 
   <link rel="stylesheet" href="/resources/admin/vendors/feather/feather.css">
   <link rel="stylesheet" href="/resources/admin/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="/resources/admin/vendors/ti-icons/css/themify-icons.css">
@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="/resources/admin/js/select.dataTables.min.css">-->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="/resources/admin/css/vertical-layout-light/style.css">
+  <!--  <link rel="stylesheet" href="/resources/admin/css/vertical-layout-light/style.css">-->
   <link rel="stylesheet" href="/resources/admin/css/header.css">
 
   
@@ -63,32 +63,35 @@
     </div>
   </header>
   
-  <div class="left_nav">
-    <ul class="nav_ul">
-      <c:if test="${admin.role eq 'ROLE_ADMIN'}">
-        <li class="nav_li">
-          <a href="${contextPath}/admin/addEmployee.page">직원추가</a>
-        </li>
-      </c:if>
-      <li class="nav_li">
-        <a href="${contextPath}/admin/room/roomList.page">객실목록</a>
-      </li>
-      <li class="nav_li">
-        <a href="javascript:;">예약관련</a>
-        <ul>
-          <li>
-            <a href="${contextPath}/admin/reservation/todayCheckIn.page">오늘의 체크인</a>
-          </li>
-          <li>
-            <a href="${contextPath}/admin/reservation/calendar.page">예약전체보기</a>
-          </li>
-          <li>
-            <a href="${contextPath}/admin/reservation/reservedList.page">예약목록</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-
+  <div class="container">
+  
+	  <div class="left_nav">
+	    <ul class="nav_ul">
+	      <c:if test="${admin.role eq 'ROLE_ADMIN'}">
+	        <li class="nav_li">
+	          <a href="${contextPath}/admin/employees/new">직원추가</a>
+	        </li>
+	      </c:if>
+	      <li class="nav_li">
+	        <a href="${contextPath}/admin/room/list">객실목록</a>
+	      </li>
+	      <li class="nav_li">
+	        <a href="javascript:;">예약관련 ▼</a>
+	        <ul>
+	          <li>
+	            <a href="${contextPath}/admin/reservation/todayCheckIn.page">오늘의 체크인</a>
+	          </li>
+	          <li>
+	            <a href="${contextPath}/admin/reservation/calendar.page">예약전체보기</a>
+	          </li>
+	          <li>
+	            <a href="${contextPath}/admin/reservation/reservedList.page">예약목록</a>
+	          </li>
+	        </ul>
+	      </li>
+	    </ul>
+	  </div>
+	  
+    <div class="sub">
 
 

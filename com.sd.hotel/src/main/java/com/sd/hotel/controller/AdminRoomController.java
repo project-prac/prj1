@@ -31,13 +31,16 @@ public class AdminRoomController {
 
 	private final AdminRoomService adminRoomService;
 
-	@GetMapping("/roomList.page")
+	
+	/* 코드 수정 중 */
+	
+	@GetMapping("/list")
 	public String roomListPage() {
-		return "admin/room/roomList";
+		return "admin/room/list";
 	}
 
 	// 객실 목록 불러오기
-	@GetMapping("/roomList.do")
+	@GetMapping("/data")
 	public ResponseEntity<Map<String, Object>> getRoomList() {
 
 		List<RoomDto> roomList = adminRoomService.getRoomList();
@@ -51,6 +54,13 @@ public class AdminRoomController {
 
 		return ResponseEntity.ok(response);
 	}
+	
+	
+	
+	/* ----  */
+	
+	
+
 	
 	
 	//객실목록 (100,101,102.. 불러오기)

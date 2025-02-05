@@ -1,7 +1,11 @@
 window.addEventListener('load', () => {
   
   
+  
+  
   const reserveDate = document.getElementById('today').textContent;
+  console.log(reserveDate)
+  
 
   Promise.all([
     fetch('/admin/room/roomListByCategory.do', {
@@ -25,7 +29,7 @@ window.addEventListener('load', () => {
     const checkInList = document.getElementById('list_checkIn');
     checkInList.innerHTML = '';
 
-    console.log(roomData, reservationData);
+    //console.log(roomData, reservationData);
 
     let reservationCounts = {};
 

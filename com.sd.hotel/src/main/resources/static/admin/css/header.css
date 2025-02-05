@@ -66,20 +66,27 @@ a{    text-decoration: none;color:#000}
   │     header 기본설정 ★                             
   └-------------------------------------*/
   
-#header{position:fixed;top:0;left:0;width:100%;height:80px;background:pink;z-index:5000}
+#header{position:fixed;top:0;left:0;width:100%;height:80px;z-index:5000;background:#7977f1}
 #header .header_in{width:100%;max-width:1280px;height:100%;margin:0 auto;
 display:flex;align-items:center}
-.header_in .hi{font-size:24px;color:#6C7383}
+.header_in .hi{font-size:24px;color:#fff}
 
 
-.left_nav{position:fixed;top:80px;left:0;width:220px;height:100vh;z-index:5000;}
+.left_nav{width:23%;max-width:220px;height:100vh;background:#fff}
 .nav_ul{width:200px;margin:0 auto;}
 .nav_li{height:38px;border-bottom:1px solid #6C7383;}
 .nav_li>a{display:block;width:100%;line-height:34px;}
-.nav_li>ul{display:none;}
+.nav_li>ul{/*display:none;*/}
 .nav_li>ul>li>a{display:block;width:80%;margin:0 auto;
 height:32px;line-height:32px;}
 
 
 
 
+/*┌--------------------------------------
+  │     sub쪽 ★                             
+  └-------------------------------------*/
+  
+  .container{width:100%;margin-top:80px;display:flex;background:#f1f0f0}
+  .sub{width:75%;max-width:1280px;margin-left:45px;}
+  

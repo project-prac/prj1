@@ -6,7 +6,7 @@ $(document).ready(function() {
   let roomImgList;
   let roomDetailList;
 
-  fetch('/admin/room/roomList.do', {
+  fetch('/admin/room/data', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'

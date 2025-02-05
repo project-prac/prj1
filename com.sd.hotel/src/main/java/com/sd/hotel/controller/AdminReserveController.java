@@ -36,6 +36,7 @@ public class AdminReserveController {
 	
 	
 	
+	/* 코드 수정 중 */
 	
 	//오늘체크인페이지 가기
 	@GetMapping("/todayCheckIn.page")
@@ -97,7 +98,10 @@ public class AdminReserveController {
 		return ResponseEntity.ok(response);
 	}
 	
-	// reservedList(예약목록 페이지) 로 넘어가기
+
+	
+	// reservedList(예약목록 페이지) 로 넘어가기 (달력쪽에서)
+	
 	@GetMapping("/reservedList.do")
 	public String goReservedListPage(@RequestParam String date,
 																		Model model) {
