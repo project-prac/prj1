@@ -111,11 +111,12 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			int registeredRoomNo = room.getRoomNo();
 
 			if (insertRoom == 1) {
-
+					
+				/*
 				for (int i = 0; i < totalRoom; i++) {
 					RoomDetailDto detailRoom = RoomDetailDto.builder().roomNo(registeredRoomNo).roomName(roomName).build();
 					roomMapper.roomDetailRegister(detailRoom);
-				}
+				}*/
 
 				// 첨부파일
 				List<MultipartFile> files = request.getFiles("files");
@@ -159,24 +160,11 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 	
 
 	@Override
-	public boolean modifyRoomInfo(MultipartHttpServletRequest request) {
-
+	public boolean modifyRoomInfo(RoomDto roomDto) {
+		
 		try {
-			int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-			String roomName = request.getParameter("roomName");
-			String info = request.getParameter("info");
-			int price = Integer.parseInt(request.getParameter("price"));
-			int people = Integer.parseInt(request.getParameter("people"));
 
-			RoomDto room = RoomDto.builder()
-															.roomNo(roomNo)
-															.roomName(roomName)
-															.info(info)
-															.price(price)
-															.people(people)
-														.build();
-			
-			int updateRoomInfo =  roomMapper.modifyRoomInfo(room);
+			int updateRoomInfo =  roomMapper.modifyRoomInfo(roomDto);
 			return updateRoomInfo > 0;
 			
 		} catch (Exception e) {
@@ -184,16 +172,13 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			return false;
 		}
 		
-		
-		
-		
-		
 	}
 
+	//detailRoom 테이블 사용 안함 - 필요없는 로직
+	/*
 	@Override
 	@Transactional
-	public boolean modifyRoomNum(MultipartHttpServletRequest request) {
-		
+	public boolean modifyRoomNum(RoomDto roomDto) {
 		
 		try {
 			
@@ -228,7 +213,7 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 		}
 
 	}
-
+*/
 	@Override
 	@Transactional
 	public boolean modifyRoomImg(MultipartHttpServletRequest request) {

@@ -157,35 +157,40 @@
          , INFO = #{info}
          , PRICE = #{price}
          , GUEST_COUNT = #{guestCount}
+         , RESERVED_ROOM = #{reservedRoom}
+         , TOTAL_ROOM = #{totalRoom}
      WHERE ROOM_NO = #{roomNo}
   </update>
 
 
 
-  <!-- 객실 detail 수 수정 -->
+  <!-- 객실 detail 수 수정 
+  
   <update id="modifyRoomDetail">
     UPDATE ROOM_DETAIL
        SET ROOM_NAME = #{roomName}
      WHERE ROOM_NO = #{roomNo}
     
   </update>
+ 
   
   <delete id="delteRoomDetail">
 
       DELETE FROM ROOM_DETAIL
       WHERE ROOM_DETAIL_NO IN (
-                                SELECT ROOM_DETAIL_NO FROM (
-                                                            SELECT ROOM_DETAIL_NO
-                                                              FROM ROOM_DETAIL
-                                                             WHERE ROOM_NO = #{roomNo}
-                                                             ORDER BY ROOM_DETAIL_NO DESC
-                                                            )
-                                  WHERE ROWNUM =1
-                                )                               
-                                
-                                							
+              SELECT ROOM_DETAIL_NO FROM 
+              (  SELECT ROOM_DETAIL_NO
+                 FROM ROOM_DETAIL
+                 WHERE ROOM_NO = #{roomNo}
+                 ORDER BY ROOM_DETAIL_NO DESC
+               )
+                WHERE ROWNUM =1
+               )                               
   </delete>
-  
+   -->
+   
+   
+   
   <!-- roomImg지우기 -->
   <delete id="deleteRoomImg">
     DELETE FROM ROOM_IMG

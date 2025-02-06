@@ -39,9 +39,9 @@ $(document).ready(function() {
         return {
           id: room.roomNo,
           parent: room.depth === 0 ? '#' : roomList.find(r => r.roomNo === Math.floor(room.roomNo / 100) * 100).roomNo,
-          text: room.depth === 0 ? room.roomName : `${room.roomName} (${detailCount})`,
+          text: room.depth === 0 ? room.roomName : `${room.roomName} (${room.totalRoom})`,
           roomName: room.roomName,
-          roomNum: `${detailCount}`,
+          roomNum: `${room.totalRoom}`,
           state: { opened: false }
         }
       });
@@ -259,10 +259,12 @@ $(document).ready(function() {
     //$('#clientImgNos').val(JSON.stringify(clientImgNos));
 
     var formData = new FormData(this);
+    var roomNo = $('#roomNo').val();
+    console.log(roomNo)
 
     $.ajax({
-      type: 'POST',
-      url: '/admin/room/roomModify.do',
+      type: 'PUT',
+      url: `/admin/room/${roomNo}`,
       data: formData, // FormData 전송
       contentType: false, // FormData 사용 시 반드시 false로 설정
       processData: false,
@@ -422,9 +424,7 @@ $(document).ready(function() {
       return; // 빈 필드가 있으면 여기서 중단
     }
 
-
     var formData = new FormData(this); // FormData 객체 생성 (this는 폼)
-
 
     allFiles.forEach(function(file) {
       formData.append('files', file); // 'files'는 서버에서 받을 이름으로 설정
