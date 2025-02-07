@@ -39,7 +39,8 @@ $(document).ready(function() {
         return {
           id: room.roomNo,
           parent: room.depth === 0 ? '#' : roomList.find(r => r.roomNo === Math.floor(room.roomNo / 100) * 100).roomNo,
-          text: room.depth === 0 ? room.roomName : `${room.roomName} (${room.totalRoom})`,
+          text: `${room.depth === 0 ? room.roomName : `${room.roomName} (${room.totalRoom})`} 
+           <button class="delete-btn" data-id="${room.roomNo}">X</button>`,
           roomName: room.roomName,
           roomNum: `${room.totalRoom}`,
           state: { opened: false }
@@ -58,6 +59,44 @@ $(document).ready(function() {
 
 
     })
+
+
+  // 객실 삭제
+  $('#jstree').on('click', '.delete-btn', function(e) {
+    e.stopPropagation(); // 버튼 클릭이 노드 선택으로 전달되지 않게 막음
+    
+    const roomNoId = $(this).data('id');
+    
+    console.log(roomNoId);
+    // 삭제 확인 창 띄우기
+    if (confirm('정말 삭제하시겠습니까?')) {
+
+      fetch(`/admin/room/delete/${roomNoId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            alert('삭제되었습니다.');
+            location.reload();
+          } else {
+            alert('삭제에 실패했습니다.');
+            location.reload();
+          }
+        })
+        .catch(error => {
+          alert('오류 발생: ' + error.message);
+        });
+
+
+    }
+  });
+
+
+
+
 
 
   // jsTree node클릭시 정보open

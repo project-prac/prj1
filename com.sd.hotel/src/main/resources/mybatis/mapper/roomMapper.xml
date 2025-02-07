@@ -198,6 +198,13 @@
   </delete>
   
   
+  <!-- 객실 삭제 -->
+  <delete id="deleteRoom">
+    DELETE FROM ROOM
+     WHERE ROOM_NO = #{roomNo}
+  </delete>
+  
+  
   
   <!-- 객실예약  관련  -->
   

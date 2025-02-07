@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -290,6 +292,32 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 
 
 	}
+	
+	//객실 삭제
+	@Override
+	public int deleteRoom(int roomNo) {
+
+		
+		
+		try {
+			int deletecount = roomMapper.deleteRoom(roomNo);
+			
+			if(deletecount > 0) {
+				return 1;
+			}else {
+				throw new RuntimeException("Fail");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		
+		
+		
+	}
+	
 	
 	
 	@Override

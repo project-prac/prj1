@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -149,5 +150,33 @@ public class AdminRoomController {
 		}
 
 	}
-
+	
+	
+	// 객실 삭제
+	@DeleteMapping("/delete/{roomNo}")
+	public ResponseEntity<Map<String, Object>> delteRoom(@PathVariable int roomNo){
+		
+		
+		System.out.println(roomNo);
+		Map<String, Object> response = new HashMap<>();
+		
+		int deleteCount = adminRoomService.deleteRoom(roomNo);
+		
+		
+		if(deleteCount > 0) {
+			
+			response.put("status", "success");
+      response.put("message", "객실이 성공적으로 삭제되었습니다.");
+			return ResponseEntity.ok(response);
+			
+		}else {
+			
+			response.put("status", "fail");
+      response.put("message", "객실 삭제에 실패했습니다.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+		
+	}
+	
+	
 }

@@ -33,4 +33,7 @@ public interface AdminRoomService {
 	
 	RoomDto getRoombyRoomNo(int roomNo);
 	List<RoomImgDto> getRoomImgListByNo(int roomNo);
+	
+	//객실 삭제
+	int deleteRoom(int roomNo);
 }
