@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class RoomDto {
-	private int roomNo, depth, price, people, availableRoom,reservedRoom, totalRoom ,guestCount;
+	private int roomNo, depth, price, availableRoom,reservedRoom, totalRoom ,guestCount;
 	private String roomName, parentName, info;
 	private List<RoomImgDto> images;
 }

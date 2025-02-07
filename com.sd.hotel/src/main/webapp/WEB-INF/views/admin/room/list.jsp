@@ -112,7 +112,7 @@
       </div>
       <div class="form-group">
         <label for="roomType-roomName">인원수</label>
-        <input type="text" id="type-people" name="people">
+        <input type="text" id="type-people" name="guestCount">
       </div>
       <div class="form-group">
         <label for="roomNum">객실수</label>

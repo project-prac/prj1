@@ -79,10 +79,10 @@
 	        <a href="javascript:;">예약관련 ▼</a>
 	        <ul>
 	          <li>
-	            <a href="${contextPath}/admin/reservation/todayCheckIn.page">오늘의 체크인</a>
+	            <a href="${contextPath}/admin/reservation/checkInList">오늘의 체크인</a>
 	          </li>
 	          <li>
-	            <a href="${contextPath}/admin/reservation/calendar.page">예약전체보기</a>
+	            <a href="${contextPath}/admin/reservation/calendar">예약전체보기</a>
 	          </li>
 	          <li>
 	            <a href="${contextPath}/admin/reservation/reservedList.page">예약목록</a>

@@ -4,11 +4,11 @@ window.addEventListener('load', () => {
   
   
   const reserveDate = document.getElementById('today').textContent;
-  console.log(reserveDate)
+  //console.log(reserveDate)
   
 
   Promise.all([
-    fetch('/admin/room/roomListByCategory.do', {
+    fetch('/admin/room/data/category', {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
       .then(response => response.json()),
      
 
-    fetch('/admin/reservation/resList.do', {
+    fetch('/admin/reservation/data/all', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ reservationDate: reserveDate })

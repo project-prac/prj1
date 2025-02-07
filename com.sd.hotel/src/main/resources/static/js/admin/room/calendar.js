@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-  fetch('/admin/room/roomListByCategory.do', {
+  fetch('/admin/room/data/category', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.json())
     .then(data => {
       let roomLists = data.roomList;
+      console.log(roomLists)
       
       let roomArray = [];
 
@@ -85,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var eventDate = info.event.start; // Date 객체
             var formattedDate =  moment(eventDate).format('YYYY-MM-DD');//
             //console.log(formattedDate);
-            window.location.href = `/admin/reservation/reservedList.do?date=${formattedDate}`;
+            window.location.href = `/admin/reservation/data/date?date=${formattedDate}`;
 
           }
         });
@@ -97,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   //예약목록 불러옴
   function fngetResList(date) {
-    return fetch('/admin/reservation/resList.do', {
+    return fetch('/admin/reservation/data/all', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

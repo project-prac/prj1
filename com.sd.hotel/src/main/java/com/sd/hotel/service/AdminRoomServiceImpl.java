@@ -102,12 +102,12 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			String parentName = request.getParameter("parentName");
 			String info = request.getParameter("info");
 			int price = Integer.parseInt(request.getParameter("price"));
-			int people = Integer.parseInt(request.getParameter("people"));
+			int guestCount = Integer.parseInt(request.getParameter("guestCount"));
 			int totalRoom = Integer.parseInt(request.getParameter("totalRoom"));
 
 			
 			RoomDto room = RoomDto.builder().roomName(roomName).depth(depth).parentName(parentName).info(info).price(price)
-					.people(people).totalRoom(totalRoom).availableRoom(totalRoom).build();
+					.guestCount(guestCount).totalRoom(totalRoom).availableRoom(totalRoom).build();
 
 			int insertRoom = roomMapper.roomTypeRegister(room);
 			int registeredRoomNo = room.getRoomNo();
