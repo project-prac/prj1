@@ -37,8 +37,8 @@
             </div>
             <div class="form-group">
               <label for="roomName">객실수</label>
-              <input  class="form-control" id="new-roomNum" name="roomNum" />
-              <input type="hidden" class="form-control" id="origin-roomNum" name="originNum" />
+              <input  class="form-control" id="new-roomNum" name="totalRoom" />
+              <input type="hidden" class="form-control" id="origin-roomNum" name=totalRoom />
             </div>
             
             <div class="form-group">
@@ -51,7 +51,7 @@
             </div>
             <div class="form-group">
               <label for="roomName">인원수</label>
-              <input type="text" class="form-control" id="people" name="people" />
+              <input type="text" class="form-control" id="people" name="guestCount" />
             </div>
             <div class="roomImgListsArea">
               
@@ -112,7 +112,7 @@
       </div>
       <div class="form-group">
         <label for="roomType-roomName">인원수</label>
-        <input type="text" id="type-people" name="people">
+        <input type="text" id="type-people" name="guestCount">
       </div>
       <div class="form-group">
         <label for="roomNum">객실수</label>

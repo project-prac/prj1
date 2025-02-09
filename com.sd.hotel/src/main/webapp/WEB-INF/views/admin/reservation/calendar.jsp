@@ -43,7 +43,7 @@
 
                   </style>
 
-<script src="${contextPath}/js/calendar.js"></script>
+<script src="${contextPath}/js/admin/room/calendar.js"></script>
 
 <jsp:include page="../../admin/layout/footer.jsp" />
 

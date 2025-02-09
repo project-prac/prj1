@@ -29,6 +29,9 @@ public interface RoomMapper {
   int modifyRoomDetail(String roomName,int roomNo);
   int delteRoomDetail(int roomNo);
   
+  //객실 삭제
+  int deleteRoom(int roomNo);
+  
   int deleteRoomImg(int roomImgNo);
   
   RoomDto getRoombyRoomNo(int roomNo);

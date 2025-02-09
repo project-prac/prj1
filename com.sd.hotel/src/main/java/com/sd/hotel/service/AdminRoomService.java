@@ -26,11 +26,14 @@ public interface AdminRoomService {
 	
 	
 	//수정
-	boolean modifyRoomInfo(MultipartHttpServletRequest request);
-	boolean modifyRoomNum(MultipartHttpServletRequest request);
+	boolean modifyRoomInfo(RoomDto roomDto);
+	//boolean modifyRoomNum(RoomDto roomDto);
 	boolean modifyRoomImg(MultipartHttpServletRequest request);
 	
 	
 	RoomDto getRoombyRoomNo(int roomNo);
 	List<RoomImgDto> getRoomImgListByNo(int roomNo);
+	
+	//객실 삭제
+	int deleteRoom(int roomNo);
 }

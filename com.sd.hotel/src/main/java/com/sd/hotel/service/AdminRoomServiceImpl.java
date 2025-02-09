@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -100,22 +102,23 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			String parentName = request.getParameter("parentName");
 			String info = request.getParameter("info");
 			int price = Integer.parseInt(request.getParameter("price"));
-			int people = Integer.parseInt(request.getParameter("people"));
+			int guestCount = Integer.parseInt(request.getParameter("guestCount"));
 			int totalRoom = Integer.parseInt(request.getParameter("totalRoom"));
 
 			
 			RoomDto room = RoomDto.builder().roomName(roomName).depth(depth).parentName(parentName).info(info).price(price)
-					.people(people).totalRoom(totalRoom).availableRoom(totalRoom).build();
+					.guestCount(guestCount).totalRoom(totalRoom).availableRoom(totalRoom).build();
 
 			int insertRoom = roomMapper.roomTypeRegister(room);
 			int registeredRoomNo = room.getRoomNo();
 
 			if (insertRoom == 1) {
-
+					
+				/*
 				for (int i = 0; i < totalRoom; i++) {
 					RoomDetailDto detailRoom = RoomDetailDto.builder().roomNo(registeredRoomNo).roomName(roomName).build();
 					roomMapper.roomDetailRegister(detailRoom);
-				}
+				}*/
 
 				// 첨부파일
 				List<MultipartFile> files = request.getFiles("files");
@@ -159,24 +162,11 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 	
 
 	@Override
-	public boolean modifyRoomInfo(MultipartHttpServletRequest request) {
-
+	public boolean modifyRoomInfo(RoomDto roomDto) {
+		
 		try {
-			int roomNo = Integer.parseInt(request.getParameter("roomNo"));
-			String roomName = request.getParameter("roomName");
-			String info = request.getParameter("info");
-			int price = Integer.parseInt(request.getParameter("price"));
-			int people = Integer.parseInt(request.getParameter("people"));
 
-			RoomDto room = RoomDto.builder()
-															.roomNo(roomNo)
-															.roomName(roomName)
-															.info(info)
-															.price(price)
-															.people(people)
-														.build();
-			
-			int updateRoomInfo =  roomMapper.modifyRoomInfo(room);
+			int updateRoomInfo =  roomMapper.modifyRoomInfo(roomDto);
 			return updateRoomInfo > 0;
 			
 		} catch (Exception e) {
@@ -184,16 +174,13 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 			return false;
 		}
 		
-		
-		
-		
-		
 	}
 
+	//detailRoom 테이블 사용 안함 - 필요없는 로직
+	/*
 	@Override
 	@Transactional
-	public boolean modifyRoomNum(MultipartHttpServletRequest request) {
-		
+	public boolean modifyRoomNum(RoomDto roomDto) {
 		
 		try {
 			
@@ -228,7 +215,7 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 		}
 
 	}
-
+*/
 	@Override
 	@Transactional
 	public boolean modifyRoomImg(MultipartHttpServletRequest request) {
@@ -305,6 +292,32 @@ public class AdminRoomServiceImpl implements AdminRoomService {
 
 
 	}
+	
+	//객실 삭제
+	@Override
+	public int deleteRoom(int roomNo) {
+
+		
+		
+		try {
+			int deletecount = roomMapper.deleteRoom(roomNo);
+			
+			if(deletecount > 0) {
+				return 1;
+			}else {
+				throw new RuntimeException("Fail");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+		
+		
+		
+		
+	}
+	
 	
 	
 	@Override

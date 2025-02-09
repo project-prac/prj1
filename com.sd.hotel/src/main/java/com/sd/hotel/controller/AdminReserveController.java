@@ -39,13 +39,14 @@ public class AdminReserveController {
 	/* 코드 수정 중 */
 	
 	//오늘체크인페이지 가기
-	@GetMapping("/todayCheckIn.page")
-	public String goReservationPage() {
-		return "admin/reservation/todayCheckIn";
+	@GetMapping("/checkInList")
+	public String goCheckInListPage() {
+		return "admin/reservation/checkInList";
 	}
 	
 	
-	@PostMapping("/reservation.do")
+	//@PostMapping("/reservation.do")
+	@PostMapping("/today")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> reservationPage() {
 		
@@ -60,33 +61,21 @@ public class AdminReserveController {
 	}
 	
 	
-	//상태가 reserved 말고 completed인 것만 가져오게
-	@PostMapping("/todayCheckIn.do")
-	@ResponseBody
-	public ResponseEntity<Map<String, Object>> todayCheckIn() {
-		
-		LocalDate today = LocalDate.now();
-		
-		List<ReservationDto> reserves = ademinReserveService.getResCheckIn(today);
-		
-		Map<String, Object> response = new HashMap<>();
-		response.put("reserves", reserves);
-		
-		return ResponseEntity.ok(response);
-	}
-	
-	
 	// 달력페이지
-	@GetMapping("/calendar.page")
+	@GetMapping("/calendar")
 	public String goCalendarPage() {
 		
 		return "admin/reservation/calendar";
 	}
 	
+	// 예약 현황 가져오기
+	
+	// calendar 쪽 객실예약 현황 가져오기
+
 	
 	//예약 정보 가져오기
 	
-	@PostMapping("/resList.do")
+	@PostMapping("/data/all")
 	public ResponseEntity<Map<String, Object>> getResList(@RequestBody Map<String, String> params){
 		
 		String date = params.get("reservationDate");		
@@ -101,8 +90,8 @@ public class AdminReserveController {
 
 	
 	// reservedList(예약목록 페이지) 로 넘어가기 (달력쪽에서)
-	
-	@GetMapping("/reservedList.do")
+	///reservedList.do
+	@GetMapping("/data/date")
 	public String goReservedListPage(@RequestParam String date,
 																		Model model) {
     //System.out.println("Selected date: " + date);
@@ -110,6 +99,24 @@ public class AdminReserveController {
     model.addAttribute("date", date);
 		return "admin/reservation/reservedList";
 	}
+	
+	
+	/* 추후 수정예정!!!*/
+	//상태가 reserved 말고 completed인 것만 가져오게 - 결제완료
+	@PostMapping("/todayCheckIn.do")
+	@ResponseBody
+	public ResponseEntity<Map<String, Object>> todayCheckIn() {
+		
+		LocalDate today = LocalDate.now();
+		
+		List<ReservationDto> reserves = ademinReserveService.getResCheckIn(today);
+		
+		Map<String, Object> response = new HashMap<>();
+		response.put("reserves", reserves);
+		
+		return ResponseEntity.ok(response);
+	}
+	
 	
 	
 }

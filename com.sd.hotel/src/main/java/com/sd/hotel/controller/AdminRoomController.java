@@ -8,9 +8,12 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,15 +61,8 @@ public class AdminRoomController {
 	}
 	
 	
-	
-	/* ----  */
-	
-	
-
-	
-	
-	//객실목록 (100,101,102.. 불러오기)
-	@PostMapping("/roomListByCategory.do")
+	// 객실 목록 불러오기 100 ,101 ...
+	@PostMapping("/data/category")
 	public ResponseEntity<Map<String, Object>> getRoomLists(){
 		
 		List<RoomDto> roomList = adminRoomService.getRoomList();
@@ -77,8 +73,6 @@ public class AdminRoomController {
 		return ResponseEntity.ok(response);
 	}
 	
-	
-
 	// 객실 대분류(roomNo :100 200 ..추가)
 	@PostMapping("/categories")
 	public String roomNoRegister(@ModelAttribute RoomDto roomDto, RedirectAttributes redirectAttributes) {
@@ -108,39 +102,82 @@ public class AdminRoomController {
 		}
 		return response; // JSON 형식으로 응답
 	}
+	
+	
+	/* ----  */
+	
+	
 
+	
+	
 
+	
+	
+	
 
-	@PostMapping("/roomModify.do")
-	public ResponseEntity<Map<String, Object>> modifyRoom(MultipartHttpServletRequest request) {
+	@PutMapping("/{roomNo}")
+	public ResponseEntity<Map<String, Object>> modifyRoom(
+			@PathVariable int roomNo,
+			RoomDto roomDto,
+			MultipartHttpServletRequest request) {
 
+		roomDto.setRoomNo(roomNo);
+		
 		Map<String, Object> response = new HashMap<>();
 
 		try {
 			// 객실정보
-			boolean infoResult = adminRoomService.modifyRoomInfo(request);
+			boolean infoResult = adminRoomService.modifyRoomInfo(roomDto);
 
-			// 객실 수
-			boolean numResult = adminRoomService.modifyRoomNum(request);
+			// 객실 수 -detailRoom 관련해서 추가, 삭제 했었으나 더이상 사용 x
+			// boolean numResult = adminRoomService.modifyRoomNum(roomDto);
 
 			// 객실이미지
 			boolean imgResult = adminRoomService.modifyRoomImg(request);
 			System.out.println(imgResult);
 
-			if (infoResult && numResult && imgResult) {
+			if (infoResult && imgResult) {
 				response.put("success", true);
 				return ResponseEntity.ok(response); // 200 OK 응답
 			} else {
 				response.put("success", false);
 				response.put("errorMessage", "에러");
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // 500 Internal Server Error 응답
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 			}
 
 		} catch (Exception e) {
 			response.put("success", false);
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // 500 Internal Server Error 응답
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 
 	}
-
+	
+	
+	// 객실 삭제
+	@DeleteMapping("/delete/{roomNo}")
+	public ResponseEntity<Map<String, Object>> delteRoom(@PathVariable int roomNo){
+		
+		
+		System.out.println(roomNo);
+		Map<String, Object> response = new HashMap<>();
+		
+		int deleteCount = adminRoomService.deleteRoom(roomNo);
+		
+		
+		if(deleteCount > 0) {
+			
+			response.put("status", "success");
+      response.put("message", "객실이 성공적으로 삭제되었습니다.");
+			return ResponseEntity.ok(response);
+			
+		}else {
+			
+			response.put("status", "fail");
+      response.put("message", "객실 삭제에 실패했습니다.");
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+		
+	}
+	
+	
 }

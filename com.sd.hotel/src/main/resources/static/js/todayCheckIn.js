@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
     todayElement.innerHTML = year + '년 ' + month + '월 ' + date + '일 ' + day + '요일';
        
   
-    fetch('/admin/reservation/todayCheckIn.do', {
+    fetch('/admin/reservation/today', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
