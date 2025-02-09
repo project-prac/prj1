@@ -37,7 +37,9 @@
           <li>
             <p class="info_t">이메일</p>
             <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.mail}</p>
+            
           </li>
+          <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.userNo}</p>
         </ul>
         <div class="">
           <a href="${contextPath}/user/modifyMypage.page" class="btna1">회원정보 변경</a>

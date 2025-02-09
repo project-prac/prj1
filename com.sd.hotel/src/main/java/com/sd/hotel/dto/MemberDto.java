@@ -17,6 +17,9 @@ public class MemberDto implements UserDto, UserDetailDto{
 	private String userId, name, password, tel, gender, email, role;
 	private Date birth;
 	
-	
+	@Override
+	public int getNo() {
+		return memberNo;
+	}
 	
 }

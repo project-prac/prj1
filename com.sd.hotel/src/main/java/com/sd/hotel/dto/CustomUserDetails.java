@@ -118,7 +118,9 @@ public class CustomUserDetails implements UserDetails {
 		return this.userDetail;
 	}
 	
-
+	public int getUserNo() {
+    return user.getNo();
+	}
 	/**/
 
 	
