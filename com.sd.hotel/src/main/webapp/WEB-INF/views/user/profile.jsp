@@ -17,6 +17,8 @@
   <jsp:include page="../hotel/layout/header.jsp" />
   <link rel="stylesheet" href="/resources/hotel/css/sub.css">
 
+<!-- myPageList.jsp 였음 -->
+
   <!-- Start -->
   <div class="sub mypage">
     <div class="sub_in">
@@ -42,7 +44,7 @@
           <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.userNo}</p>
         </ul>
         <div class="">
-          <a href="${contextPath}/user/modifyMypage.page" class="btna1">회원정보 변경</a>
+          <a href="${contextPath}/user/me/edit" class="btna1">회원정보 변경</a>
         </div>
         <ul class="mypageList">
           <li><a href="${contextPath}/user/mypage.page">내정보 ▶</a></li>

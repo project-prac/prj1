@@ -11,7 +11,7 @@
 <jsp:include page="../hotel/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/hotel/css/sub_mem.css">
 
-
+<!-- modifyPw.jsp였음 -->
 
 <style>
 .stretch-card{margin:150px auto 40px;}

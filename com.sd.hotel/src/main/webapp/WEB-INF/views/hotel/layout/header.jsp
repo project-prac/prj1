@@ -72,8 +72,8 @@
 			</sec:authorize>
 				<ul>
 					<sec:authorize access="isAnonymous()">
-						<li><a href="${contextPath}/user/login.page">로그인</a></li>
-						<li><a href="${contextPath}/user/signup.page">회원가입</a></li>
+						<li><a href="${contextPath}/user/login">로그인</a></li>
+						<li><a href="${contextPath}/user/signup">회원가입</a></li>
 					</sec:authorize>
 					<sec:authorize access="isAuthenticated()">
 						<li><a href="${contextPath}/user/logout">로그아웃</a></li>
@@ -83,7 +83,7 @@
 									변경</a></li>
 						</c:if>
 						<c:if test="${user.role eq 'ROLE_USER'}">
-							<li><a href="${contextPath}/user/mypageList.page">마이페이지</a></li>
+							<li><a href="${contextPath}/user/profile">마이페이지</a></li>
 						</c:if>
 						<c:if test="${user.role eq 'ROLE_MANAGER'}">
 							<li><a href="${contextPath}/user/mypage.page">마이페이지</a></li>

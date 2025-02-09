@@ -11,7 +11,7 @@
 <jsp:include page="../hotel/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/hotel/css/sub_mem.css">
 
-
+<!-- modifyMypage.jsp 였음 -->
 <style>
 .stretch-card{margin:150px auto 40px;}
 </style>
@@ -65,9 +65,9 @@
              name="birth"
              value="${user.birth}"
            />
-        </div>
+        </div><!-- 
         <input name="role" value="${user.role}">
-        <!-- 
+        
         <input type="hidden" name="role" value="ROLE_USER">
         <input type="hidden" name="password" value=${user.password}> -->
         
@@ -76,7 +76,7 @@
         <button type="submit"class="btn btn-primary me-2">수정완료</button>
         <div><a class="btn btn-light" href="${contextPath}/user/mypage.page">취소</a>
         </div>
-        <div><a class="btn btn-primary me-2" href="${contextPath}/user/modifyPw.page">비밀번호 변경하기</a></div>
+        <div><a class="btn btn-primary me-2" href="${contextPath}/user/me/edit/password">비밀번호 변경하기</a></div>
       </form>
     
   </div>

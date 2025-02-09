@@ -34,7 +34,10 @@ public class UserController {
 	private final UserService userService;
 	private final UserRoomService userRoomService;
 	
-	@GetMapping("/signup.page")
+	
+	// 회원가입
+	
+	@GetMapping("/signup")
 	public String signup() {
 		return "user/signup";
 	}
@@ -62,25 +65,27 @@ public class UserController {
 	}
 	
 
-	@GetMapping("/login.page")
+	@GetMapping("/login")
 	public String loginPage() {
 		return "user/login";
 	}
 	
+	
+	// 마이페이지
 	
 	@GetMapping("/mypage.page")
 	public String myPage() {
 		return "user/mypage";
 	}
 	
-	@GetMapping("/mypageList.page")
+	@GetMapping("/profile")
 	public String myPageList() {
-		return "user/mypageList";
+		return "user/profile";
 	}
 	
-	@GetMapping("/modifyMypage.page")
+	@GetMapping("/me/edit")
 	public String getMypage() {
-		return "user/modifyMypage";
+		return "user/edit";
 	}
 	
 	@PostMapping("/modifyMypage.do")
@@ -92,9 +97,9 @@ public class UserController {
 		return "user/mypage";
 	}
 	
-	@GetMapping("/modifyPw.page")
+	@GetMapping("/me/edit/password")
 	public String modifyPwPage() {
-		return "user/modifyPw";
+		return "user/password";
 	}
 	
 	@PostMapping("/modifyPw.do")
