@@ -19,10 +19,11 @@
 <div class="sub">
   <div class="sub_in">
     <div class="sub_title">내 정보수정</div>
-          <form class="forms-sample"
+      <form class="forms-sample"
              id = "frm-signup"
             method="POST"
-            action="${contextPath}/user/modifyMypage.do">
+            action="${contextPath}/user/me">
+      <input type ="hidden" name="_method" value="PATCH" >
         <div class="form-group">
           <label for="exampleInputUsername1">성명</label> 
           <input
@@ -65,10 +66,10 @@
              name="birth"
              value="${user.birth}"
            />
-        </div><!-- 
-        <input name="role" value="${user.role}">
+        </div>
+        <input type="hidden" name="role" value="${user.role}">
         
-        <input type="hidden" name="role" value="ROLE_USER">
+       <!--  <input type="hidden" name="role" value="ROLE_USER">
         <input type="hidden" name="password" value=${user.password}> -->
         
 

@@ -83,7 +83,7 @@
 									변경</a></li>
 						</c:if>
 						<c:if test="${user.role eq 'ROLE_USER'}">
-							<li><a href="${contextPath}/user/profile">마이페이지</a></li>
+							<li><a href="${contextPath}/user/me">마이페이지</a></li>
 						</c:if>
 						<c:if test="${user.role eq 'ROLE_MANAGER'}">
 							<li><a href="${contextPath}/user/mypage.page">마이페이지</a></li>
