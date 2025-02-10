@@ -14,7 +14,49 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="/resources/admin/images/favicon.png" />
 
-<jsp:include page="../hotel/layout/header.jsp" />
+  <jsp:include page="../hotel/layout/header.jsp" />
+  <link rel="stylesheet" href="/resources/hotel/css/sub.css">
+
+<!-- myPageList -> profile.jsp 였음 -->
+
+  <!-- Start -->
+  <div class="sub mypage">
+    <div class="sub_in">
+      <div class="sub_title">마이페이지</div>
+        <ul class="mypageInfo">
+          <li>
+            <p class="info_t">이름</p>
+            <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.name}</p>
+          </li>
+          <li>
+            <p class="info_t">생년월일</p>
+            <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.birth}</p>
+          </li>
+          <li>
+            <p class="info_t">연락처</p>
+            <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.tel}</p>
+          </li>
+          <li>
+            <p class="info_t">이메일</p>
+            <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.mail}</p>
+            
+          </li>
+          <p class="info_c"><sec:authentication property="principal"  var="user"/>${user.userNo}</p>
+        </ul>
+        <div class="">
+          <a href="${contextPath}/user/me/edit" class="btna1">회원정보 변경</a>
+        </div>
+        <ul class="mypageList">
+          <li><a href="${contextPath}/user/me/profile">내정보 ▶</a></li>
+          <li><a href="${contextPath}/user/myReserve.do">예약내역 ▶</a></li>
+          <li><a href="">결제내역 ▶</a></li>
+        </ul>
+    
+    </div>
+  </div>
+
+<!-- Finish -->
+
 
 
 <div class="container-scroller">
@@ -33,12 +75,12 @@
 				         
 				          <tbody>
 				            <tr>
-				              <td>아이디</td>
-				              <td><sec:authentication property="principal"  var="user"/>${user.username}</td>
+				              <td>내 정보</td>
+				              <td><a href="${contextPath}/user/mypage.page">내 정보</a></td>
 				            </tr>
 				            <tr>
-                      <td>성명</td>
-                      <td><sec:authentication property="principal"  var="user"/>${user.name}</td>
+                      <td>예약확인</td>
+                      <td><a href="${contextPath}/user/myReserve.do">예약확인</a></td>
                     </tr>
                     <tr>
                       <td>이메일</td>
@@ -85,7 +127,7 @@
 	</div>
 	<!-- page-body-wrapper ends -->
 	
-	<sec:authentication property="name" />
+	
 </div>
 
 

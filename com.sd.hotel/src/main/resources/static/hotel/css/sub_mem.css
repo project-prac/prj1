@@ -19,3 +19,5 @@
 #frm-signup .form-group{border-bottom:1px solid #eee;line-height:40px;}
 #frm-signup label{display:inline-block;width:20%;font-size:18px;;height:40px;}
 #frm-signup input{height:26px;}
+#frm-signup .radio-label{width:auto; }
+#frm-signup .radio-input{margin-right:20px;}

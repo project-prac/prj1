@@ -7,5 +7,6 @@ public interface UserDto {
   String getRole();
   String getPassword();
   String getName();
+  int getNo();
  
 }

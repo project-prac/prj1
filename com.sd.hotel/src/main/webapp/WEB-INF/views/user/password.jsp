@@ -11,7 +11,7 @@
 <jsp:include page="../hotel/layout/header.jsp"/>
 <link rel="stylesheet" href="/resources/hotel/css/sub_mem.css">
 
-
+<!-- modifyPw.jsp였음 -->
 
 <style>
 .stretch-card{margin:150px auto 40px;}
@@ -22,10 +22,11 @@
   <div class="sub_in">
     <div class="sub_title">비밀번호 변경하기</div>
     
-          <form class="forms-sample"
-             id = "frm-signup"
-            method="POST"
-            action="${contextPath}/user/modifyPw.do">
+	    <form class="forms-sample"
+	       id = "frm-signup"
+	      method="POST"
+	      action="${contextPath}/user/password">
+	     <input type ="hidden" name="_method" value="PATCH" >
         <div class="form-group">
           <label for="exampleInputUsername1">현재 비밀번호</label> 
           <input

@@ -66,7 +66,7 @@ const fnCheckId = (e) =>{
     return;
   }
   
-  fetch(fnGetContextPath() + '/checkId.do',{
+  fetch(fnGetContextPath() + '/check-availability',{
     method:'POST',
     headers:{
       'Content-Type':'application/json'
@@ -100,7 +100,7 @@ const fnCheckEmail = () =>{
     return;
   }
   
-  fetch('/user/sendCode.do',{
+  fetch('/user/code',{
     method: 'POST',
     headers: {
       'Content-Type' : 'application/json'

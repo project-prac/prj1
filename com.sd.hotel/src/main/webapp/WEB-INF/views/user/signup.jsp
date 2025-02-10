@@ -19,7 +19,7 @@
     <form class="forms-sample"
              id = "frm-signup"
             method="POST"
-            action="${contextPath}/user/signup.do">
+            action="${contextPath}/user">
         <div class="form-group">
           <label for="exampleInputUsername1">성명</label> 
           <input
@@ -74,11 +74,11 @@
         <div class="form-group">
           <label for="gender">성별</label>
           <div style="display:flex;align-items: center">
-            <label for="gender-man" style="display:inline-block;width:120px;">남자</label>
-            <input type="radio" class="form-control" id="gender-man" name="gender" value="남" 
+            <label for="gender-man" class="radio-label" style="display:inline-block;">남자</label>
+            <input type="radio" class="radio-input" id="gender-man" name="gender" value="남" 
             style="max-width:120px;">
-            <label for="gender-woman" style="display:inline-block;width:120px;">여자</label>
-            <input type="radio" class="form-control" id="gender-woman" name="gender" value="여">
+            <label for="gender-woman" class="radio-label" style="display:inline-block;">여자</label>
+            <input type="radio" class="radio-input" id="gender-woman" name="gender" value="여">
           </div>
 
         </div>
@@ -100,7 +100,7 @@
 
 </style>
 
-<script src="${contextPath}/resources/signup.js?dt=${dt}"></script>
+<script src="${contextPath}/resources/js/user/signup.js?dt=${dt}"></script>
 
 
 <jsp:include page="../hotel/layout/footer.jsp" />
