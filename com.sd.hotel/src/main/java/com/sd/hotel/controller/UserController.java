@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sd.hotel.dto.CustomUserDetails;
 import com.sd.hotel.dto.MemberDto;
@@ -104,32 +106,38 @@ public class UserController {
 	}
 	
 	@PatchMapping("/password")
-	public String modifyPw(HttpServletRequest request, HttpServletResponse response) {
+	public String modifyPw(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		
-		userService.modifyPw(request, response);
-		return "user/modifyPw";
+		int modifyCount = userService.modifyPw(request, response);
+		
+		/* 수정중 */
+		if(modifyCount > 0) {
+			redirectAttributes.addFlashAttribute("pwsuccess", "비밀번호가 변경되었습니다");
+		}else {
+			redirectAttributes.addFlashAttribute("pwfail", "비밀번호 변경을 실패했습니다.");
+		}
+		
+		return "redirect:/user/me/profile";
 	}
 	
 	/*마이페이지 내 예약 내역확인*/
-	@GetMapping("/myReserve.do")
+	//@GetMapping("/myReserve.do")
+	@GetMapping("/me/reservations")
 	public String myReservePage(Authentication authentication,Model model) {
 		
 		String userID = authentication.getName();
 		int memberNo = userService.getMemberNo(userID);
 		
-		System.out.println(memberNo);
-		
 		List<ReservationDto> reservedRoom = userRoomService.getReservedRoom(memberNo);
 		
-		System.out.println("reservedRoom::"+reservedRoom);
 		model.addAttribute("reservedRoom",reservedRoom );
 		
 		
-		return "user/myReserve";
+		return "user/reservations";
 	}
 	
 	
-	/*마이페이지 내 예약 상세보기*/
+	/*마이페이지 내 예약 상세보기
 	@PostMapping("/myReserveDetail.do")
 	public String getReservedDetail(@RequestParam("reservationNo") int reservationNo,  Model model) {
 		
@@ -137,11 +145,12 @@ public class UserController {
 		model.addAttribute("reservedRoom",reservedRoom );
 		
 		return "user/myReserveDetail";
-	}
+	}*/
 	
-	/* ↓ 코드 수정 
-	@GetMapping("/reservations/{reservationNo}")
-	public String getReservedDetail(@RequestParam("reservationNo") int reservationNo,  Model model) {
+	/* ↓ 코드 수정 */
+	@GetMapping("/me/reservations/{reservationNo}")
+	public String getReservedDetail(@PathVariable("reservationNo") int reservationNo ,
+			 Model model) {
 		
 		ReservationDto reservedRoom = userRoomService.getReservedRoomDetail(reservationNo);
 		model.addAttribute("reservedRoom",reservedRoom );
@@ -149,5 +158,5 @@ public class UserController {
 		return "user/myReserveDetail";
 	}
 	
-	*/
+	
 }

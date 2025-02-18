@@ -1,10 +1,5 @@
 $(document).ready(function() {
 
- 
-
-
-
-
 
   //예약 취소 후 메시지
   const fnRemoveResult = () => {
@@ -25,6 +20,7 @@ $(document).ready(function() {
 
 
   // 예약 상세보기
+  
   const fnReserveDetail = () => {
     $(document).on('click', '.btn_detail', (e) => {
 
@@ -33,7 +29,7 @@ $(document).ready(function() {
       const reservationNo = parent.querySelector('input#reservationNo');
       console.log(roomNo.value);
       console.log("reservationNo", reservationNo.value);
-      const url = '/user/myReserveDetail.do';
+      const url = `/user/me/reservations/${reservationNo}`;
 
       const params = {
         //roomNo: roomNo.value,
@@ -48,7 +44,7 @@ $(document).ready(function() {
 
   fnSubmitForm = (url, params) => {
     const form = document.createElement('form');
-    form.method = 'POST';
+    form.method = 'GET';
     form.action = url;
 
 
@@ -117,7 +113,7 @@ $(document).ready(function() {
 
 
 
-  fnReserveDetail();
+  //fnReserveDetail();
   fnReserveRemove();
   fnPay();
 

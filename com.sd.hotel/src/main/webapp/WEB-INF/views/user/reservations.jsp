@@ -57,17 +57,20 @@
 		                  <input type="hidden" id="roomNo" value="${room.roomNo}" name="roomNo">
 		                      
 		                 <c:choose>
+		                 
 		                  <c:when test="${room.status eq 'reserved'}">
 		                    
 			                  예약 완료 / 결제 대기 : 결제를 완료하시면 예약이 확정됩니다.
 			                   <button type="button" class="btn_pay">결제하기</button>
-		                     <button type="button" class="btn_detail"> 예약 상세보기 </button>
+		                     <button type="button" class="btn_detail"><a href="${contextPath}/user/me/reservations/${room.reservationNo}">예약 상세보기</a>  </button>
 		                     <button class="btn_remove" type="button">  예약 취소하기 </button>
 		                  </c:when>
+		                  
 		                  <c:otherwise>
 		                  결제완료
-		                  
+		                   
                        <input type="hidden" value="${room.reservationNo}" name="reservationNo">
+                       <button type="button" class="btn_detail"><a href="${contextPath}/user/me/reservations/${room.reservationNo}">예약 상세보기</a>  </button>
                        <!--<button type="submit">
                         상세보기 
                        </button>  -->
@@ -110,5 +113,5 @@
 	  
 </script>
 
- <script src="${contextPath}/resources/js/myReserve.js"></script> 
+<!-- <script src="${contextPath}/resources/js/user/reservation/reservations.js"></script>  --> 
 <jsp:include page="../hotel/layout/footer.jsp" />

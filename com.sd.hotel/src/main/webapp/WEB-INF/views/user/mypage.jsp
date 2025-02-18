@@ -48,7 +48,7 @@
         </div>
         <ul class="mypageList">
           <li><a href="${contextPath}/user/me/profile">내정보 ▶</a></li>
-          <li><a href="${contextPath}/user/myReserve.do">예약내역 ▶</a></li>
+          <li><a href="${contextPath}/user/me/reservations">예약내역 ▶</a></li>
           <li><a href="">결제내역 ▶</a></li>
         </ul>
     
